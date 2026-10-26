@@ -8,51 +8,41 @@
 {% block content %}
 <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
   
-  <!-- Breadcrumbs & Step Milestone -->
-  <section class="mb-8">
-    <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant mb-4 pb-3 border-b editorial-border">
-      <div class="flex items-center gap-2 tracking-wider">
+  <!-- Clean Checkout Header -->
+  <section class="mb-6">
+    <div class="flex items-center justify-between text-xs text-on-surface-variant mb-3 pb-2 border-b editorial-border">
+      <div class="flex items-center gap-2">
         <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">
           {% if is_ar %}الرئيسية{% else %}Home{% endif %}
         </a>
         <span class="text-outline-variant">/</span>
         <a class="hover:text-primary transition-colors" href="{% url 'cart:cart_detail' %}">
-          {% if is_ar %}حقيبة المقتنيات{% else %}Shopping Bag{% endif %}
+          {% if is_ar %}حقيبة التسوق{% else %}Shopping Bag{% endif %}
         </a>
         <span class="text-outline-variant">/</span>
         <span class="text-primary font-semibold">
-          {% if is_ar %}ملف الشراء والكونسيرج الشخصي{% else %}Concierge Checkout Dossier{% endif %}
+          {% if is_ar %}إتمام الطلب{% else %}Checkout{% endif %}
         </span>
       </div>
-      <div class="flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-outline">
-        <span>{% if is_ar %}كونسيرج الشراء الملكي • ملف 84210{% else %}CONCIERGE CHECKOUT • DOSSIER N° 84210{% endif %}</span>
-        <span class="hidden sm:inline">• {% if is_ar %}القاهرة، مصر{% else %}CAIRO, EG{% endif %}</span>
+      <div class="flex items-center gap-1.5 text-xs text-[#4A6B53] font-medium">
+        <span class="material-symbols-outlined text-[16px]">lock</span>
+        <span>{% if is_ar %}دفع مشفر وآمن 100%{% else %}100% Secure Checkout{% endif %}</span>
       </div>
     </div>
-
-    <!-- Stepper Milestone Indicator -->
-    <div class="bg-surface-container-lowest border editorial-border rounded-xl p-3.5 mb-6 shadow-xs">
-      <div class="flex items-center justify-between max-w-2xl mx-auto text-xs font-semibold">
-        <div class="flex items-center gap-2 text-primary">
-          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">✓</span>
-          <span>{% if is_ar %}مراجعة الحقيبة{% else %}Bag Review{% endif %}</span>
-        </div>
-        <span class="h-0.5 flex-1 mx-3 bg-primary rounded-full"></span>
-        <div class="flex items-center gap-2 text-primary">
-          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</span>
-          <span>{% if is_ar %}بيانات التوصيل والعنوان{% else %}Shipping Details{% endif %}</span>
-        </div>
-        <span class="h-0.5 flex-1 mx-3 bg-primary/40 rounded-full"></span>
-        <div class="flex items-center gap-2 text-on-surface-variant font-medium">
-          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">3</span>
-          <span>{% if is_ar %}الدفع وتأكيد الطلب{% else %}Payment & Confirmation{% endif %}</span>
-        </div>
+    <div class="flex items-baseline justify-between mb-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-serif text-[#2A1D1A] font-medium">
+          {% if is_ar %}إتمام الطلب والتوصيل{% else %}Complete Your Order{% endif %}
+        </h1>
+        <p class="text-xs text-on-surface-variant mt-1">
+          {% if is_ar %}أدخلي بيانات التوصيل واختاري وسيلة الدفع المناسبة لكِ.{% else %}Enter delivery address details and select your preferred payment method.{% endif %}
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Main Checkout Form Grid -->
-  <form method="POST" id="checkout-form" onsubmit="const btn = this.querySelector('button[type=submit]'); if (btn) { btn.disabled = true; btn.classList.add('opacity-75'); }" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <form method="POST" id="checkout-form" onsubmit="if (!this.checkValidity()) { return true; } const btn = this.querySelector('button[type=submit]'); if (btn) { btn.disabled = true; btn.classList.add('opacity-75'); btn.innerText = '{% if is_ar %}جاري تأكيد الطلب...{% else %}Confirming Order...{% endif %}'; }" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     {% csrf_token %}
 
     <!-- LEFT / MAIN COLUMN: ADDRESS & PAYMENT (7 COLS) -->

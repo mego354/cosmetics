@@ -6,111 +6,55 @@
 {% block content %}
 <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
   
-  <!-- Breadcrumbs & Dossier Header -->
-  <section class="mb-8">
-    <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant mb-4 pb-3 border-b editorial-border">
-      <div class="flex items-center gap-2 tracking-wider">
+  <!-- Clean Cart Header -->
+  <section class="mb-6">
+    <div class="flex items-center justify-between text-xs text-on-surface-variant mb-4 pb-2 border-b editorial-border">
+      <div class="flex items-center gap-2">
         <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
         <span class="text-outline-variant">/</span>
-        <span class="text-primary font-semibold">{% if is_ar %}حقيبة المقتنيات الفاخرة{% else %}Royal Shopping Bag{% endif %}</span>
+        <span class="text-primary font-semibold">{% if is_ar %}حقيبة التسوق{% else %}Shopping Bag{% endif %}</span>
       </div>
-      <div class="flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-outline">
-        <span>CURATED SELECTION • DOSSIER N° 84210</span>
-        <span class="hidden sm:inline">• CAIRO, EG</span>
-      </div>
+      <span class="text-xs text-outline font-medium">
+        {{ cart.total_items }} {% if is_ar %}مستحضر{% else %}items{% endif %}
+      </span>
     </div>
 
-    <!-- Stepper Milestone Indicator -->
-    <div class="bg-surface-container-lowest border editorial-border rounded-xl p-3.5 mb-6 shadow-xs">
-      <div class="flex items-center justify-between max-w-2xl mx-auto text-xs font-semibold">
-        <div class="flex items-center gap-2 text-primary">
-          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</span>
-          <span>{% if is_ar %}مراجعة الحقيبة{% else %}Review Bag{% endif %}</span>
-        </div>
-        <span class="h-0.5 flex-1 mx-3 bg-primary/40 rounded-full"></span>
-        <div class="flex items-center gap-2 text-on-surface-variant">
-          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">2</span>
-          <span>{% if is_ar %}بيانات التوصيل والعنوان{% else %}Shipping & Address{% endif %}</span>
-        </div>
-        <span class="h-0.5 flex-1 mx-3 bg-outline-variant/50 rounded-full"></span>
-        <div class="flex items-center gap-2 text-on-surface-variant font-medium">
-          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">3</span>
-          <span>{% if is_ar %}الدفع وتأكيد الطلب{% else %}Payment & Confirmation{% endif %}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Masthead Banner -->
-    <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl border editorial-border relative overflow-hidden shadow-sm">
-      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 relative z-10">
+    <!-- Title & Free Shipping Bar -->
+    <div class="bg-surface-container-lowest p-5 md:p-6 rounded-2xl border editorial-border shadow-xs">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <div>
-          <div class="flex items-center gap-2 mb-2">
-            <span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-mono text-xs font-semibold tracking-wider">ÉDITION PRIVÉE</span>
-            <span class="text-xs text-outline font-serif italic">The Ritual Shopping Bag</span>
-          </div>
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#2A1D1A] tracking-tight font-medium">
-            {% if is_ar %}حقيبة المقتنيات الفاخرة{% else %}Royal Shopping Bag{% endif %}
-            <span class="text-primary font-normal text-xl sm:text-2xl ms-2">({{ cart.total_items }} {% if is_ar %}مستحضر منتقى{% else %}curated artifacts{% endif %})</span>
+          <h1 class="text-2xl sm:text-3xl font-serif text-[#2A1D1A] font-medium">
+            {% if is_ar %}حقيبة التسوق{% else %}Your Shopping Bag{% endif %}
           </h1>
-          <p class="text-xs sm:text-sm text-on-surface-variant mt-2 max-w-2xl leading-relaxed">
-            {% if is_ar %}
-              مستحضرات تجميل نباتية نادرة تصاغ في معاملنا العطرية بمصر من أنقى خلاصات وادي النيل والواحات، مغلفة يدوياً داخل صناديق خشبية خفيفة وأشرطة حريرية خام.
-            {% else %}
-              Rare botanical formulations crafted in our Cairo atelier from the purest Nile valley and oasis essences, wrapped in bespoke royal gift packaging.
-            {% endif %}
+          <p class="text-xs text-on-surface-variant mt-0.5">
+            {% if is_ar %}راجعي مقتنياتكِ المنتقاة قبل الانتقال لبيانات التوصيل السريع.{% else %}Review your curated formulations before proceeding to checkout.{% endif %}
           </p>
         </div>
-
-        <!-- Regional Trust Pills -->
-        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-          <div class="flex items-center gap-2 px-3.5 py-2 bg-surface-container-low rounded-xl border editorial-border">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#4A6B53] animate-pulse"></span>
-            <div>
-              <span class="block text-xs font-bold text-on-surface">{% if is_ar %}دفع عند الاستلام متاح{% else %}Cash on Delivery Available{% endif %}</span>
-              <span class="block text-[10px] text-on-surface-variant">{% if is_ar %}معاينة الطرد قبل السداد{% else %}Inspect Box Before Paying{% endif %}</span>
-            </div>
-          </div>
-          <div class="flex items-center gap-2 px-3.5 py-2 bg-surface-container-low rounded-xl border editorial-border">
-            <span class="material-symbols-outlined text-primary text-[20px]">verified</span>
-            <div>
-              <span class="block text-xs font-bold text-on-surface">{% if is_ar %}أصالة نيلية معتمدة 100%{% else %}100% Nile Authenticity{% endif %}</span>
-              <span class="block text-[10px] text-on-surface-variant">{% if is_ar %}مرخصة بهيئة الدواء المصرية{% else %}EDA Licensed Formulation{% endif %}</span>
-            </div>
-          </div>
-        </div>
+        <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-1 text-xs text-primary font-semibold hover:underline">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          <span>{% if is_ar %}متابعة التسوق{% else %}Continue Shopping{% endif %}</span>
+        </a>
       </div>
 
-      <!-- Free Shipping Progress -->
-      <div class="mt-6 pt-5 border-t editorial-border">
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs mb-2.5">
-          <div class="flex items-center gap-2 text-on-surface">
-            <div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-primary">
-              <span class="material-symbols-outlined text-[16px]">local_shipping</span>
-            </div>
-            <div>
-              {% if cart.qualifies_for_free_shipping %}
-                <span class="font-bold text-[#4A6B53]">
-                  {% if is_ar %}مبروك! تم تفعيل الشحن الملكي المجاني السريع لجميع المحافظات!{% else %}Congratulations! Complimentary Royal Express Shipping is unlocked!{% endif %}
-                </span>
-              {% else %}
-                <span class="font-semibold text-primary">
-                  {% if is_ar %}أضيفي {{ cart.remaining_for_free_shipping }} {{ currency_symbol }} فقط{% else %}Add only {{ cart.remaining_for_free_shipping }} {{ currency_symbol }}{% endif %}
-                </span>
-                <span class="text-on-surface-variant">
-                  {% if is_ar %}لتفعيل الشحن المجاني الملكي لجميع محافظات مصر + هدية عطرية مصغرة!{% else %}to unlock Complimentary Royal Shipping + a miniature gift!{% endif %}
-                </span>
-              {% endif %}
-            </div>
+      <!-- Free Shipping Progress Bar (Clean & Compact) -->
+      <div class="pt-3 border-t editorial-border">
+        <div class="flex items-center justify-between text-xs mb-2">
+          <div class="flex items-center gap-2 text-on-surface font-medium">
+            <span class="material-symbols-outlined text-primary text-[18px]">local_shipping</span>
+            {% if cart.qualifies_for_free_shipping %}
+              <span class="font-bold text-[#4A6B53]">
+                {% if is_ar %}تم تفعيل الشحن المجاني السريع لطلبكِ!{% else %}Complimentary Express Delivery Unlocked!{% endif %}
+              </span>
+            {% else %}
+              <span>
+                {% if is_ar %}أضيفي <strong class="text-primary font-bold">{{ cart.remaining_for_free_shipping }} {{ currency_symbol }}</strong> لتفعيل الشحن المجاني!{% else %}Add <strong class="text-primary font-bold">{{ cart.remaining_for_free_shipping }} {{ currency_symbol }}</strong> for free delivery!{% endif %}
+              </span>
+            {% endif %}
           </div>
-          <div class="flex items-center gap-3">
-            <span class="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full font-bold font-mono">
-              {{ cart.free_shipping_progress_pct }}% {% if is_ar %}من المكافأة{% else %}Unlocked{% endif %}
-            </span>
-            <span class="text-on-surface-variant font-mono font-medium">{{ cart.subtotal }} / 800 {{ currency_symbol }}</span>
-          </div>
+          <span class="font-bold font-mono text-primary text-xs">{{ cart.subtotal }} / 800 {{ currency_symbol }}</span>
         </div>
-        <div class="relative w-full bg-surface-container h-3 rounded-full overflow-hidden p-0.5 border editorial-border">
-          <div class="bg-gradient-to-l from-primary via-primary-container to-[#C86D51] h-full rounded-full transition-all duration-700" style="width: {{ cart.free_shipping_progress_pct }}%;"></div>
+        <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+          <div class="bg-gradient-to-l from-primary to-[#C86D51] h-full rounded-full transition-all duration-500" style="width: {{ cart.free_shipping_progress_pct }}%;"></div>
         </div>
       </div>
     </div>

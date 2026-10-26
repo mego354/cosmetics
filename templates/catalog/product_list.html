@@ -6,107 +6,64 @@
 {% endblock %}
 
 {% block content %}
-<!-- 1. EDITORIAL CATALOG MASTHEAD & PROVENANCE CUES -->
-<section class="border-b editorial-border bg-gradient-to-b from-surface via-surface-container-low/50 to-surface pt-8 pb-12 px-6 md:px-12">
+<!-- 1. CLEAN CATALOG HEADER -->
+<section class="border-b editorial-border bg-surface-container-low/40 pt-6 pb-6 px-6 md:px-12">
   <div class="max-w-[1440px] mx-auto">
     
-    <!-- Breadcrumbs & Edition Metadata -->
-    <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-on-surface-variant mb-6 pb-4 border-b editorial-border">
-      <nav aria-label="Breadcrumb" class="flex items-center gap-2">
-        <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">
-          {% if is_ar %}الرئيسية{% else %}Home{% endif %}
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-on-surface-variant mb-3">
+      <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">
+        {% if is_ar %}الرئيسية{% else %}Home{% endif %}
+      </a>
+      <span class="text-outline-variant">/</span>
+      {% if current_category %}
+        <a class="hover:text-primary transition-colors" href="{% url 'catalog:product_list' %}">
+          {% if is_ar %}المتجر{% else %}Store{% endif %}
         </a>
         <span class="text-outline-variant">/</span>
-        <a class="hover:text-primary transition-colors" href="{% url 'catalog:product_list' %}">
-          {% if is_ar %}الكتالوج التحريري{% else %}Editorial Catalog{% endif %}
-        </a>
-        {% if current_category %}
-          <span class="text-outline-variant">/</span>
-          <span class="text-primary font-medium">
-            {% if is_ar %}{{ current_category.name_ar }}{% else %}{{ current_category.name_en }}{% endif %}
-          </span>
-        {% endif %}
-      </nav>
-      <div class="flex items-center gap-3 text-[11px] font-mono text-outline">
-        <span>ISSN 2984-771X</span>
-        <span>•</span>
-        <span>{% if is_ar %}إصدار صيف / خريف 2026{% else %}Summer / Autumn 2026 Edition{% endif %}</span>
-        <span>•</span>
-        <span class="text-primary font-semibold">{% if is_ar %}الدفعة المعملية المحصورة رقم #09{% else %}Atelier Batch N° 09{% endif %}</span>
-      </div>
-    </div>
+        <span class="text-primary font-semibold">
+          {% if is_ar %}{{ current_category.name_ar }}{% else %}{{ current_category.name_en }}{% endif %}
+        </span>
+      {% else %}
+        <span class="text-primary font-semibold">
+          {% if is_ar %}جميع المستحضرات{% else %}All Formulations{% endif %}
+        </span>
+      {% endif %}
+    </nav>
 
-    <!-- Main Editorial Masthead -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
-      <div class="lg:col-span-8">
-        <div class="inline-flex items-center gap-2.5 bg-surface-container-lowest border editorial-border px-4 py-1.5 rounded-full text-primary text-xs mb-5 shadow-xs">
-          <span class="material-symbols-outlined text-[16px]">auto_stories</span>
-          <span class="font-semibold">
-            {% if is_ar %}الأرشيف التحريري والمصنعي المستقل{% else %}Independent Botanical & Editorial Archive{% endif %}
-          </span>
-          <span class="text-outline-variant">•</span>
-          <span class="text-on-surface-variant font-mono">Curatorial Issue No. 04</span>
-        </div>
-        <h1 class="text-3xl md:text-5xl font-serif text-primary tracking-tight mb-4 leading-tight">
+    <!-- Page Title & Short Subtitle -->
+    <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-3">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-serif text-[#2A1D1A] font-medium tracking-tight">
           {% if current_category %}
-            {% if is_ar %}{{ current_category.name_ar }}: {{ current_category.description_ar }}{% else %}{{ current_category.name_en }}: {{ current_category.description_en }}{% endif %}
+            {% if is_ar %}{{ current_category.name_ar }}{% else %}{{ current_category.name_en }}{% endif %}
           {% else %}
-            {% if is_ar %}إشراقة نقية مستوحاة من أسرار النيل والواحات المصرية{% else %}Sacred Radiance Derived from Nile & Egyptian Oasis Botanicals{% endif %}
+            {% if is_ar %}مستحضرات الجمال والعناية الملكية{% else %}Luxury Botanical Beauty & Parfums{% endif %}
           {% endif %}
         </h1>
-        <p class="text-sm md:text-base text-on-surface-variant max-w-2xl leading-relaxed">
-          {% if is_ar %}
-          كتالوج تحريري يحتفي بمستحضرات معملية حصرية مستخلصة من خامات التربة المصرية النقية، متوازنة كيميائياً لمواجهة شمس وجفاف الصيف المرتفع بأسلوب رفيع يدوم.
+        <p class="text-xs text-on-surface-variant mt-1 max-w-xl leading-relaxed">
+          {% if current_category %}
+            {% if is_ar %}{{ current_category.description_ar }}{% else %}{{ current_category.description_en }}{% endif %}
           {% else %}
-          An editorial catalogue honoring exclusive laboratory formulations distilled from pure Egyptian soils, scientifically balanced to shield skin against desert sun and heat.
+            {% if is_ar %}
+              مستحضرات تجميل وعناية بالبشرة طبيعية وفاخرة مستخلصة من أندر نباتات وادي النيل والواحات المصرية.
+            {% else %}
+              Rare botanical skincare, makeup and parfums crafted with pure Nile and oasis extracts.
+            {% endif %}
           {% endif %}
         </p>
-
-        <!-- Egyptian Ingredient Provenance Badges -->
-        <div class="flex flex-wrap items-center gap-2.5 mt-6">
-          <span class="inline-flex items-center gap-1.5 bg-surface-container border editorial-border rounded-full px-3.5 py-1.5 text-xs text-on-surface shadow-xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-            <strong class="font-semibold text-primary">{% if is_ar %}دلتا النيل:{% else %}Nile Delta:{% endif %}</strong> 
-            {% if is_ar %}لوتس أزرق عضوي معصور بالتقطير{% else %}Cold-distilled organic blue lotus{% endif %}
-          </span>
-          <span class="inline-flex items-center gap-1.5 bg-surface-container border editorial-border rounded-full px-3.5 py-1.5 text-xs text-on-surface shadow-xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-700"></span>
-            <strong class="font-semibold text-primary">{% if is_ar %}أسوان وصعيد مصر:{% else %}Aswan & Upper Egypt:{% endif %}</strong> 
-            {% if is_ar %}مستخلص الكركديه وزيت المورينجا البري{% else %}Wild moringa & hibiscus elixir{% endif %}
-          </span>
-          <span class="inline-flex items-center gap-1.5 bg-surface-container border editorial-border rounded-full px-3.5 py-1.5 text-xs text-on-surface shadow-xs">
-            <span class="w-1.5 h-1.5 rounded-full bg-[#4A6B53]"></span>
-            <strong class="font-semibold text-primary">{% if is_ar %}واحة سيوة:{% else %}Siwa Oasis:{% endif %}</strong> 
-            {% if is_ar %}نكتار نوى البلح المعصور على البارد{% else %}Cold-pressed desert date seed nectar{% endif %}
-          </span>
-        </div>
       </div>
 
-      <!-- Curatorial Note Card -->
-      <div class="lg:col-span-4 bg-surface-container-lowest border editorial-border rounded-2xl p-6 shadow-sm relative overflow-hidden">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs uppercase tracking-wider font-semibold text-primary flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[16px]">edit_note</span>
-            {% if is_ar %}ملاحظة القيّم التحريري{% else %}Curator's Dispatch{% endif %}
-          </span>
-          <span class="text-[11px] text-outline font-mono">{% if is_ar %}القاهرة، مصر{% else %}Cairo, EG{% endif %}</span>
-        </div>
-        <blockquote class="text-xs text-on-surface-variant italic leading-relaxed mb-4 font-serif">
-          {% if is_ar %}
-          "لم نرد تصميم مجرد منتجات تجميل، بل استعادة طقوس الترطيب القديمة في صيغ نانو-حيوية فائقة الخفة لا تترك أي أثر لزج في رطوبة الصيف المصرية."
-          {% else %}
-          "Our ambition was never conventional cosmetics, but reviving ancestral hydration liturgies through weightless bio-nano emulsions engineered for Egypt's intense climate."
-          {% endif %}
-        </blockquote>
-        <div class="flex items-center justify-between pt-3 border-t editorial-border">
-          <div>
-            <div class="text-xs font-bold text-on-surface">{% if is_ar %}د. ريم المهدي{% else %}Dr. Reem El-Mahdy{% endif %}</div>
-            <div class="text-[10px] text-outline">{% if is_ar %}كبيرة أطباء الجلد ومؤسسة المعمل{% else %}Head Dermatologist & Atelier Founder{% endif %}</div>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-secondary-container/70 flex items-center justify-center text-primary font-serif font-bold text-xs">
-            RM
-          </div>
-        </div>
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 text-xs font-medium pt-2 md:pt-0">
+        <a href="{% url 'catalog:product_list' %}" class="px-3.5 py-1.5 rounded-full border transition-colors {% if not current_category %}bg-primary text-white border-primary{% else %}bg-surface hover:bg-surface-container border-outline-variant text-on-surface{% endif %}">
+          {% if is_ar %}الكل{% else %}All{% endif %}
+        </a>
+        {% for cat in categories %}
+          <a href="{% url 'catalog:category_products' cat.slug %}" class="px-3.5 py-1.5 rounded-full border transition-colors {% if current_category.id == cat.id %}bg-primary text-white border-primary{% else %}bg-surface hover:bg-surface-container border-outline-variant text-on-surface{% endif %}">
+            {% if is_ar %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}
+          </a>
+        {% endfor %}
       </div>
     </div>
 

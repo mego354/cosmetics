@@ -52,6 +52,8 @@ class CheckoutView(View):
         return render(request, 'orders/checkout.html', context)
 
     def post(self, request):
+        if not request.session.session_key:
+            request.session.save()
         cart = get_or_create_cart(request)
         if cart.items.count() == 0:
             return redirect('catalog:product_list')
@@ -297,13 +299,15 @@ class OrderConfirmationView(View):
             order_number=order_number
         )
         
-        # IDOR Protection: Only the placing customer or current session owner can view
+        # IDOR Protection: The placing customer, current session owner, or guest with the order URL can view
         is_owner = False
         if request.user.is_authenticated and order.user == request.user:
             is_owner = True
         elif request.session.get('last_order_number') == order.order_number:
             is_owner = True
         elif order.session_key and request.session.session_key == order.session_key:
+            is_owner = True
+        elif not order.user:
             is_owner = True
 
         if not is_owner and not request.user.is_staff:

@@ -5,21 +5,6 @@
 {% block meta_description %}{% if is_ar %}{{ product.short_description_ar }}{% else %}{{ product.short_description_en|default:product.short_description_ar }}{% endif %}{% endblock %}
 
 {% block content %}
-<!-- Dossier Meta Bar -->
-<div class="border-b editorial-border bg-surface-container-low/50 py-2">
-  <div class="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between text-[11px] font-mono text-outline">
-    <div class="flex items-center gap-3">
-      <span class="font-bold text-primary">DOSSIER DE BEAUTÉ N° IV</span>
-      <span>•</span>
-      <span>{% if is_ar %}إصدار دار لوميه لعلوم النباتات النيلية{% else %}LUMÉ Atelier of Nile Botanicals{% endif %}</span>
-    </div>
-    <div class="hidden sm:flex items-center gap-4 text-on-surface-variant">
-      <span>FOLIO: {{ product.ministry_registration_code }}</span>
-      <span>•</span>
-      <span class="text-primary font-semibold">{% if is_ar %}مستحضر معتمد رسمياً بهيئة الدواء المصرية{% else %}Officially Certified by EDA{% endif %}</span>
-    </div>
-  </div>
-</div>
 
 <!-- Breadcrumb -->
 <nav class="w-full max-w-[1440px] mx-auto px-6 md:px-12 py-3.5 text-xs text-on-surface-variant flex items-center gap-2 flex-wrap">

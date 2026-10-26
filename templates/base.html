@@ -85,102 +85,70 @@
 </head>
 <body class="bg-background text-on-surface antialiased selection:bg-secondary-container selection:text-primary min-h-screen flex flex-col">
 
-  <!-- 1. ANNOUNCEMENT BAR & ISSUE MASTHEAD -->
+  <!-- 1. CLEAN LUXURY ANNOUNCEMENT BAR -->
   <aside class="bg-surface-container-low border-b editorial-border text-on-surface-variant text-xs py-2 px-4 md:px-12 transition-colors">
-    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-start">
-      <div class="flex items-center flex-wrap justify-center gap-2 md:gap-4 text-[11px] md:text-xs">
-        <span class="inline-flex items-center gap-1.5 font-bold tracking-widest text-primary uppercase font-mono">
-          {% if is_ar %}إصدار رقم 04 • القاهرة والإسكندرية{% else %}ISSUE N° 04 • CAIRO &amp; ALEXANDRIA{% endif %}
-        </span>
-        <span class="hidden sm:inline text-outline-variant">•</span>
-        <span class="inline-flex items-center gap-1.5 text-primary font-semibold">
+    <div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-xs">
+        <span class="inline-flex items-center gap-1.5 text-primary font-medium">
           <span class="w-2 h-2 rounded-full bg-[#4A6B53] animate-pulse"></span>
           {% if is_ar %}
-            توصيل فاخر مجاني للطلبات فوق 800 ج.م في القاهرة والجيزة (24 ساعة)
+            توصيل مجاني للطلبات فوق 800 ج.م بمصر • كود الخصم: <strong class="text-primary font-bold">EGYPTGLOW</strong> (خصم 15%)
           {% else %}
-            Complimentary luxury delivery on orders over 800 EGP in Cairo &amp; Giza (24h)
-          {% endif %}
-        </span>
-        <span class="hidden lg:inline text-outline-variant">•</span>
-        <span class="hidden lg:inline-flex items-center gap-1 bg-surface-container px-2.5 py-0.5 rounded-full border editorial-border">
-          {% if is_ar %}
-            كود دار التحرير: <strong class="text-primary font-bold tracking-wider">EGYPTGLOW</strong> (خصم 15%)
-          {% else %}
-            Promo Code: <strong class="text-primary font-bold tracking-wider">EGYPTGLOW</strong> (15% Off)
+            Complimentary delivery over 800 EGP in Egypt • Code: <strong class="text-primary font-bold">EGYPTGLOW</strong> (15% Off)
           {% endif %}
         </span>
       </div>
 
-      <!-- Regional Delivery & Language Switcher -->
-      <div class="flex items-center gap-4 text-xs font-medium">
-        <div class="flex items-center gap-1">
-          <span class="material-symbols-outlined text-[15px]">location_on</span>
-          <span>
-            {% if is_ar %}التسليم إلى: <strong class="text-primary font-bold">القاهرة الكبرى</strong>{% else %}Deliver to: <strong class="text-primary font-bold">Greater Cairo</strong>{% endif %}
-          </span>
-        </div>
-        <span class="text-outline-variant">|</span>
-        <div class="flex items-center gap-1 font-semibold text-primary">
-          <span>{{ currency_symbol }}</span>
-        </div>
+      <!-- Quick Language & Currency Switcher -->
+      <div class="flex items-center gap-3 text-xs font-medium">
+        <span class="font-semibold text-primary font-mono">{{ currency_symbol }}</span>
         <span class="text-outline-variant">|</span>
         {% if is_ar %}
           <a href="{% url 'core:switch_language' 'en' %}" class="hover:text-primary transition-colors font-semibold tracking-wide font-sans">
-            English (EN)
+            English
           </a>
         {% else %}
           <a href="{% url 'core:switch_language' 'ar' %}" class="hover:text-primary transition-colors font-semibold tracking-wide font-sans">
-            العربية (AR)
+            العربية
           </a>
         {% endif %}
       </div>
     </div>
   </aside>
 
-  <!-- 2. HIGH-FASHION EDITORIAL HEADER -->
+  <!-- 2. STREAMLINED LUXURY HEADER -->
   <header class="sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b editorial-border transition-all">
-    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-[1440px] mx-auto h-20">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-[1440px] mx-auto h-18 py-3">
       
       <!-- Brand Wordmark -->
       <div class="flex items-center gap-4">
-        <button type="button" onclick="document.getElementById('mobile-nav-drawer').classList.toggle('hidden')" class="lg:hidden p-2 text-on-surface hover:text-primary" aria-label="{% if is_ar %}القائمة{% else %}Menu{% endif %}">
+        <button type="button" onclick="document.getElementById('mobile-nav-drawer').classList.toggle('hidden')" class="lg:hidden p-1.5 text-on-surface hover:text-primary" aria-label="{% if is_ar %}القائمة{% else %}Menu{% endif %}">
           <span class="material-symbols-outlined text-[24px]">menu</span>
         </button>
-        <a class="group flex items-baseline gap-2.5" href="{% url 'core:home' %}">
-          <span class="text-3xl md:text-4xl font-serif text-primary tracking-widest font-normal">LUMÉ</span>
-          <span class="text-xs md:text-sm tracking-[0.25em] text-on-surface-variant font-light group-hover:text-primary transition-colors">
+        <a class="group flex items-baseline gap-2" href="{% url 'core:home' %}">
+          <span class="text-2xl md:text-3xl font-serif text-primary tracking-widest font-normal">LUMÉ</span>
+          <span class="text-[11px] tracking-[0.2em] text-on-surface-variant font-light group-hover:text-primary transition-colors">
             {% if is_ar %}لوميه{% else %}ATELIER{% endif %}
           </span>
         </a>
-        <span class="hidden xl:inline-block h-4 w-[1px] bg-outline-variant/60 mx-1"></span>
-        <span class="hidden xl:inline-block text-[10px] uppercase tracking-[0.25em] text-secondary font-medium">
-          {% if is_ar %}دار الجمال والمجلة النباتية المصرية{% else %}Maison de Beauté &amp; Botanical Revue{% endif %}
-        </span>
       </div>
 
-      <!-- Primary Navigation Links (Cleanly Segregated by Active Language) -->
-      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-7 h-full text-xs font-semibold tracking-wide">
-        <a class="relative text-primary border-b-2 border-primary pb-1 font-semibold transition-colors flex items-center gap-1.5" href="{% url 'catalog:product_list' %}">
-          <span>{% if is_ar %}العناية بالبشرة{% else %}Skincare{% endif %}</span>
-          <span class="bg-primary text-white text-[9px] font-mono px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
-            {% if is_ar %}الأكثر طلباً{% else %}Bestseller{% endif %}
-          </span>
+      <!-- Primary Navigation Links (Clean & Direct) -->
+      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-8 h-full text-xs font-semibold tracking-wide">
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'catalog:product_list' %}">
+          {% if is_ar %}جميع المنتجات{% else %}Shop All{% endif %}
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'catalog:category_products' 'skincare' %}">
+          {% if is_ar %}العناية بالبشرة{% else %}Skincare{% endif %}
         </a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'catalog:category_products' 'makeup' %}">
-          {% if is_ar %}المكياج المخملي{% else %}Velvet Makeup{% endif %}
+          {% if is_ar %}المكياج{% else %}Makeup{% endif %}
         </a>
-        <a class="relative text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" href="{% url 'catalog:category_products' 'perfumes' %}">
-          <span>{% if is_ar %}عطور وادي النيل{% else %}Haute Parfums{% endif %}</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#4A6B53]"></span>
-        </a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'core:rituals' %}">
-          {% if is_ar %}طقوس الملكات{% else %}Imperial Rituals{% endif %}
-        </a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'core:stories' %}">
-          {% if is_ar %}فصول التحرير{% else %}Editorial Volumes{% endif %}
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'catalog:category_products' 'perfumes' %}">
+          {% if is_ar %}العطور{% else %}Parfums{% endif %}
         </a>
         <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'orders:track_order' %}">
-          {% if is_ar %}تتبع الشحنة{% else %}Track Order{% endif %}
+          {% if is_ar %}تتبع الطلب{% else %}Track Order{% endif %}
         </a>
       </nav>
 

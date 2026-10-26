@@ -6,32 +6,20 @@
 {% endblock %}
 
 {% block content %}
-<!-- 1. EDITORIAL COVER STORY HERO SPREAD -->
-<section class="relative overflow-hidden pt-6 pb-16 md:pt-10 md:pb-24 px-6 md:px-12 max-w-[1440px] mx-auto border-b editorial-border">
-  <!-- Top Magazine Running Header -->
-  <div class="flex items-center justify-between pb-6 mb-8 border-b editorial-border text-xs uppercase tracking-[0.25em] text-secondary font-medium font-mono">
-    <span>{% if is_ar %}مجلة لوميه • المجلد الرابع{% else %}LUMÉ GAZETTE • VOLUME IV{% endif %}</span>
-    <span class="hidden md:inline font-cormorant italic text-sm tracking-normal capitalize text-primary font-semibold">
-      {% if is_ar %}"انبعاث أزهار النيل والبرديات المقدسة"{% else %}"Rebirth of the Nile Sacred Flora"{% endif %}
-    </span>
-    <span>{% if is_ar %}القاهرة — ربيع / صيف 2026{% else %}CAIRO — SPRING / SUMMER 2026{% endif %}</span>
-  </div>
-
+<!-- 1. CLEAN LUXURY HERO SPREAD -->
+<section class="relative overflow-hidden pt-8 pb-12 md:pt-14 md:pb-20 px-6 md:px-12 max-w-[1440px] mx-auto border-b editorial-border">
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
     <!-- Content Column (6 Cols) -->
-    <div class="lg:col-span-6 flex flex-col items-start space-y-6 z-10">
+    <div class="lg:col-span-6 flex flex-col items-start space-y-5 z-10">
       
-      <!-- Micro Label / Volume Badge -->
-      <div class="inline-flex items-center gap-2 text-primary font-mono text-[11px] tracking-widest uppercase bg-surface-container px-3.5 py-1 rounded-full border editorial-border">
+      <!-- Micro Collection Badge -->
+      <div class="inline-flex items-center gap-2 text-primary font-medium text-xs bg-secondary-container/40 px-3 py-1 rounded-full border border-primary/20">
         <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
-        <span>{% if is_ar %}الغلاف التحريري الحصري • 2026{% else %}COVER STORY • EXCLUSIVE EDITION{% endif %}</span>
+        <span>{% if is_ar %}مجموعة صيف 2026 الحصرية{% else %}Exclusive Summer 2026 Collection{% endif %}</span>
       </div>
 
-      <!-- Dramatic Serif Editorial Headline -->
+      <!-- Hero Headline -->
       <div class="space-y-2">
-        <div class="text-[13px] tracking-[0.3em] uppercase text-secondary font-mono">
-          {% if is_ar %}إكسير طيبة المقدس{% else %}THE SACRED ELIXIR OF THEBES{% endif %}
-        </div>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal text-on-surface leading-[1.12]">
           {% if is_ar %}
             بعث زهرة اللوتس: <br>
