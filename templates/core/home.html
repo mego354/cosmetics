@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {% if is_ar %}LUMÉ | لوميه — مجلة ومقتنيات الجمال الملكي والعطور النادرة{% else %}LUMÉ | Atelier of Ancient Egyptian Luxury Beauty & Rare Parfums{% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- 1. EDITORIAL COVER STORY HERO SPREAD -->
+<section class="relative overflow-hidden pt-6 pb-16 md:pt-10 md:pb-24 px-6 md:px-12 max-w-[1440px] mx-auto border-b editorial-border">
+  <!-- Top Magazine Running Header -->
+  <div class="flex items-center justify-between pb-6 mb-8 border-b editorial-border text-xs uppercase tracking-[0.25em] text-secondary font-medium font-mono">
+    <span>{% if is_ar %}مجلة لوميه • المجلد الرابع{% else %}LUMÉ GAZETTE • VOLUME IV{% endif %}</span>
+    <span class="hidden md:inline font-cormorant italic text-sm tracking-normal capitalize text-primary font-semibold">
+      {% if is_ar %}"انبعاث أزهار النيل والبرديات المقدسة"{% else %}"Rebirth of the Nile Sacred Flora"{% endif %}
+    </span>
+    <span>{% if is_ar %}القاهرة — ربيع / صيف 2026{% else %}CAIRO — SPRING / SUMMER 2026{% endif %}</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+    <!-- Content Column (6 Cols) -->
+    <div class="lg:col-span-6 flex flex-col items-start space-y-6 z-10">
+      
+      <!-- Micro Label / Volume Badge -->
+      <div class="inline-flex items-center gap-2 text-primary font-mono text-[11px] tracking-widest uppercase bg-surface-container px-3.5 py-1 rounded-full border editorial-border">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        <span>{% if is_ar %}الغلاف التحريري الحصري • 2026{% else %}COVER STORY • EXCLUSIVE EDITION{% endif %}</span>
+      </div>
+
+      <!-- Dramatic Serif Editorial Headline -->
+      <div class="space-y-2">
+        <div class="text-[13px] tracking-[0.3em] uppercase text-secondary font-mono">
+          {% if is_ar %}إكسير طيبة المقدس{% else %}THE SACRED ELIXIR OF THEBES{% endif %}
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-serif font-normal text-on-surface leading-[1.12]">
+          {% if is_ar %}
+            بعث زهرة اللوتس: <br>
+            <span class="italic text-primary font-serif font-normal">إكسير الشباب الأبدي</span>
+          {% else %}
+            Rebirth of Blue Lotus: <br>
+            <span class="italic text-primary font-serif font-normal">Eternal Youth Alchemy</span>
+          {% endif %}
+        </h1>
+        <p class="text-sm md:text-base font-cormorant italic tracking-wide text-secondary pt-1">
+          {% if is_ar %}
+            "حيث تلتقي نباتات وادي النيل القديمة مع أحدث معايير الصيدلة الحيوية الفاخرة."
+          {% else %}
+            "Where ancient Nile botany meets contemporary bio-cellular luxury science."
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- Prominent Editorial Pull-Quote -->
+      <blockquote class="relative pe-4 ps-5 py-3 border-r-2 border-primary bg-surface-container-low/70 rounded-l-xl text-on-surface-variant text-sm md:text-base leading-relaxed italic font-serif">
+        {% if is_ar %}
+          «لم تكن عناية كليوباترا بالبشرة مجرد روتين، بل طقساً أسطورياً مقدساً يُستحضر فيه أريج وادي النيل لترميم الروح وتفتيح الملامح بنضارة ذهبية باهرة.»
+        {% else %}
+          "Cleopatra's skincare was never a routine; it was a sacred liturgy evoking Nile floral breath to illuminate features with golden radiance."
+        {% endif %}
+      </blockquote>
+
+      <p class="text-body-md text-on-surface-variant max-w-xl leading-relaxed text-sm md:text-base">
+        {% if is_ar %}
+          نعيد إحياء أسرار البرديات المصرية بتركيزات صيدلانية نقية 100% مستخلصة يدوياً من مزارع النيل وسيوة، معتمدة سريرياً لحماية بشرتكِ من حرارة وشمس الصيف.
+        {% else %}
+          We resurrect medicinal Egyptian papyri formulas with 100% pure botanical extracts sustainably harvested from the Nile delta and Siwa oasis.
+        {% endif %}
+      </p>
+
+      <!-- Editorial CTA Cluster -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto pt-2">
+        <a href="#bestsellers" class="rounded-full bg-[#2A1D1A] hover:bg-primary text-[#FDFBF7] font-bold text-xs py-4 px-8 text-center tracking-wider transition-all duration-300 shadow-luxury-card active:scale-95 flex items-center justify-center gap-3">
+          <span>{% if is_ar %}اقتناء مقتنيات الغلاف{% else %}Shop Cover Story Artifacts{% endif %}</span>
+          <span class="material-symbols-outlined text-[18px] {% if is_rtl %}rotate-180{% endif %}">arrow_forward</span>
+        </a>
+        <a href="{% url 'core:rituals' %}" class="rounded-full border border-primary/40 hover:bg-secondary-container/40 text-primary font-bold text-xs py-3.5 px-7 text-center transition-all duration-200 flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">auto_stories</span>
+          <span>{% if is_ar %}الطقوس الملكية الأربعة{% else %}The Four Imperial Rituals{% endif %}</span>
+        </a>
+      </div>
+
+      <!-- Curated Egyptian Heritage Proof Badges -->
+      <div class="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 border-t editorial-border w-full">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">verified_user</span>
+          <div class="leading-tight">
+            <p class="text-[11px] font-bold text-on-surface">{% if is_ar %}مسجل بهيئة الدواء{% else %}EDA Approved{% endif %}</p>
+            <p class="text-[10px] text-on-surface-variant">{% if is_ar %}معتمد رسمياً بمصر{% else %}Officially Certified{% endif %}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">local_shipping</span>
+          <div class="leading-tight">
+            <p class="text-[11px] font-bold text-on-surface">{% if is_ar %}شحن سريع لمصر{% else %}24h Express Egypt{% endif %}</p>
+            <p class="text-[10px] text-on-surface-variant">{% if is_ar %}24-48 ساعة للمحافظات{% else %}Nationwide Courier{% endif %}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">payments</span>
+          <div class="leading-tight">
+            <p class="text-[11px] font-bold text-on-surface">{% if is_ar %}دفع عند الاستلام{% else %}Cash on Delivery{% endif %}</p>
+            <p class="text-[10px] text-on-surface-variant">{% if is_ar %}معاينة قبل الدفع{% else %}Open-Box Inspection{% endif %}</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">assignment_return</span>
+          <div class="leading-tight">
+            <p class="text-[11px] font-bold text-on-surface">{% if is_ar %}استرجاع 14 يوماً{% else %}14-Day Returns{% endif %}</p>
+            <p class="text-[10px] text-on-surface-variant">{% if is_ar %}ضمان الرضا التام{% else %}100% Satisfaction{% endif %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual Editorial Art Piece & Magazine Cover Layout (6 Cols) -->
+    <div class="lg:col-span-6 relative">
+      <div class="relative w-full aspect-[4/5] max-w-[520px] mx-auto rounded-3xl overflow-hidden border border-outline-variant/60 shadow-luxury-elevated bg-surface-container">
+        <img class="w-full h-full object-cover" 
+             src="https://lh3.googleusercontent.com/aida-public/AB6AXuApM20dqzS8U5V4lWqCtxOi_Ve3AA9ehhuHrkSsqscrplrLbX-p4P-YoCWgrBUcrwK8LJDH7G8WX2Iyr28pvAC4OR5-D6G3236sj9U2Qsg-FaJ8fckShB7obkCm4Hz08UxY0Zx1KHRFaGk1o_QJwcThfSlwc7mB7B8kn10vlX8rveHLYBPJ8WuHjBVan6Ptmam2-mWlOVpv5uCC0rx6aEWsOHkGEYiEqZcJT4RSMHBX0snIdkMpayY_" 
+             alt="Editorial luxury skincare photography featuring luminous Egyptian beauty with golden dropper of blue lotus botanical serum">
+        
+        <!-- Magazine Typography Overlay -->
+        <div class="absolute top-6 end-6 text-right">
+          <span class="font-cormorant text-2xl tracking-widest text-white/90 drop-shadow block font-semibold">
+            {% if is_ar %}إصدار خاص{% else %}SPECIAL EDITION{% endif %}
+          </span>
+          <span class="text-[10px] tracking-[0.2em] uppercase text-white/80 font-mono">
+            {% if is_ar %}اللوتس الأزرق • رقم 01{% else %}SACRED LOTUS • N° 01{% endif %}
+          </span>
+        </div>
+
+        <!-- Floating Editorial Pill 1: Key Botanical Note -->
+        <div class="absolute bottom-6 end-6 bg-surface/95 backdrop-blur-md border editorial-border p-4 rounded-2xl shadow-luxury-card max-w-[240px]">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+            <span class="text-xs font-bold text-primary uppercase font-mono tracking-wider">
+              {% if is_ar %}اللوتس الأزرق المصري{% else %}Egyptian Blue Lotus{% endif %}
+            </span>
+          </div>
+          <p class="text-[11px] text-on-surface-variant leading-relaxed">
+            {% if is_ar %}
+              خلاصة البتلات النيلية المقطوفة فجراً — تعزز الكولاجين وتحمي خلايا الجلد بنسبة 94%.
+            {% else %}
+              Nile dawn petal distillate — accelerates collagen synthesis and shields against urban oxidation by 94%.
+            {% endif %}
+          </p>
+        </div>
+
+        <!-- Floating Editorial Pill 2: Award / Formulation -->
+        <div class="absolute top-6 start-6 bg-surface/90 backdrop-blur-md border editorial-border py-1.5 px-3.5 rounded-full shadow-luxury-card flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[17px]">auto_awesome</span>
+          <span class="text-[11px] font-semibold text-on-surface">
+            {% if is_ar %}صيغة سريرية حائزة على جوائز{% else %}Award-Winning Clinical Formula{% endif %}
+          </span>
+        </div>
+
+        <!-- Editorial Film Grain Label -->
+        <div class="absolute bottom-3 start-6 font-mono text-[9px] uppercase tracking-widest text-white/70">
+          CAIRO ATELIER • 2026
+        </div>
+      </div>
+
+      <!-- Decorative Terracotta Glow -->
+      <div class="absolute -bottom-8 -start-8 w-64 h-64 bg-secondary-container/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. EDITORIAL CHAPTERS / VOLUMES (THE 4 STITCH CATEGORIES) -->
+<section class="py-16 md:py-24 bg-surface-container-low/60 border-b editorial-border" id="volumes">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    
+    <!-- Section Header with Editorial Counter -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 pb-4 border-b editorial-border">
+      <div>
+        <div class="flex items-center gap-2 text-primary font-mono text-xs uppercase tracking-widest mb-1">
+          <span>{% if is_ar %}فصول الجمال الملكي{% else %}CURATED ATELIER VOLUMES{% endif %}</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-serif font-normal text-on-surface">
+          {% if is_ar %}تصفحي فصول المجلة الحصرية{% else %}Explore Atelier Curated Volumes{% endif %}
+        </h2>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="text-xs text-secondary font-mono hidden md:inline">INDEX 01 — 04</span>
+        <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-1 text-primary font-bold hover:underline text-xs md:text-sm">
+          <span>{% if is_ar %}عرض كافة المجموعات{% else %}View Full Catalog{% endif %}</span>
+          <span class="material-symbols-outlined text-[16px] {% if is_rtl %}rotate-180{% endif %}">chevron_right</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Staggered Editorial Chapter Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+      {% for cat in categories %}
+        <a href="{% url 'catalog:category_products' cat.slug %}" 
+           class="group relative rounded-2xl overflow-hidden aspect-[3/4.2] border editorial-border shadow-luxury-subtle transition-all duration-500 hover:shadow-luxury-card hover:-translate-y-1.5 {% if forloop.counter|divisibleby:2 %}lg:translate-y-4{% endif %}">
+          <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+               src="{{ cat.image }}" 
+               alt="{% if is_ar %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}" 
+               loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-[#2A1D1A]/90 via-[#2A1D1A]/35 to-transparent"></div>
+          
+          <span class="absolute top-4 start-4 font-cormorant text-2xl text-secondary-container font-bold tracking-wider">
+            {{ cat.volume_number }}
+          </span>
+
+          <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+            <span class="text-[10px] uppercase font-mono tracking-widest text-secondary-container block mb-1">
+              {% if is_ar %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}
+            </span>
+            <h3 class="text-2xl font-serif font-normal text-white mb-1.5">
+              {% if is_ar %}{{ cat.name_ar }}{% else %}{{ cat.name_en }}{% endif %}
+            </h3>
+            <p class="text-xs text-surface-container-high/90 font-light line-clamp-2 leading-relaxed">
+              {% if is_ar %}{{ cat.description_ar }}{% else %}{{ cat.description_en }}{% endif %}
+            </p>
+            <div class="mt-3 flex items-center gap-1.5 text-xs text-primary-fixed-dim font-medium group-hover:translate-x-[-4px] transition-transform">
+              <span>{% if is_ar %}تصفح الفصل{% else %}Explore Volume{% endif %}</span>
+              <span class="material-symbols-outlined text-[14px] {% if is_rtl %}rotate-180{% endif %}">east</span>
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<!-- 3. BESTSELLER GALLERY / CURATED EXHIBITS -->
+<section class="py-16 md:py-24 px-6 md:px-12 max-w-[1440px] mx-auto border-b editorial-border" id="bestsellers">
+  <!-- Section Header -->
+  <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+    <div class="inline-flex items-center gap-2 text-primary font-mono text-xs uppercase tracking-widest">
+      <span>{% if is_ar %}مقتنيات الأسبوع المختارة{% else %}CURATED EXHIBITS{% endif %}</span>
+    </div>
+    <h2 class="text-3xl md:text-5xl font-serif font-normal text-on-surface">
+      {% if is_ar %}الأكثر طلباً ورواجاً في مصر{% else %}Bestsellers Across Egypt{% endif %}
+    </h2>
+    <p class="text-body-md text-on-surface-variant leading-relaxed text-sm md:text-base">
+      {% if is_ar %}
+        أيقونات التجميل المختارة بعناية من كبرى محررات الجمال وعاشقات لوميه في القاهرة، الإسكندرية والساحل الشمالي.
+      {% else %}
+        Beloved beauty icons favored by LUMÉ clientele across Cairo, Alexandria, and the Mediterranean Coast.
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Products Grid (4 Columns) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+    {% for product in bestsellers %}
+      {% include 'components/product_card.html' with product=product %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 4. EDITORIAL ATELIER ARCHIVE & HERITAGE SPREAD -->
+<section class="py-16 md:py-24 px-6 md:px-12 max-w-[1440px] mx-auto border-b editorial-border" id="stories">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+    
+    <!-- Visual Collage -->
+    <div class="lg:col-span-6 relative order-2 lg:order-1">
+      <div class="relative grid grid-cols-2 gap-4">
+        <div class="space-y-4">
+          <div class="rounded-2xl overflow-hidden aspect-[3/4] border editorial-border shadow-luxury-card">
+            <img class="w-full h-full object-cover" 
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo8hjnKBeAqzewRBXn1U0DbaNIbhA2-ei1-OXyuwvmfaclAAab7_zbtvECyiAKYrPdALBWRzTqr1w5_2z9zrqsyt80vEVYwaZMWPeg5pUWJDLnChE0lUgl5Z03ykQgrigIWWGoaNKK-P8QrmsMD-WUha5agVZ5ySVImcqq6aEiO73C0iPl9HlFDY4s5hO9rRoibKdbp8oAbkVF2HtzUbtzDUqD2u6TV5WVk4N7mLAuN8ybdjMHrNGM" 
+                 alt="Blue water lotus floating in serene clean water">
+          </div>
+          <div class="bg-surface-container p-5 rounded-2xl border editorial-border text-center">
+            <span class="text-4xl font-serif text-primary block leading-none font-normal">100%</span>
+            <span class="text-xs font-bold text-on-surface mt-1 block">
+              {% if is_ar %}مكونات نباتية نقية{% else %}Pure Botanical Origins{% endif %}
+            </span>
+            <p class="text-[11px] text-on-surface-variant mt-1">
+              {% if is_ar %}مقطوفة برعاية من مزارع وادي النيل وسيوة وأسوان{% else %}Ethically sourced from Nile delta and Siwa oasis{% endif %}
+            </p>
+          </div>
+        </div>
+        <div class="space-y-4 pt-8">
+          <div class="bg-[#2A1D1A] text-white p-5 rounded-2xl shadow-luxury-card text-center">
+            <span class="text-4xl font-serif text-primary-fixed-dim block leading-none font-normal">0%</span>
+            <span class="text-xs font-bold mt-1 block">
+              {% if is_ar %}خالية من الكيماويات والبارابين{% else %}Parabens & Toxins Free{% endif %}
+            </span>
+            <p class="text-[11px] text-surface-container-high/80 mt-1">
+              {% if is_ar %}آمنة على البشرة الحساسة في شمس الصيف{% else %}Gentle on reactive skin in hot climate{% endif %}
+            </p>
+          </div>
+          <div class="rounded-2xl overflow-hidden aspect-[3/4] border editorial-border shadow-luxury-card">
+            <img class="w-full h-full object-cover" 
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb5qWKXD_5J7BERDQyzyth8G2z9kcS4xh9WbIbbgzNIIdZnTVZlzPQcMpFilQLbGMlAz30XloyfglXmEm4EwP--r4-CIFrdWm8KMoCKG6jVlD_M44rjlTOb7bDPqKSt2Bu_QJffnSDa6u34ewDdbsMWkXkOn_8zmRSrYn93glOaG0hjoLsxYSum6d6sr4G2E76LZzrHHFr4HJN2ou9XTRnl4Z0zBAahB_i4oPheIMUKkBZ5-G89Ps7" 
+                 alt="Artistic skincare textures and amber glass flacons">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Narrative Column -->
+    <div class="lg:col-span-6 space-y-6 order-1 lg:order-2">
+      <div class="inline-flex items-center gap-2 text-primary font-mono text-xs uppercase tracking-widest">
+        <span>{% if is_ar %}دار التحرير وأسرار المعمل{% else %}HERITAGE ARCHIVES{% endif %}</span>
+      </div>
+      <h2 class="text-3xl md:text-5xl font-serif font-normal text-on-surface leading-tight">
+        {% if is_ar %}
+          فلسفة دار لوميه: <br>
+          <span class="italic text-primary">استعادة فخامة الطبيعة المصرية</span>
+        {% else %}
+          The LUMÉ Atelier Philosophy: <br>
+          <span class="italic text-primary">Restoring Egyptian Botanical Splendor</span>
+        {% endif %}
+      </h2>
+      <p class="text-body-md text-on-surface-variant leading-relaxed text-sm md:text-base">
+        {% if is_ar %}
+          في قلب القاهرة، تلتقي الأسرار التاريخية العريقة لأقدم حضارة صاغت علم العطور ومستحضرات التجميل في العالم، مع أحدث تقنيات الصيدلة والتكنولوجيا الحيوية المستدامة.
+        {% else %}
+          At the heart of Cairo, age-old medicinal papyri meet modern biocosmetic extraction science, honoring the world's most enduring alchemical civilization.
+        {% endif %}
+      </p>
+      <div class="space-y-3 pt-2">
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-[#4A6B53]/20 text-[#4A6B53] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-[14px]">check</span>
+          </span>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            <strong class="text-on-surface">{% if is_ar %}تقطير عضوي بطيء:{% else %}Slow Cold Distillation:{% endif %}</strong> 
+            {% if is_ar %}تُقطف بتلات الأزهار فجراً وتُقطر على البارد للحفاظ على كامل قواها البيولوجية.{% else %}Petals harvested at twilight and cold-distilled to preserve delicate phytonutrients.{% endif %}
+          </p>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-[#4A6B53]/20 text-[#4A6B53] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="material-symbols-outlined text-[14px]">check</span>
+          </span>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            <strong class="text-on-surface">{% if is_ar %}معايير أمان معتمدة:{% else %}Ministry Certified Safety:{% endif %}</strong> 
+            {% if is_ar %}خاضعة لاختبارات أطباء الجلد ومسجلة رسمياً لدى هيئة الدواء المصرية.{% else %}Clinically dermatologist-tested and registered with the Egyptian Drug Authority.{% endif %}
+          </p>
+        </div>
+      </div>
+      <div class="pt-4">
+        <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider hover:underline">
+          <span>{% if is_ar %}اكتشفي كتالوج المقتنيات الكامل{% else %}Discover The Full Catalog{% endif %}</span>
+          <span class="material-symbols-outlined text-[16px] {% if is_rtl %}rotate-180{% endif %}">east</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

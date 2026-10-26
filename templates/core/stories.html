@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}قصص وأرشيف الدار | LUMÉ لوميه{% else %}Atelier Stories & Journal | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-10 md:py-16">
+
+  <!-- Header Banner -->
+  <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <span class="inline-block px-3.5 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+      {% if is_ar %}الأرشيف التحريري والمجلة التراثية{% else %}EDITORIAL JOURNAL & PAPYRUS ARCHIVE{% endif %}
+    </span>
+    <h1 class="font-serif text-3xl md:text-5xl text-on-surface font-light">
+      {% if is_ar %}قصص الجمال والتراث من مصر القديمة{% else %}Chronicles of Egyptian Alchemy & Beauty{% endif %}
+    </h1>
+    <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+      {% if is_ar %}
+      رحلات استكشافية توثق رحلتنا بين البرديات الطبية الفرعونية وحقول زهور اللوتس في الدلتا ونخيل سيوة الذهبي.
+      {% else %}
+      Expeditions unearthing medicinal papyri, wild delta lotus blossoms, and age-old botanical alchemy from Upper Egypt.
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Featured Article Cover -->
+  <article class="bg-surface-container-lowest rounded-3xl border editorial-border overflow-hidden grid grid-cols-1 lg:grid-cols-12 mb-16 shadow-xs group">
+    <div class="lg:col-span-7 bg-surface-container-low p-8 md:p-12 flex flex-col justify-between space-y-6">
+      <div class="space-y-3">
+        <div class="flex items-center gap-3 text-[11px] font-mono text-outline uppercase tracking-wider">
+          <span class="text-primary font-bold">{% if is_ar %}المقال الرئيسي{% else %}COVER STORY{% endif %}</span>
+          <span>•</span>
+          <span>VOL. IV • DOSSIER 104</span>
+        </div>
+        <h2 class="font-serif text-2xl md:text-4xl text-on-surface font-light leading-snug group-hover:text-primary transition-colors">
+          {% if is_ar %}
+          سر زهرة اللوتس الزرقاء في برديات «إيبرس» الطبية: إلهام الأزل لعصرنا
+          {% else %}
+          The Sacred Blue Lotus in the Ebers Papyrus: Timeless Alchemy for the Modern Skin
+          {% endif %}
+        </h2>
+        <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          عُثر في مقابر الملوك على نقوش تمجد زهرة اللوتس الزرقاء باعتبارها رمز الانبعاث والنور. تكشف دراساتنا الحديثة كيف تعمل مركبات النوسيفيرين الطبيعية في الزهرة على موازنة الجهاز العصبي للجلد وتثبيط عوامل الشيخوخة البيئية.
+          {% else %}
+          Tomb frescoes depict royal priestesses inhaling blue lotus blossoms at twilight. Today, biocosmetic analyses prove that nuciferine flavonoids protect cutaneous cells from urban oxidative damage while inducing serene cellular homeostasis.
+          {% endif %}
+        </p>
+      </div>
+
+      <div class="pt-4 border-t editorial-border flex items-center justify-between text-xs">
+        <span class="text-outline font-mono">{% if is_ar %}قراءة لمدة 5 دقائق • القاهرة{% else %}5 min read • Cairo Atelier{% endif %}</span>
+        <a href="{% url 'catalog:product_list' %}" class="text-primary font-bold hover:underline">
+          {% if is_ar %}استكشاف مستحضر اللوتس ←{% else %}Discover Lotus Serum →{% endif %}
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5 bg-surface-container-low min-h-[300px] flex items-center justify-center p-8 border-t lg:border-t-0 lg:border-s editorial-border relative">
+      <div class="text-center space-y-3 max-w-xs">
+        <span class="material-symbols-outlined text-6xl text-primary/40">filter_vintage</span>
+        <h4 class="font-serif text-lg text-on-surface font-semibold">
+          {% if is_ar %}زهرة اللوتس الزرقاء المقدسة{% else %}Nymphaea Caerulea{% endif %}
+        </h4>
+        <p class="text-xs text-on-surface-variant font-mono">
+          Ebers Papyrus, Plate 875 • Thebes 1550 BCE
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Editorial Articles Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    
+    <!-- Story 02 -->
+    <article class="bg-surface-container-lowest rounded-3xl p-8 border editorial-border shadow-xs space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <span class="text-[10px] uppercase font-mono tracking-widest text-primary block">
+          {% if is_ar %}واحة سيوة • الصحراء الغربية{% else %}SIWA OASIS BOTANICALS{% endif %}
+        </span>
+        <h3 class="font-serif text-xl md:text-2xl text-on-surface font-semibold">
+          {% if is_ar %}
+          نكتار نوى البلح السيوي: درع الترطيب المعجزة ضد الجفاف
+          {% else %}
+          Siwa Date Seed Nectar: The Miracle Barrier in Desert Climates
+          {% endif %}
+        </h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          تحت شمس الصحراء الحارقة، طوّر نخيل سيوة تركيبة دهنية فريدة تحافظ على الرطوبة لسنوات. نقوم باستخلاص هذا الإكسير بالطرد المركزي البارد دون أي معالجات حرارية.
+          {% else %}
+          Enduring unforgiving desert heat, Siwa date palms concentrate lipid-rich phytosterols that prevent trans-epidermal water loss even in harsh aridity.
+          {% endif %}
+        </p>
+      </div>
+      <div class="pt-4 border-t editorial-border flex items-center justify-between text-xs">
+        <span class="text-outline font-mono">SIWA EXPEDITION</span>
+        <a href="{% url 'catalog:product_list' %}" class="text-primary font-bold hover:underline">
+          {% if is_ar %}قراءة المزيد ←{% else %}Explore →{% endif %}
+        </a>
+      </div>
+    </article>
+
+    <!-- Story 03 -->
+    <article class="bg-surface-container-lowest rounded-3xl p-8 border editorial-border shadow-xs space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <span class="text-[10px] uppercase font-mono tracking-widest text-tertiary block">
+          {% if is_ar %}الذهب 24K • الإسكندرية القديمة{% else %}24K COLLOIDAL GOLD HISTORY{% endif %}
+        </span>
+        <h3 class="font-serif text-xl md:text-2xl text-on-surface font-semibold">
+          {% if is_ar %}
+          قناع كليوباترا الذهبي: الحقيقة العلمية وراء الأسطورة
+          {% else %}
+          Cleopatra's Golden Mask: Scientific Truth Behind the Legend
+          {% endif %}
+        </h3>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          لم تكن أقنعة الذهب مجرد ترف؛ فالذهب معدن خامل حيوياً يحفز الدورة الدموية الدقيقة ويمنع التحلل الأنزيمي للكولاجين. هكذا طوّرت دار لوميه سيروم الذهب المعلق.
+          {% else %}
+          Far from mere opulence, bio-colloidal gold stimulates micro-circulation and neutralizes matrix metalloproteinases that degrade youthful elastin.
+          {% endif %}
+        </p>
+      </div>
+      <div class="pt-4 border-t editorial-border flex items-center justify-between text-xs">
+        <span class="text-outline font-mono">ALEXANDRIA ARCHIVE</span>
+        <a href="{% url 'catalog:product_list' %}" class="text-primary font-bold hover:underline">
+          {% if is_ar %}قراءة المزيد ←{% else %}Explore →{% endif %}
+        </a>
+      </div>
+    </article>
+
+  </div>
+
+</main>
+{% endblock %}

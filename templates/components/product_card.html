@@ -1,0 +1,134 @@
+<div class="bg-surface rounded-2xl border editorial-border overflow-hidden shadow-luxury-subtle hover:shadow-luxury-card transition-all duration-300 flex flex-col group h-full">
+  <!-- Media Frame (4:5 Aspect Ratio) -->
+  <div class="relative aspect-[4/5] bg-surface-container-low overflow-hidden">
+    <a href="{% url 'catalog:product_detail' product.slug %}" class="block w-full h-full">
+      {% if product.primary_image %}
+        <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+             src="{{ product.primary_image.image }}" 
+             alt="{% if is_ar %}{{ product.name_ar }}{% else %}{{ product.name_en|default:product.name_ar }}{% endif %}" 
+             loading="lazy">
+      {% else %}
+        <div class="w-full h-full flex items-center justify-center bg-surface-container text-outline font-serif">LUMÉ</div>
+      {% endif %}
+    </a>
+
+    <!-- Micro-Badges at Top Corner -->
+    <div class="absolute top-3 start-3 flex flex-col gap-1 items-start pointer-events-none">
+      {% if product.has_discount %}
+        <span class="bg-primary text-white text-[11px] font-mono font-bold py-1 px-2.5 rounded-full shadow-sm">
+          {% if is_ar %}خصم {{ product.discount_percentage }}%{% else %}{{ product.discount_percentage }}% Off{% endif %}
+        </span>
+        <span class="bg-surface/95 text-primary text-[10px] font-bold py-0.5 px-2 rounded-full border editorial-border shadow-sm">
+          {% if is_ar %}وفري {{ product.discount_amount }} ج.م{% else %}Save {{ product.discount_amount }} EGP{% endif %}
+        </span>
+      {% elif product.is_bestseller %}
+        <span class="bg-[#2A1D1A] text-white text-[11px] font-mono font-bold py-1 px-2.5 rounded-full shadow-sm">
+          {% if is_ar %}الأكثر طلباً بمصر{% else %}Bestseller in Egypt{% endif %}
+        </span>
+      {% elif product.is_new_arrival %}
+        <span class="bg-[#4A6B53] text-white text-[11px] font-mono font-bold py-1 px-2.5 rounded-full shadow-sm">
+          {% if is_ar %}إصدار جديد{% else %}New Arrival{% endif %}
+        </span>
+      {% endif %}
+    </div>
+
+    <!-- Wishlist Button -->
+    <button type="button" 
+            onclick="toggleWishlist({{ product.id }}, this)" 
+            aria-label="{% if is_ar %}إضافة للمفضلة{% else %}Add to Wishlist{% endif %}" 
+            class="wishlist-btn absolute top-3 end-3 w-8 h-8 rounded-full bg-surface/90 backdrop-blur-sm text-on-surface-variant hover:text-primary flex items-center justify-center transition-colors shadow-sm active:scale-95 z-10" 
+            title="{% if is_ar %}حفظ للمفضلة{% else %}Save to Wishlist{% endif %}">
+      <span class="material-symbols-outlined text-[18px]">favorite</span>
+    </button>
+
+    <!-- Key Benefit / Formulation Pill -->
+    <div class="absolute bottom-3 start-3 bg-surface/95 text-[#4A6B53] font-bold text-[10px] py-1 px-2.5 rounded-full border editorial-border flex items-center gap-1 shadow-sm pointer-events-none">
+      <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+      <span>
+        {% if product.ritual_type == 'radiance' %}
+          {% if is_ar %}نضارة وتفتيح فوري 24K{% else %}Instant 24K Radiance{% endif %}
+        {% elif product.ritual_type == 'hydration' %}
+          {% if is_ar %}ترطيب عميق 72h{% else %}Deep 72h Hydration{% endif %}
+        {% elif product.ritual_type == 'soothing' %}
+          {% if is_ar %}تهدئة البشرة والوردية{% else %}Soothes Reactive Skin{% endif %}
+        {% elif product.ritual_type == 'anti-aging' %}
+          {% if is_ar %}شد وترميم الخطوط{% else %}Firms & Smooths Lines{% endif %}
+        {% else %}
+          {% if is_ar %}خلاصة نباتية نيلية نقية{% else %}Pure Nile Botanical Extract{% endif %}
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-5 flex flex-col flex-1 justify-between">
+    <div>
+      <!-- Rating Strip -->
+      <div class="flex items-center gap-1.5 mb-2">
+        <div class="flex text-[#D97706]">
+          <span class="material-symbols-outlined text-[15px] fill-active">star</span>
+          <span class="material-symbols-outlined text-[15px] fill-active">star</span>
+          <span class="material-symbols-outlined text-[15px] fill-active">star</span>
+          <span class="material-symbols-outlined text-[15px] fill-active">star</span>
+          <span class="material-symbols-outlined text-[15px] fill-active">star</span>
+        </div>
+        <span class="text-xs font-bold text-on-surface font-mono">{{ product.average_rating }}</span>
+        <span class="text-[11px] text-outline font-mono">
+          ({% if is_ar %}{{ product.reviews_count }} تقييم موثق{% else %}{{ product.reviews_count }} verified reviews{% endif %})
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h3 class="font-serif text-lg text-on-surface group-hover:text-primary transition-colors leading-snug font-medium line-clamp-2">
+        <a href="{% url 'catalog:product_detail' product.slug %}">
+          {% if is_ar %}{{ product.name_ar }}{% else %}{{ product.name_en|default:product.name_ar }}{% endif %}
+        </a>
+      </h3>
+
+      <!-- Short Description -->
+      <p class="text-body-sm font-body-sm text-on-surface-variant mt-1.5 line-clamp-2 leading-relaxed">
+        {% if is_ar %}{{ product.short_description_ar }}{% else %}{{ product.short_description_en|default:product.short_description_ar }}{% endif %}
+      </p>
+
+      <!-- 24h Express Delivery Pill -->
+      {% if product.express_shipping_eligible %}
+        <div class="mt-2.5 flex items-center gap-1.5 text-[10px] text-[#4A6B53] font-medium bg-[#4A6B53]/10 px-2 py-1 rounded-md">
+          <span class="material-symbols-outlined text-[13px]">schedule</span>
+          <span>
+            {% if is_ar %}توصيل خلال 24 ساعة للقاهرة والجيزة{% else %}24h Express Delivery in Cairo &amp; Giza{% endif %}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Pricing Block & CTA -->
+    <div class="pt-4 mt-3 border-t editorial-border space-y-3">
+      <div class="flex items-baseline justify-between">
+        <div class="flex items-baseline gap-2">
+          <span class="text-2xl font-bold font-mono text-primary">
+            {% if is_ar %}{{ product.price }} ج.م{% else %}{{ product.price }} EGP{% endif %}
+          </span>
+          {% if product.has_discount %}
+            <span class="text-xs text-outline line-through font-mono">
+              {% if is_ar %}{{ product.compare_at_price }} ج.م{% else %}{{ product.compare_at_price }} EGP{% endif %}
+            </span>
+          {% endif %}
+        </div>
+        <span class="text-[10px] text-secondary font-medium">
+          {% if is_ar %}متاح بالتقسيط ValU{% else %}0% Installments ValU{% endif %}
+        </span>
+      </div>
+
+      <!-- Add to Bag Button -->
+      <button type="button" 
+              onclick="addToCart({{ product.id }}, null, 1, this)" 
+              class="w-full py-2.5 px-4 rounded-full bg-[#2A1D1A] hover:bg-primary text-white font-label-lg text-xs flex items-center justify-center gap-2 transition-all duration-300 shadow-sm active:scale-95 group/btn" 
+              aria-label="{% if is_ar %}أضيفي للحقيبة{% else %}Add to Bag{% endif %}">
+        <span class="material-symbols-outlined text-[17px] group-hover/btn:translate-x-[-2px] transition-transform">shopping_bag</span>
+        <span class="font-bold tracking-wide">
+          {% if is_ar %}أضيفي للحقيبة{% else %}Add to Bag{% endif %}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

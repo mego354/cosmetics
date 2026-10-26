@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {% if is_ar %}ملف الشراء والكونسيرج الشخصي | LUMÉ لوميه{% else %}Concierge Checkout & Dossier | LUMÉ{% endif %}
+{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+  
+  <!-- Breadcrumbs & Step Milestone -->
+  <section class="mb-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant mb-4 pb-3 border-b editorial-border">
+      <div class="flex items-center gap-2 tracking-wider">
+        <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">
+          {% if is_ar %}الرئيسية{% else %}Home{% endif %}
+        </a>
+        <span class="text-outline-variant">/</span>
+        <a class="hover:text-primary transition-colors" href="{% url 'cart:cart_detail' %}">
+          {% if is_ar %}حقيبة المقتنيات{% else %}Shopping Bag{% endif %}
+        </a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-primary font-semibold">
+          {% if is_ar %}ملف الشراء والكونسيرج الشخصي{% else %}Concierge Checkout Dossier{% endif %}
+        </span>
+      </div>
+      <div class="flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-outline">
+        <span>{% if is_ar %}كونسيرج الشراء الملكي • ملف 84210{% else %}CONCIERGE CHECKOUT • DOSSIER N° 84210{% endif %}</span>
+        <span class="hidden sm:inline">• {% if is_ar %}القاهرة، مصر{% else %}CAIRO, EG{% endif %}</span>
+      </div>
+    </div>
+
+    <!-- Stepper Milestone Indicator -->
+    <div class="bg-surface-container-lowest border editorial-border rounded-xl p-3.5 mb-6 shadow-xs">
+      <div class="flex items-center justify-between max-w-2xl mx-auto text-xs font-semibold">
+        <div class="flex items-center gap-2 text-primary">
+          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">✓</span>
+          <span>{% if is_ar %}مراجعة الحقيبة{% else %}Bag Review{% endif %}</span>
+        </div>
+        <span class="h-0.5 flex-1 mx-3 bg-primary rounded-full"></span>
+        <div class="flex items-center gap-2 text-primary">
+          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</span>
+          <span>{% if is_ar %}بيانات التوصيل والعنوان{% else %}Shipping Details{% endif %}</span>
+        </div>
+        <span class="h-0.5 flex-1 mx-3 bg-primary/40 rounded-full"></span>
+        <div class="flex items-center gap-2 text-on-surface-variant font-medium">
+          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">3</span>
+          <span>{% if is_ar %}الدفع وتأكيد الطلب{% else %}Payment & Confirmation{% endif %}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Checkout Form Grid -->
+  <form method="POST" id="checkout-form" onsubmit="const btn = this.querySelector('button[type=submit]'); if (btn) { btn.disabled = true; btn.classList.add('opacity-75'); }" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    {% csrf_token %}
+
+    <!-- LEFT / MAIN COLUMN: ADDRESS & PAYMENT (7 COLS) -->
+    <section class="lg:col-span-7 space-y-6">
+      
+      <!-- STEP 01: EGYPTIAN SHIPPING ADDRESS -->
+      <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl border editorial-border shadow-sm space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b editorial-border">
+          <div class="flex items-center gap-2 text-primary font-bold text-sm">
+            <span class="material-symbols-outlined text-[20px]">pin_drop</span>
+            <span>{% if is_ar %}بيانات التوصيل السريع بمصر (العنوان التفصيلي){% else %}Egyptian Delivery Address Details{% endif %}</span>
+          </div>
+          <span class="text-xs text-outline font-mono">01</span>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <!-- Full Name & Email -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-medium mb-1.5 text-on-surface">
+                {% if is_ar %}الاسم بالكامل *{% else %}Full Name *{% endif %}
+              </label>
+              <input type="text" name="customer_name" required 
+                     value="{{ default_address.full_name|default:user.get_full_name|default:'' }}" 
+                     placeholder="{% if is_ar %}الاسم الأول واسم العائلة{% else %}First and Last Name{% endif %}" 
+                     class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
+            </div>
+            <div>
+              <label class="block font-medium mb-1.5 text-on-surface">
+                {% if is_ar %}البريد الإلكتروني (لتأكيد الفاتورة){% else %}Email Address (for Invoice){% endif %}
+              </label>
+              <input type="email" name="customer_email" 
+                     value="{{ user.email|default:'' }}" 
+                     placeholder="client@lume-beauty.com" 
+                     class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
+            </div>
+          </div>
+
+          <!-- Egyptian Governorate & District -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-medium mb-1.5 text-on-surface">
+                {% if is_ar %}المحافظة *{% else %}Governorate *{% endif %}
+              </label>
+              <select name="governorate" id="checkout-governorate" onchange="updateGovernorateShipping(this)" class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none cursor-pointer focus:border-primary">
+                {% for val, name in governorates %}
+                  <option value="{{ val }}" {% if default_address.governorate == val %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="block font-medium mb-1.5 text-on-surface">
+                {% if is_ar %}المدينة والحي *{% else %}City & District *{% endif %}
+              </label>
+              <input type="text" name="city" required 
+                     value="{{ default_address.city|default:'' }}" 
+                     placeholder="{% if is_ar %}مثال: الزمالك / مصر الجديدة / المعادي{% else %}e.g. New Cairo, Zamalek, Maadi{% endif %}" 
+                     class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
+            </div>
+          </div>
+
+          <!-- Street Address -->
+          <div>
+            <label class="block font-medium mb-1.5 text-on-surface">
+              {% if is_ar %}اسم الشارع بالتفصيل *{% else %}Street Address *{% endif %}
+            </label>
+            <input type="text" name="street_address" required 
+                   value="{{ default_address.street_address|default:'' }}" 
+                   placeholder="{% if is_ar %}مثال: 12 شارع حسن صبري، متفرع من شارع البرازيل{% else %}e.g. 12 Hassan Sabry St, Off Brazil St{% endif %}" 
+                   class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
+          </div>
+
+          <!-- Building, Floor, Apartment -->
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block font-medium mb-1 text-on-surface-variant">
+                {% if is_ar %}رقم العمارة{% else %}Building{% endif %}
+              </label>
+              <input type="text" name="building_number" value="{{ default_address.building_number|default:'' }}" placeholder="{% if is_ar %}عمارة 12{% else %}Bldg 12{% endif %}" class="w-full bg-surface border editorial-border rounded-xl p-2.5 outline-none">
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-on-surface-variant">
+                {% if is_ar %}رقم الطابق{% else %}Floor{% endif %}
+              </label>
+              <input type="text" name="floor_number" value="{{ default_address.floor_number|default:'' }}" placeholder="{% if is_ar %}الدور 3{% else %}Floor 3{% endif %}" class="w-full bg-surface border editorial-border rounded-xl p-2.5 outline-none">
+            </div>
+            <div>
+              <label class="block font-medium mb-1 text-on-surface-variant">
+                {% if is_ar %}رقم الشقة{% else %}Apartment{% endif %}
+              </label>
+              <input type="text" name="apartment_number" value="{{ default_address.apartment_number|default:'' }}" placeholder="{% if is_ar %}شقة 5{% else %}Apt 5{% endif %}" class="w-full bg-surface border editorial-border rounded-xl p-2.5 outline-none">
+            </div>
+          </div>
+
+          <!-- Landmark -->
+          <div>
+            <label class="block font-medium mb-1.5 text-on-surface">
+              {% if is_ar %}علامة مميزة قريبة (اختياري){% else %}Nearest Landmark (Optional){% endif %}
+            </label>
+            <input type="text" name="nearest_landmark" value="{{ default_address.nearest_landmark|default:'' }}" placeholder="{% if is_ar %}بجوار نادي، فندق أو سفارة...{% else %}Near landmark, embassy, or club...{% endif %}" class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none">
+          </div>
+
+          <!-- Phone Number with +20 prefix -->
+          <div>
+            <label class="block font-medium mb-1.5 text-on-surface">
+              {% if is_ar %}رقم الهاتف المحمول لتنسيق موعد التسليم *{% else %}Mobile Phone for Courier Coordination *{% endif %}
+            </label>
+            <div class="flex" dir="ltr">
+              <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 editorial-border bg-surface-container text-on-surface-variant font-mono">🇪🇬 +20</span>
+              <input type="tel" name="customer_phone" required 
+                     value="{{ default_address.phone_number|default:user.phone_number|default:'01012345678' }}" 
+                     placeholder="10X XXX XXXX" 
+                     class="w-full bg-surface border editorial-border rounded-r-xl px-3 py-2.5 outline-none font-mono text-left">
+            </div>
+          </div>
+
+          <!-- Governorate Live Delivery Note -->
+          <div id="governorate-delivery-note" class="text-xs pt-1">
+            <span class="text-[#4A6B53] font-bold">
+              {% if is_ar %}توصيل فاخر خلال 24 ساعة بمندوب دار لوميه المعتمد.{% else %}Expedited 24h white-glove delivery in Cairo &amp; Giza.{% endif %}
+            </span>
+          </div>
+
+          <!-- WhatsApp Coordination Opt-in -->
+          <label class="flex items-center gap-2.5 pt-2 cursor-pointer">
+            <input type="checkbox" name="whatsapp_opt_in" checked class="rounded border-outline-variant text-[#25D366] focus:ring-[#25D366] w-4 h-4">
+            <span class="text-xs text-on-surface-variant flex items-center gap-1">
+              <strong class="text-[#25D366] font-bold">WhatsApp:</strong> 
+              {% if is_ar %}
+                إرسال رابط تتبع الشحنة وتنسيق موعد وصول المندوب فورياً عبر واتساب.
+              {% else %}
+                Send live dispatch tracking and courier coordination link via WhatsApp.
+              {% endif %}
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- STEP 02: PAYMENT OPTIONS -->
+      <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl border editorial-border shadow-sm space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b editorial-border">
+          <div class="flex items-center gap-2 text-primary font-bold text-sm">
+            <span class="material-symbols-outlined text-[20px]">payments</span>
+            <span>{% if is_ar %}طريقة السداد المعتمدة{% else %}Payment Method{% endif %}</span>
+          </div>
+          <span class="text-xs text-outline font-mono">02</span>
+        </div>
+
+        <div class="space-y-3">
+          
+          <!-- Option 1: Cash on Delivery -->
+          <label class="flex items-start gap-3.5 p-4 rounded-xl border-2 border-primary bg-secondary-container/25 cursor-pointer transition shadow-2xs relative">
+            <input type="radio" name="payment_method" value="cod" checked class="mt-1 text-primary focus:ring-primary border-outline-variant">
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs sm:text-sm font-bold text-[#2A1D1A]">
+                  {% if is_ar %}الدفع نقدياً عند الاستلام{% else %}Cash on Delivery (COD){% endif %}
+                </span>
+                <span class="text-[10px] bg-primary text-white px-2 py-0.5 rounded font-bold">
+                  {% if is_ar %}الخيار المفضل والأكثر أماناً{% else %}Most Popular &amp; Safe{% endif %}
+                </span>
+              </div>
+              <p class="text-xs text-on-surface-variant mt-1.5 leading-normal">
+                <span class="inline-flex items-center gap-1 text-[#4A6B53] font-bold bg-[#4A6B53]/10 px-2 py-0.5 rounded">
+                  <span class="material-symbols-outlined text-[14px]">verified</span> 
+                  {% if is_ar %}يحق لكِ معاينة الطرد والتأكد من المستحضرات قبل دفع ثمن الطلب للمندوب.{% else %}Guaranteed open-box inspection prior to payment.{% endif %}
+                </span>
+              </p>
+            </div>
+          </label>
+
+          <!-- Option 2: Paymob Credit Cards / Meeza -->
+          <label class="flex items-start gap-3.5 p-3.5 rounded-xl border editorial-border bg-surface hover:border-primary/50 cursor-pointer transition">
+            <input type="radio" name="payment_method" value="paymob_card" class="mt-1 text-primary focus:ring-primary border-outline-variant">
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs sm:text-sm font-bold text-on-surface">
+                  {% if is_ar %}بطاقات ميزة الوطنية والبطاقات البنكية (Paymob){% else %}Credit / Debit Cards &amp; Meeza (Paymob){% endif %}
+                </span>
+                <div class="flex items-center gap-1.5 text-[11px] font-mono font-bold">
+                  <span class="bg-surface-container px-1 py-0.5 rounded">VISA</span>
+                  <span class="bg-surface-container px-1 py-0.5 rounded">MC</span>
+                  <span class="bg-secondary-container text-primary px-1.5 py-0.5 rounded font-semibold">{% if is_ar %}ميزة{% else %}Meeza{% endif %}</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-on-surface-variant mt-0.5 leading-relaxed">
+                {% if is_ar %}
+                  بوابة دفع مشفرة بمعيار 256-bit SSL ومعتمدة رسمياً من البنك المركزي المصري دون أية فوائد أو مصاريف إضافية.
+                {% else %}
+                  Encrypted 256-bit SSL gateway certified by the Central Bank of Egypt with zero processing surcharge.
+                {% endif %}
+              </p>
+            </div>
+          </label>
+
+          <!-- Option 3: InstaPay & Mobile Wallets -->
+          <label class="flex items-start gap-3.5 p-3.5 rounded-xl border editorial-border bg-surface hover:border-primary/50 cursor-pointer transition">
+            <input type="radio" name="payment_method" value="instapay_wallet" class="mt-1 text-primary focus:ring-primary border-outline-variant">
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs sm:text-sm font-bold text-on-surface">
+                  {% if is_ar %}إنستاباي ومحافظ المحمول (Vodafone Cash / InstaPay){% else %}InstaPay &amp; Egyptian Mobile Wallets{% endif %}
+                </span>
+                <span class="text-[11px] text-primary font-bold font-mono bg-primary/10 px-2 py-0.5 rounded">
+                  {% if is_ar %}تحويل لحظي{% else %}Instant{% endif %}
+                </span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant mt-0.5 leading-relaxed">
+                {% if is_ar %}
+                  تحويل مباشر وفوري بدون أية رسوم عبر تطبيق إنستاباي أو محفظة فودافون / أورنج / اتصالات كاش.
+                {% else %}
+                  Zero-fee instant transfer via InstaPay app or Vodafone / Orange / Etisalat Cash mobile wallets.
+                {% endif %}
+              </p>
+            </div>
+          </label>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT COLUMN: ORDER SUMMARY & SUBMIT (5 COLS) -->
+    <section class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+      <div class="p-6 md:p-8 bg-surface-container-lowest rounded-2xl border-2 editorial-border shadow-md space-y-5">
+        
+        <div class="flex items-center justify-between pb-4 border-b editorial-border">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest font-mono text-outline block">
+              {% if is_ar %}ملف الحساب النهائي{% else %}FINAL DOSSIER SUMMARY{% endif %}
+            </span>
+            <h3 class="text-lg font-serif text-[#2A1D1A] mt-0.5">
+              {% if is_ar %}ملخص طلبيتكِ الملكية{% else %}Order Summary Dossier{% endif %}
+            </h3>
+          </div>
+          <span class="font-mono text-xs bg-secondary-container/60 text-on-secondary-container px-3 py-1 rounded-full font-semibold">
+            {{ cart.total_items }} {% if is_ar %}عناصر{% else %}items{% endif %}
+          </span>
+        </div>
+
+        <!-- Items Snapshot -->
+        <div class="max-h-56 overflow-y-auto space-y-3 divide-y divide-outline-variant/30 text-xs">
+          {% for item in items %}
+            <div class="pt-2.5 first:pt-0 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-10 h-12 rounded-lg bg-surface-container overflow-hidden shrink-0 border editorial-border">
+                  {% if item.image_url %}<img src="{{ item.image_url }}" alt="{{ item.product.name_ar }}" class="w-full h-full object-cover">{% endif %}
+                </div>
+                <div class="min-w-0">
+                  <h4 class="font-bold text-on-surface truncate">
+                    {% if is_ar %}{{ item.product.name_ar }}{% else %}{{ item.product.name_en|default:item.product.name_ar }}{% endif %}
+                  </h4>
+                  <span class="text-[11px] text-outline font-mono">
+                    {% if is_ar %}الكمية: {% else %}Qty: {% endif %}{{ item.quantity }}
+                  </span>
+                </div>
+              </div>
+              <span class="font-bold font-mono text-primary text-xs shrink-0">
+                {% if is_ar %}{{ item.line_total }} ج.م{% else %}{{ item.line_total }} EGP{% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="space-y-2.5 pt-3 border-t editorial-border text-xs">
+          <div class="flex justify-between items-center text-on-surface-variant">
+            <span>{% if is_ar %}مجموع المستحضرات{% else %}Subtotal{% endif %}</span>
+            <span class="font-bold text-on-surface font-mono">
+              {% if is_ar %}{{ subtotal }} ج.م{% else %}{{ subtotal }} EGP{% endif %}
+            </span>
+          </div>
+
+          <div class="flex justify-between items-center text-primary" id="discount-row">
+            <span class="flex items-center gap-1 font-medium">
+              <span class="material-symbols-outlined text-[15px]">loyalty</span>
+              <span>{% if is_ar %}قسيمة الخصم{% else %}Promotion Discount{% endif %}</span>
+            </span>
+            <span id="checkout-discount-amount" class="font-bold font-mono">
+              {% if is_ar %}0.00 ج.م{% else %}0.00 EGP{% endif %}
+            </span>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-[#4A6B53]/10 border border-[#4A6B53]/20 flex items-center justify-between">
+            <span class="flex items-center gap-1.5 text-[#4A6B53] font-semibold">
+              <span class="material-symbols-outlined text-[16px]">local_shipping</span>
+              <span>{% if is_ar %}الشحن الملكي السريع:{% else %}Expedited Delivery:{% endif %}</span>
+            </span>
+            <span class="text-[#4A6B53] font-bold font-mono">
+              {% if shipping_cost == 0 %}
+                {% if is_ar %}مجاناً (0 ج.م){% else %}Complimentary (0 EGP){% endif %}
+              {% else %}
+                {% if is_ar %}{{ shipping_cost }} ج.م{% else %}{{ shipping_cost }} EGP{% endif %}
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="flex justify-between items-center text-outline text-[11px]">
+            <span>{% if is_ar %}ضريبة القيمة المضافة 14%{% else %}VAT 14% Included{% endif %}</span>
+            <span>{% if is_ar %}مشمولة بالكامل ضمن الفاتورة{% else %}All taxes included{% endif %}</span>
+          </div>
+        </div>
+
+        <!-- Promo Code Input -->
+        <div class="pt-3 border-t editorial-border">
+          <label class="block font-medium mb-1.5 text-xs text-on-surface">
+            {% if is_ar %}قسيمة الخصم الترويجية{% else %}Promotion Code{% endif %}
+          </label>
+          <div class="flex gap-2">
+            <input type="text" id="checkout-coupon-input" name="coupon_code" placeholder="{% if is_ar %}أدخلي الكود (مثال: EGYPTGLOW){% else %}Enter code (e.g. EGYPTGLOW){% endif %}" class="flex-1 bg-surface border editorial-border rounded-xl px-3 py-2 text-xs font-mono uppercase outline-none focus:border-primary">
+            <button type="button" onclick="applyCoupon('#checkout-coupon-input', '#checkout-coupon-msg')" class="px-4 py-2 rounded-xl bg-secondary hover:bg-primary text-white font-bold text-xs transition-colors shrink-0">
+              {% if is_ar %}تطبيق{% else %}Apply{% endif %}
+            </button>
+          </div>
+          <div id="checkout-coupon-msg"></div>
+        </div>
+
+        <!-- Grand Total -->
+        <div class="py-4 border-t border-b editorial-border">
+          <div class="flex items-baseline justify-between">
+            <div>
+              <span class="block text-sm font-bold text-on-surface">
+                {% if is_ar %}الإجمالي المستحق للسداد{% else %}Grand Total Due{% endif %}
+              </span>
+              <span class="text-[11px] text-[#4A6B53] font-semibold mt-0.5 block">
+                {% if is_ar %}شامل الضريبة والتغليف الملكي{% else %}Includes tax &amp; royal gift packaging{% endif %}
+              </span>
+            </div>
+            <div class="text-right">
+              <span id="checkout-total-amount" class="font-serif text-3xl font-bold text-primary font-mono">{{ total }}</span>
+              <span class="text-xs text-on-surface-variant mr-1">
+                {% if is_ar %}ج.م{% else %}EGP{% endif %}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary CTA Button -->
+        <button type="submit" class="w-full py-4 px-8 rounded-full bg-[#2A1D1A] hover:bg-primary text-[#FDFBF7] font-bold text-xs tracking-wider transition-all duration-300 shadow-luxury-card flex items-center justify-center gap-3 group active:scale-[0.99]">
+          <span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">lock</span>
+          <span class="text-sm">{% if is_ar %}تأكيد وحجز الطلب الآن{% else %}Confirm &amp; Place Royal Order{% endif %}</span>
+          <span class="material-symbols-outlined text-[18px] {% if is_rtl %}rotate-180{% endif %}">arrow_forward</span>
+        </button>
+
+        <!-- Micro-Trust Seals -->
+        <div class="pt-4 border-t editorial-border text-center text-xs text-on-surface-variant space-y-1">
+          <div class="flex items-center justify-center gap-3">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary text-[15px]">verified_user</span> 
+              {% if is_ar %}ضمان أصالة 100%{% else %}100% Authentic{% endif %}
+            </span>
+            <span>•</span>
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary text-[15px]">autorenew</span> 
+              {% if is_ar %}إرجاع واستبدال 14 يوم{% else %}14-Day Returns{% endif %}
+            </span>
+          </div>
+          <p class="text-[10px] text-outline pt-1">
+            {% if is_ar %}
+              جميع المستحضرات مسجلة رسمياً ومصنوعة بموجب ترخيص هيئة الدواء المصرية للمستحضرات الطبيعية.
+            {% else %}
+              All formulations are certified under official Egyptian Drug Authority herbal cosmetic directives.
+            {% endif %}
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </form>
+</main>
+{% endblock %}

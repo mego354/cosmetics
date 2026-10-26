@@ -1,0 +1,382 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}حقيبة المقتنيات الفاخرة | LUMÉ لوميه{% else %}Royal Shopping Bag | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+  
+  <!-- Breadcrumbs & Dossier Header -->
+  <section class="mb-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 text-xs text-on-surface-variant mb-4 pb-3 border-b editorial-border">
+      <div class="flex items-center gap-2 tracking-wider">
+        <a class="hover:text-primary transition-colors" href="{% url 'core:home' %}">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
+        <span class="text-outline-variant">/</span>
+        <span class="text-primary font-semibold">{% if is_ar %}حقيبة المقتنيات الفاخرة{% else %}Royal Shopping Bag{% endif %}</span>
+      </div>
+      <div class="flex items-center gap-3 text-xs tracking-widest uppercase font-mono text-outline">
+        <span>CURATED SELECTION • DOSSIER N° 84210</span>
+        <span class="hidden sm:inline">• CAIRO, EG</span>
+      </div>
+    </div>
+
+    <!-- Stepper Milestone Indicator -->
+    <div class="bg-surface-container-lowest border editorial-border rounded-xl p-3.5 mb-6 shadow-xs">
+      <div class="flex items-center justify-between max-w-2xl mx-auto text-xs font-semibold">
+        <div class="flex items-center gap-2 text-primary">
+          <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</span>
+          <span>{% if is_ar %}مراجعة الحقيبة{% else %}Review Bag{% endif %}</span>
+        </div>
+        <span class="h-0.5 flex-1 mx-3 bg-primary/40 rounded-full"></span>
+        <div class="flex items-center gap-2 text-on-surface-variant">
+          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">2</span>
+          <span>{% if is_ar %}بيانات التوصيل والعنوان{% else %}Shipping & Address{% endif %}</span>
+        </div>
+        <span class="h-0.5 flex-1 mx-3 bg-outline-variant/50 rounded-full"></span>
+        <div class="flex items-center gap-2 text-on-surface-variant font-medium">
+          <span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">3</span>
+          <span>{% if is_ar %}الدفع وتأكيد الطلب{% else %}Payment & Confirmation{% endif %}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Masthead Banner -->
+    <div class="bg-surface-container-lowest p-6 md:p-8 rounded-2xl border editorial-border relative overflow-hidden shadow-sm">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 relative z-10">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-mono text-xs font-semibold tracking-wider">ÉDITION PRIVÉE</span>
+            <span class="text-xs text-outline font-serif italic">The Ritual Shopping Bag</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#2A1D1A] tracking-tight font-medium">
+            {% if is_ar %}حقيبة المقتنيات الفاخرة{% else %}Royal Shopping Bag{% endif %}
+            <span class="text-primary font-normal text-xl sm:text-2xl ms-2">({{ cart.total_items }} {% if is_ar %}مستحضر منتقى{% else %}curated artifacts{% endif %})</span>
+          </h1>
+          <p class="text-xs sm:text-sm text-on-surface-variant mt-2 max-w-2xl leading-relaxed">
+            {% if is_ar %}
+              مستحضرات تجميل نباتية نادرة تصاغ في معاملنا العطرية بمصر من أنقى خلاصات وادي النيل والواحات، مغلفة يدوياً داخل صناديق خشبية خفيفة وأشرطة حريرية خام.
+            {% else %}
+              Rare botanical formulations crafted in our Cairo atelier from the purest Nile valley and oasis essences, wrapped in bespoke royal gift packaging.
+            {% endif %}
+          </p>
+        </div>
+
+        <!-- Regional Trust Pills -->
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <div class="flex items-center gap-2 px-3.5 py-2 bg-surface-container-low rounded-xl border editorial-border">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#4A6B53] animate-pulse"></span>
+            <div>
+              <span class="block text-xs font-bold text-on-surface">{% if is_ar %}دفع عند الاستلام متاح{% else %}Cash on Delivery Available{% endif %}</span>
+              <span class="block text-[10px] text-on-surface-variant">{% if is_ar %}معاينة الطرد قبل السداد{% else %}Inspect Box Before Paying{% endif %}</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 px-3.5 py-2 bg-surface-container-low rounded-xl border editorial-border">
+            <span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+            <div>
+              <span class="block text-xs font-bold text-on-surface">{% if is_ar %}أصالة نيلية معتمدة 100%{% else %}100% Nile Authenticity{% endif %}</span>
+              <span class="block text-[10px] text-on-surface-variant">{% if is_ar %}مرخصة بهيئة الدواء المصرية{% else %}EDA Licensed Formulation{% endif %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Free Shipping Progress -->
+      <div class="mt-6 pt-5 border-t editorial-border">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs mb-2.5">
+          <div class="flex items-center gap-2 text-on-surface">
+            <div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[16px]">local_shipping</span>
+            </div>
+            <div>
+              {% if cart.qualifies_for_free_shipping %}
+                <span class="font-bold text-[#4A6B53]">
+                  {% if is_ar %}مبروك! تم تفعيل الشحن الملكي المجاني السريع لجميع المحافظات!{% else %}Congratulations! Complimentary Royal Express Shipping is unlocked!{% endif %}
+                </span>
+              {% else %}
+                <span class="font-semibold text-primary">
+                  {% if is_ar %}أضيفي {{ cart.remaining_for_free_shipping }} {{ currency_symbol }} فقط{% else %}Add only {{ cart.remaining_for_free_shipping }} {{ currency_symbol }}{% endif %}
+                </span>
+                <span class="text-on-surface-variant">
+                  {% if is_ar %}لتفعيل الشحن المجاني الملكي لجميع محافظات مصر + هدية عطرية مصغرة!{% else %}to unlock Complimentary Royal Shipping + a miniature gift!{% endif %}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full font-bold font-mono">
+              {{ cart.free_shipping_progress_pct }}% {% if is_ar %}من المكافأة{% else %}Unlocked{% endif %}
+            </span>
+            <span class="text-on-surface-variant font-mono font-medium">{{ cart.subtotal }} / 800 {{ currency_symbol }}</span>
+          </div>
+        </div>
+        <div class="relative w-full bg-surface-container h-3 rounded-full overflow-hidden p-0.5 border editorial-border">
+          <div class="bg-gradient-to-l from-primary via-primary-container to-[#C86D51] h-full rounded-full transition-all duration-700" style="width: {{ cart.free_shipping_progress_pct }}%;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% if cart.items.count > 0 %}
+    <!-- Split Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: Items & Addons (7 Cols) -->
+      <section class="lg:col-span-7 space-y-6">
+        <div class="flex items-baseline justify-between border-b-2 border-primary/30 pb-2">
+          <div class="flex items-baseline gap-3">
+            <span class="font-serif text-lg font-bold text-primary tracking-widest font-mono">SECTION I.</span>
+            <h2 class="text-xl font-serif text-[#2A1D1A] tracking-wide font-medium">
+              {% if is_ar %}المقتنيات المختارة{% else %}Selected Artifacts{% endif %}
+            </h2>
+          </div>
+          <span class="text-xs text-outline font-mono">{{ cart.total_items }} {% if is_ar %}مستحضرات بالحقيبة{% else %}items in bag{% endif %}</span>
+        </div>
+
+        <!-- Complimentary Gift Banner -->
+        <div class="p-4 md:p-5 bg-gradient-to-r from-secondary-container/40 via-surface-container-lowest to-secondary-container/20 border editorial-border rounded-2xl flex items-start sm:items-center gap-4 shadow-sm">
+          <div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center shrink-0 text-primary border editorial-border">
+            <span class="material-symbols-outlined text-[24px]">card_giftcard</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-wrap items-center gap-2 mb-1">
+              <span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold font-mono">
+                {% if is_ar %}هدية فاخرة مضمّنة{% else %}Complimentary Royal Gift{% endif %}
+              </span>
+              <span class="text-[10px] text-outline font-serif">
+                {% if is_ar %}قيمة 180 {{ currency_symbol }} • مجانية{% else %}180 {{ currency_symbol }} Value • Included{% endif %}
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm font-bold text-on-surface leading-snug">
+              {% if is_ar %}عينة فاخرة من مقشر زبدة الشيا والرمان مع هذا الطلب{% else %}Deluxe Shea & Pomegranate Polish sample included with this order{% endif %}
+            </p>
+            <p class="text-[11px] text-on-surface-variant mt-0.5">
+              {% if is_ar %}مقدمة في عبوة زجاجية مصغرة 15ml ممهورة بختم دار لوميه ومختومة بالشمع الطبيعي.{% else %}Presented in a sealed 15ml glass flacon stamped with the LUMÉ royal seal.{% endif %}
+            </p>
+          </div>
+        </div>
+
+        <!-- Items Cards -->
+        <div class="space-y-4">
+          {% for item in items %}
+            <article class="p-5 md:p-6 bg-surface-container-lowest rounded-2xl border editorial-border shadow-sm transition hover:border-primary/50 relative group">
+              <div class="flex flex-col sm:flex-row gap-5">
+                <div class="w-full sm:w-28 sm:h-36 rounded-xl overflow-hidden bg-surface-container shrink-0 border editorial-border">
+                  {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{% if is_ar %}{{ item.product.name_ar }}{% else %}{{ item.product.name_en }}{% endif %}" class="w-full h-full object-cover">
+                  {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-outline text-xs">LUMÉ</div>
+                  {% endif %}
+                </div>
+                <div class="flex-1 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <span class="text-[10px] font-mono text-primary uppercase font-bold tracking-wider block">
+                          {% if is_ar %}{{ item.product.category.name_ar }}{% else %}{{ item.product.category.name_en }}{% endif %}
+                        </span>
+                        <h3 class="text-base sm:text-lg font-serif text-on-surface mt-1 font-medium group-hover:text-primary transition-colors">
+                          <a href="{% url 'catalog:product_detail' item.product.slug %}">
+                            {% if is_ar %}{{ item.product.name_ar }}{% else %}{{ item.product.name_en }}{% endif %}
+                          </a>
+                        </h3>
+                        {% if item.variant %}
+                          <span class="text-xs text-secondary font-medium block mt-0.5">
+                            {% if is_ar %}الحجم / الدرجة: {{ item.variant.title_ar }}{% else %}Size / Shade: {{ item.variant.title_en }}{% endif %}
+                          </span>
+                        {% endif %}
+                      </div>
+                      <div class="text-end whitespace-nowrap">
+                        <span class="text-xl sm:text-2xl font-serif text-primary font-bold font-mono">{{ item.line_total }}</span>
+                        <span class="text-xs text-on-surface-variant ms-1">{{ currency_symbol }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-3 border-t editorial-border text-xs">
+                    <div class="flex items-center gap-2">
+                      <span class="text-on-surface-variant font-medium">{% if is_ar %}الكمية:{% else %}Qty:{% endif %}</span>
+                      <div class="flex items-center border editorial-border rounded-full p-0.5 bg-surface-container-low">
+                        <button onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'-1' }})" class="w-6 h-6 rounded-full flex items-center justify-center text-on-surface hover:text-primary font-bold">-</button>
+                        <span class="w-7 text-center font-bold text-on-surface font-mono">{{ item.quantity }}</span>
+                        <button onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'1' }})" class="w-6 h-6 rounded-full flex items-center justify-center text-on-surface hover:text-primary font-bold">+</button>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-4 text-xs text-on-surface-variant">
+                      <button onclick="toggleWishlist({{ item.product.id }}, this)" class="flex items-center gap-1 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">favorite</span>
+                        <span>{% if is_ar %}للمفضلة{% else %}Wishlist{% endif %}</span>
+                      </button>
+                      <span class="text-outline-variant">|</span>
+                      <button onclick="removeCartItem({{ item.id }})" class="flex items-center gap-1 hover:text-red-700 transition-colors">
+                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                        <span>{% if is_ar %}حذف{% else %}Remove{% endif %}</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+
+        <!-- Editor Add-ons -->
+        {% if addons and addons|length > 0 %}
+          <div class="p-6 bg-surface-container-low rounded-2xl border editorial-border shadow-xs">
+            <div class="mb-4 pb-3 border-b editorial-border">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">auto_awesome</span>
+                <h3 class="text-sm font-bold text-on-surface">
+                  {% if is_ar %}لمستكِ الأخيرة المكمّلة لطقس الجمال (Editor's Add-ons){% else %}Editor's Finishing Add-ons{% endif %}
+                </h3>
+              </div>
+              <p class="text-xs text-on-surface-variant mt-0.5">
+                {% if is_ar %}
+                  إضافات استثنائية منتقاة بعناية ترفع طلبكِ إلى حد الشحن الفوري المجاني وتكمل تجربتكِ الفاخرة.
+                {% else %}
+                  Exceptional formulations curated to complete your ritual and unlock complimentary courier dispatch.
+                {% endif %}
+              </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {% for add_prod in addons %}
+                <div class="p-4 bg-surface rounded-xl border editorial-border flex flex-col justify-between gap-3 shadow-2xs">
+                  <div class="flex items-start gap-3">
+                    <div class="w-14 h-16 rounded-lg bg-surface-container overflow-hidden shrink-0 border editorial-border">
+                      {% if add_prod.primary_image %}
+                        <img src="{{ add_prod.primary_image.image }}" alt="{% if is_ar %}{{ add_prod.name_ar }}{% else %}{{ add_prod.name_en }}{% endif %}" class="w-full h-full object-cover">
+                      {% endif %}
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-xs font-bold text-on-surface line-clamp-1">
+                        {% if is_ar %}{{ add_prod.name_ar }}{% else %}{{ add_prod.name_en }}{% endif %}
+                      </h4>
+                      <div class="text-xs font-bold text-primary font-mono mt-1">+{{ add_prod.price }} {{ currency_symbol }}</div>
+                    </div>
+                  </div>
+                  <button type="button" onclick="addToCart({{ add_prod.id }}, null, 1, this)" class="w-full py-2 px-3 rounded-lg border border-primary/70 text-primary hover:bg-primary hover:text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                    <span class="material-symbols-outlined text-[15px]">add</span>
+                    <span>{% if is_ar %}إضافة لحقيبتي{% else %}Add to Bag{% endif %}</span>
+                  </button>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Packaging Note -->
+        <div class="p-4 rounded-xl bg-surface-container/60 border editorial-border flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-full bg-surface border editorial-border flex items-center justify-center text-secondary shrink-0">
+            <span class="material-symbols-outlined text-[18px]">featured_seasonal_and_gifts</span>
+          </div>
+          <div class="text-xs text-on-surface-variant flex-1">
+            {% if is_ar %}
+              <strong class="text-on-surface">ميثاق التغليف الملكي المجاني:</strong> كل طلب يوضع بعناية في صندوق هدايا لوميه المخملي الممهور بختم الشمع، جاهز تماماً للإهداء دون أية تكلفة إضافية.
+            {% else %}
+              <strong class="text-on-surface">Complimentary Royal Packaging:</strong> Every order arrives nestled in our signature velvet gift box sealed with wax, perfectly gift-ready at zero extra cost.
+            {% endif %}
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Summary Dossier (5 Cols) -->
+      <section class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+        <div class="flex items-baseline justify-between border-b-2 border-primary/30 pb-2">
+          <div class="flex items-baseline gap-3">
+            <span class="font-serif text-lg font-bold text-primary tracking-widest font-mono">SECTION II.</span>
+            <h2 class="text-xl font-serif text-[#2A1D1A] tracking-wide font-medium">
+              {% if is_ar %}ملخص الحساب النهائي{% else %}Order Summary Dossier{% endif %}
+            </h2>
+          </div>
+          <span class="text-xs text-[#4A6B53] font-semibold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">lock</span> {% if is_ar %}مشفر 256-bit{% else %}256-bit Encrypted{% endif %}
+          </span>
+        </div>
+
+        <div class="p-6 md:p-8 bg-surface-container-lowest rounded-2xl border-2 editorial-border shadow-md relative">
+          <div class="flex items-center justify-between pb-4 border-b editorial-border mb-5">
+            <div>
+              <span class="text-[10px] uppercase tracking-widest font-mono text-outline block">Order Summary Dossier</span>
+              <h3 class="text-lg font-serif text-[#2A1D1A] mt-0.5">{% if is_ar %}الحساب التقديري{% else %}Estimated Breakdown{% endif %}</h3>
+            </div>
+            <span class="font-mono text-xs bg-secondary-container/60 text-on-secondary-container px-3 py-1 rounded-full font-semibold">
+              {{ cart.total_items }} {% if is_ar %}عناصر مجدولة{% else %}scheduled items{% endif %}
+            </span>
+          </div>
+
+          <div class="space-y-3 text-xs border-b editorial-border pb-5">
+            <div class="flex justify-between items-center text-on-surface-variant">
+              <span>{% if is_ar %}مجموع المنتجات ({{ cart.total_items }} قطع){% else %}Subtotal ({{ cart.total_items }} items){% endif %}</span>
+              <span id="cart-page-subtotal" class="font-bold text-on-surface font-mono">{{ cart.subtotal }} {{ currency_symbol }}</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#4A6B53]/10 border border-[#4A6B53]/20 flex items-center justify-between">
+              <span class="flex items-center gap-1.5 text-[#4A6B53] font-semibold">
+                <span class="material-symbols-outlined text-[16px]">local_shipping</span>
+                <span>{% if is_ar %}الشحن السريع لمصر:{% else %}Courier in Egypt:{% endif %}</span>
+              </span>
+              <span class="text-[#4A6B53] font-bold">
+                {% if cart.qualifies_for_free_shipping %}
+                  {% if is_ar %}مجاناً (وفرتِ 50 {{ currency_symbol }}){% else %}Complimentary (Saved 50 {{ currency_symbol }}){% endif %}
+                {% else %}
+                  {% if is_ar %}يحسب في الخطوة التالية{% else %}Calculated at checkout{% endif %}
+                {% endif %}
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-outline text-[11px]">
+              <span>{% if is_ar %}ضريبة القيمة المضافة 14%{% else %}14% VAT{% endif %}</span>
+              <span>{% if is_ar %}مشمولة بالكامل ضمن الفاتورة{% else %}Included in prices{% endif %}</span>
+            </div>
+          </div>
+
+          <!-- Total Calculation -->
+          <div class="py-4 border-b editorial-border mb-6">
+            <div class="flex items-baseline justify-between">
+              <div>
+                <span class="block text-sm font-bold text-on-surface">{% if is_ar %}الإجمالي المستحق التقديري{% else %}Estimated Total Due{% endif %}</span>
+                <span class="text-[11px] text-[#4A6B53] font-semibold mt-0.5 block">{% if is_ar %}شامل الضريبة والتغليف الملكي{% else %}Includes VAT & Bespoke Packaging{% endif %}</span>
+              </div>
+              <div class="text-end">
+                <span class="font-serif text-3xl text-primary font-bold font-mono">{{ cart.subtotal }}</span>
+                <span class="text-xs text-on-surface-variant ms-1">{{ currency_symbol }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA to Checkout -->
+          <a href="{% url 'orders:checkout' %}" class="w-full py-4 px-8 rounded-full bg-[#2A1D1A] hover:bg-primary text-[#FDFBF7] font-bold text-xs tracking-wider transition-all duration-300 shadow-luxury-card flex items-center justify-center gap-3 group">
+            <span class="material-symbols-outlined text-[20px]">lock</span>
+            <span class="text-sm">{% if is_ar %}الانتقال لبيانات التوصيل والعنوان{% else %}Proceed to Shipping & Delivery{% endif %}</span>
+            <span class="material-symbols-outlined text-[18px] {% if is_rtl %}rotate-180{% endif %}">arrow_forward</span>
+          </a>
+
+          <!-- Micro-Trust Seal -->
+          <div class="mt-6 pt-5 border-t editorial-border text-center text-xs text-on-surface-variant space-y-1">
+            <div class="flex items-center justify-center gap-3">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[15px]">verified_user</span> {% if is_ar %}ضمان أصالة 100%{% else %}100% Authenticity{% endif %}</span>
+              <span>•</span>
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[15px]">autorenew</span> {% if is_ar %}إرجاع 14 يوماً{% else %}14-Day Returns{% endif %}</span>
+            </div>
+            <p class="text-[10px] text-outline pt-1">
+              {% if is_ar %}جميع المستحضرات مسجلة رسمياً ومصنوعة بموجب ترخيص هيئة الدواء المصرية.{% else %}All formulations are registered under the Egyptian Drug Authority (EDA).{% endif %}
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  {% else %}
+    <div class="py-20 text-center bg-surface rounded-2xl border editorial-border p-8 max-w-lg mx-auto">
+      <div class="w-16 h-16 rounded-full bg-secondary-container/50 mx-auto flex items-center justify-center text-primary mb-4">
+        <span class="material-symbols-outlined text-[32px]">shopping_bag</span>
+      </div>
+      <h3 class="text-xl font-serif font-medium text-on-surface">{% if is_ar %}حقيبة المقتنيات فارغة{% else %}Your Shopping Bag is Empty{% endif %}</h3>
+      <p class="text-xs text-on-surface-variant max-w-md mx-auto mt-2 leading-relaxed">
+        {% if is_ar %}لم تقومي باختيار أية مستحضرات بعد. تصفحي فصول الجمال الملكي والتركيبات النيلية النادرة.{% else %}You have not added any formulations yet. Explore our royal beauty chapters and rare Nile botanicals.{% endif %}
+      </p>
+      <a href="{% url 'catalog:product_list' %}" class="inline-block mt-6 rounded-full bg-[#2A1D1A] hover:bg-primary text-white text-xs font-bold py-3 px-8 transition-colors shadow-sm">
+        {% if is_ar %}تصفح الكتالوج التحريري{% else %}Explore Editorial Catalog{% endif %}
+      </a>
+    </div>
+  {% endif %}
+</main>
+{% endblock %}

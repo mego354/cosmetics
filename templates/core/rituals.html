@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}الطقوس الجمالية الملكية | LUMÉ لوميه{% else %}Royal Beauty Rituals | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-10 md:py-16">
+
+  <!-- Header Banner -->
+  <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <span class="inline-block px-3.5 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+      {% if is_ar %}الأرشيف الملكي للطقوس اليومية{% else %}DAILY ROYAL LITURGY{% endif %}
+    </span>
+    <h1 class="font-serif text-3xl md:text-5xl text-on-surface font-light">
+      {% if is_ar %}أربعة طقوس ملكية لبشرة مشرقة كالذهب{% else %}The Four Imperial Skin Rituals{% endif %}
+    </h1>
+    <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+      {% if is_ar %}
+      صُممت طقوس لوميه كرحلة عناية متكاملة تبدأ بالنقاء وتنتهي بالإشراقة الذهبية الخالدة؛ استعيدي بها بهاء ملكات النيل في منزلك.
+      {% else %}
+      Conceived as a sacred continuum of renewal: purifying breath, floral hydraton, colloidal gold radiance, and nocturnal silk barrier repair.
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Rituals Timeline / Cards -->
+  <div class="space-y-12 max-w-5xl mx-auto">
+    
+    <!-- Ritual 01 -->
+    <div class="bg-surface-container-lowest rounded-3xl p-8 md:p-12 border editorial-border shadow-xs grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-5 bg-surface-container-low rounded-2xl p-6 text-center border editorial-border">
+        <span class="font-serif text-6xl text-primary/30 font-bold block mb-2">01</span>
+        <span class="text-xs uppercase font-mono tracking-widest text-primary block mb-1">
+          {% if is_ar %}طقس الصباح الأول{% else %}DAWN PHASE{% endif %}
+        </span>
+        <h3 class="font-serif text-2xl text-on-surface font-semibold">
+          {% if is_ar %}التطهير النيلي الملكي{% else %}Nile Sacred Cleansing{% endif %}
+        </h3>
+      </div>
+      <div class="md:col-span-7 space-y-3">
+        <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          تنظيف فائق الرقة بخلاصة المورينجا ومياه ورد الفيوم يزيل الشوائب والأكسدة الناتجة عن تلوث المدينة دون تجريد حاجز البشرة الدهني الطبيعي.
+          {% else %}
+          Ultra-gentle purification with wild moringa and Fayoum rosewater captures urban particulate matter while preserving the delicate lipid mantle.
+          {% endif %}
+        </p>
+        <ul class="text-xs text-on-surface-variant space-y-1 list-disc list-inside">
+          <li>{% if is_ar %}يُنظف المسام بعمق ويهيئ البشرة لامتصاص السيروم{% else %}Prepares pores for optimal serum penetration{% endif %}</li>
+          <li>{% if is_ar %}يُنعش الملمس برائحة زهر البرتقال والورد الصعيدي{% else %}Scented with Egyptian neroli and wild damask rose{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ritual 02 -->
+    <div class="bg-surface-container-lowest rounded-3xl p-8 md:p-12 border editorial-border shadow-xs grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-5 bg-surface-container-low rounded-2xl p-6 text-center border editorial-border">
+        <span class="font-serif text-6xl text-primary/30 font-bold block mb-2">02</span>
+        <span class="text-xs uppercase font-mono tracking-widest text-primary block mb-1">
+          {% if is_ar %}طقس الندى الزهري{% else %}HYDRATION DEW{% endif %}
+        </span>
+        <h3 class="font-serif text-2xl text-on-surface font-semibold">
+          {% if is_ar %}ندى اللوتس الأزرق{% else %}Sacred Blue Lotus Mist{% endif %}
+        </h3>
+      </div>
+      <div class="md:col-span-7 space-y-3">
+        <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          رذاذ منعش مستخلص بالتقطير البارد من زهرة اللوتس الزرقاء (*Nymphaea caerulea*) الغنية بمضادات الأكسدة لتهدئة الاحمرار وتحفيز الاسترخاء العصبي الجلدي.
+          {% else %}
+          Cold-distilled hydrosol of sacred blue lotus flower (*Nymphaea caerulea*) instantly soothes reactive skin and reduces oxidative stress.
+          {% endif %}
+        </p>
+        <ul class="text-xs text-on-surface-variant space-y-1 list-disc list-inside">
+          <li>{% if is_ar %}يوازن درجة حموضة البشرة (pH 5.5){% else %}Restores physiologic skin pH 5.5{% endif %}</li>
+          <li>{% if is_ar %}يمنح إحساساً فورياً بالبرودة والامتلاء المائي{% else %}Delivers instant plumping and micro-cooling sensation{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ritual 03 -->
+    <div class="bg-surface-container-lowest rounded-3xl p-8 md:p-12 border editorial-border shadow-xs grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-5 bg-surface-container-low rounded-2xl p-6 text-center border editorial-border">
+        <span class="font-serif text-6xl text-tertiary/40 font-bold block mb-2">03</span>
+        <span class="text-xs uppercase font-mono tracking-widest text-tertiary block mb-1">
+          {% if is_ar %}طقس الإشراق الذهبي{% else %}GOLD COLLOIDAL ELIXIR{% endif %}
+        </span>
+        <h3 class="font-serif text-2xl text-on-surface font-semibold">
+          {% if is_ar %}إكسير الذهب 24K الملكي{% else %}Imperial 24K Gold Alchemy{% endif %}
+        </h3>
+      </div>
+      <div class="md:col-span-7 space-y-3">
+        <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          تاج العناية لدار لوميه: رقائق الذهب عيار 24 تذوب برقة على سطح البشرة وتتفاعل مع السيروم الخلوي لتنشيط الدورة الدموية الدقيقة ومنح توهج ملكي لا يُضاهى.
+          {% else %}
+          The crowning jewel of LUMÉ: 24-karat bio-gold flakes meld onto epidermis, stimulating cellular renewal and casting a luminous Pharaonic halo.
+          {% endif %}
+        </p>
+        <ul class="text-xs text-on-surface-variant space-y-1 list-disc list-inside">
+          <li>{% if is_ar %}يشد ملامح الوجه ويقلل الخطوط الرفيعة{% else %}Visibly firms facial contours and smooths fine lines{% endif %}</li>
+          <li>{% if is_ar %}إشراقة ذهبية طبيعية تدوم طوال اليوم{% else %}A radiant candle-lit golden finish that lasts all day{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ritual 04 -->
+    <div class="bg-surface-container-lowest rounded-3xl p-8 md:p-12 border editorial-border shadow-xs grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      <div class="md:col-span-5 bg-surface-container-low rounded-2xl p-6 text-center border editorial-border">
+        <span class="font-serif text-6xl text-primary/30 font-bold block mb-2">04</span>
+        <span class="text-xs uppercase font-mono tracking-widest text-primary block mb-1">
+          {% if is_ar %}طقس المساء والترميم{% else %}NOCTURNAL REPAIR{% endif %}
+        </span>
+        <h3 class="font-serif text-2xl text-on-surface font-semibold">
+          {% if is_ar %}مخمل نكتار سيوة الليلي{% else %}Siwa Velvet Oasis Balm{% endif %}
+        </h3>
+      </div>
+      <div class="md:col-span-7 space-y-3">
+        <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          بلسم ليلي غني بنكتار نوى بلح سيوة وزبدة الشيا الصحراوية العضوية يقفل الرطوبة داخل الخلايا أثناء النوم لتبدئي صباحكِ ببشرة ناعمة كالحرير الملكي.
+          {% else %}
+          A restorative overnight velvet cushion of Siwa date seed nectar and wild desert butters that seals deep hydration during circadian cellular repair.
+          {% endif %}
+        </p>
+        <ul class="text-xs text-on-surface-variant space-y-1 list-disc list-inside">
+          <li>{% if is_ar %}تغذية ليلية مكثفة للبشرة الجافة والمجهدة{% else %}Intense nocturnal replenishment for stressed skin{% endif %}</li>
+          <li>{% if is_ar %}ملمس مخملي غير دهني لا يترك أثراً على الوسادة{% else %}Absorbs seamlessly without greasy pillow transfer{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="text-center mt-16">
+    <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary text-white text-xs font-semibold shadow-sm">
+      <span>{% if is_ar %}تسوق مستحضرات الطقوس الملكية{% else %}Shop Ritual Formulations{% endif %}</span>
+      <span class="material-symbols-outlined text-[18px]">{% if is_ar %}arrow_back{% else %}arrow_forward{% endif %}</span>
+    </a>
+  </div>
+
+</main>
+{% endblock %}

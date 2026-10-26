@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}تفاصيل الطلبية #{{ order.order_number }} | LUMÉ لوميه{% else %}Order Details #{{ order.order_number }} | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-12 py-8 md:py-12">
+
+  <!-- Breadcrumbs -->
+  <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-6 pb-3 border-b editorial-border">
+    <a href="{% url 'core:home' %}" class="hover:text-primary transition-colors">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <a href="{% url 'accounts:dashboard' %}" class="hover:text-primary transition-colors">{% if is_ar %}الملف الملكي{% else %}Dossier{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <a href="{% url 'accounts:orders' %}" class="hover:text-primary transition-colors">{% if is_ar %}سجل الطلبيات{% else %}Orders{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <span class="text-primary font-semibold font-mono">#{{ order.order_number }}</span>
+  </div>
+
+  <!-- Header Dossier Info -->
+  <div class="bg-surface-container-low p-6 md:p-8 rounded-3xl border editorial-border mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div class="space-y-2">
+      <div class="flex items-center gap-3">
+        <span class="px-3 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+          {% if is_ar %}وثيقة الطلبية الملكية الرسمية{% else %}OFFICIAL ATELIER DOSSIER{% endif %}
+        </span>
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium 
+          {% if order.status == 'delivered' %}bg-primary/10 text-primary border border-primary/20
+          {% elif order.status == 'shipped' %}bg-secondary/15 text-secondary border border-secondary/20
+          {% elif order.status == 'cancelled' %}bg-error/10 text-error border border-error/20
+          {% else %}bg-tertiary/15 text-tertiary border border-tertiary/30{% endif %}">
+          {{ order.get_status_display }}
+        </span>
+      </div>
+      <h1 class="font-serif text-2xl md:text-3xl text-on-surface font-light">
+        {% if is_ar %}طلبية رقم #{% else %}Order Dossier #{% endif %}<span class="font-mono font-bold">{{ order.order_number }}</span>
+      </h1>
+      <p class="text-xs text-on-surface-variant font-mono">
+        {% if is_ar %}تاريخ الإنشاء: {% else %}Created on: {% endif %}{{ order.created_at|date:"d F Y • h:i A" }}
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <a 
+        href="{% url 'orders:order_track' order.order_number %}" 
+        class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-all flex items-center gap-2 shadow-sm"
+      >
+        <span class="material-symbols-outlined text-[18px]">radar</span>
+        <span>{% if is_ar %}تتبع مسار الشحنة بمصر{% else %}Track Egyptian Courier{% endif %}</span>
+      </a>
+      <button 
+        onclick="window.print()" 
+        class="px-4 py-2.5 rounded-xl bg-surface-container-lowest border editorial-border hover:border-primary text-xs font-semibold text-on-surface transition-all flex items-center gap-1.5"
+      >
+        <span class="material-symbols-outlined text-[18px]">print</span>
+        <span>{% if is_ar %}طباعة الفاتورة{% else %}Print Invoice{% endif %}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Items & Calculation (8 cols) -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- Items Card -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-4">
+        <h2 class="font-serif text-lg text-on-surface font-semibold pb-3 border-b editorial-border">
+          {% if is_ar %}مقتنيات الشحنة{% else %}Curated Artifacts{% endif %}
+        </h2>
+
+        <div class="divide-y divide-outline-variant/30">
+          {% for item in order.items.all %}
+          <div class="py-4 flex items-center gap-4">
+            {% if item.product and item.product.images.first %}
+            <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product_name }}" class="w-16 h-16 object-cover rounded-xl border editorial-border bg-surface-container">
+            {% else %}
+            <div class="w-16 h-16 rounded-xl bg-surface-container flex items-center justify-center text-outline">
+              <span class="material-symbols-outlined text-[24px]">spa</span>
+            </div>
+            {% endif %}
+
+            <div class="flex-1 min-w-0">
+              <h3 class="text-xs font-bold text-on-surface truncate">
+                {% if is_ar %}{{ item.product.name_ar|default:item.product_name }}{% else %}{{ item.product_name }}{% endif %}
+              </h3>
+              {% if item.variant_title %}
+              <span class="text-[11px] text-outline font-mono block mt-0.5">{{ item.variant_title }}</span>
+              {% endif %}
+              <span class="text-xs text-on-surface-variant font-mono mt-1 block">
+                {{ item.quantity }} × {{ item.unit_price }} {{ currency_symbol }}
+              </span>
+            </div>
+
+            <div class="text-end">
+              <span class="font-serif text-sm font-bold text-primary font-mono block">
+                {{ item.total_price }} {{ currency_symbol }}
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Financial Breakdown -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-3">
+        <h3 class="font-serif text-base text-on-surface font-semibold pb-2 border-b editorial-border">
+          {% if is_ar %}البيان المالي المفصل{% else %}Financial Ledger{% endif %}
+        </h3>
+
+        <div class="space-y-2 text-xs">
+          <div class="flex items-center justify-between text-on-surface-variant">
+            <span>{% if is_ar %}المجموع الفرعي للمقتنيات{% else %}Subtotal{% endif %}</span>
+            <span class="font-mono">{{ order.subtotal }} {{ currency_symbol }}</span>
+          </div>
+
+          <div class="flex items-center justify-between text-on-surface-variant">
+            <span>{% if is_ar %}رسوم الشحن والتوصيل المؤمن{% else %}Insured Courier Delivery{% endif %}</span>
+            <span class="font-mono">
+              {% if order.shipping_cost > 0 %}{{ order.shipping_cost }} {{ currency_symbol }}{% else %}{% if is_ar %}مجاني (هدية الدار){% else %}Complimentary{% endif %}{% endif %}
+            </span>
+          </div>
+
+          {% if order.discount_amount > 0 %}
+          <div class="flex items-center justify-between text-tertiary">
+            <span>{% if is_ar %}الخصم الملكي المطبق{% else %}Royal Promotion Discount{% endif %}</span>
+            <span class="font-mono">- {{ order.discount_amount }} {{ currency_symbol }}</span>
+          </div>
+          {% endif %}
+
+          <div class="pt-3 border-t editorial-border flex items-center justify-between font-bold text-sm text-on-surface">
+            <span>{% if is_ar %}الإجمالي النهائي المستحق{% else %}Grand Total Due{% endif %}</span>
+            <span class="font-serif text-lg text-primary font-mono">{{ order.grand_total }} {{ currency_symbol }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Logistics & Payment Side (4 cols) -->
+    <div class="lg:col-span-4 space-y-6">
+      
+      <!-- Egyptian Address Snapshot -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-3">
+        <div class="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider pb-2 border-b editorial-border">
+          <span class="material-symbols-outlined text-[18px]">pin_drop</span>
+          <span>{% if is_ar %}عنوان التوصيل بمصر{% else %}Delivery Destination{% endif %}</span>
+        </div>
+        <div class="text-xs space-y-1.5">
+          <p class="font-bold text-on-surface">{{ order.shipping_full_name }}</p>
+          <p class="font-mono text-outline">{{ order.shipping_phone }}</p>
+          <p class="text-on-surface-variant">
+            {{ order.shipping_street }}، عمارة {{ order.shipping_building|default:"-" }}، {{ order.shipping_city }}
+          </p>
+          <p class="text-xs font-medium text-primary">
+            {{ order.get_shipping_governorate_display }}
+          </p>
+          {% if order.shipping_landmark %}
+          <p class="text-[11px] text-outline">
+            {% if is_ar %}علامة مميزة: {% else %}Landmark: {% endif %}{{ order.shipping_landmark }}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-3">
+        <div class="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider pb-2 border-b editorial-border">
+          <span class="material-symbols-outlined text-[18px]">payments</span>
+          <span>{% if is_ar %}طريقة وحالة السداد{% else %}Payment Dossier{% endif %}</span>
+        </div>
+        <div class="text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-on-surface-variant">{% if is_ar %}الطريقة:{% else %}Method:{% endif %}</span>
+            <span class="font-medium text-on-surface">{{ order.get_payment_method_display }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-on-surface-variant">{% if is_ar %}حالة السداد:{% else %}Payment Status:{% endif %}</span>
+            <span class="font-bold {% if order.payment_status == 'paid' %}text-primary{% else %}text-tertiary{% endif %}">
+              {{ order.get_payment_status_display }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concierge Reassurance -->
+      <div class="p-5 rounded-2xl bg-surface-container-low border editorial-border space-y-2">
+        <div class="flex items-center gap-2 text-primary font-bold text-xs">
+          <span class="material-symbols-outlined text-[18px]">verified</span>
+          <span>{% if is_ar %}ضمان المعاينة قبل الدفع{% else %}Open-Box Guarantee{% endif %}</span>
+        </div>
+        <p class="text-[11px] text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          يحق لكِ فحص وتفقد مقتنياتكِ الملكية وتغليف الذهب بحضور مندوب التوصيل قبل السداد لضمان أعلى معايير الجودة المصرية الفاخرة.
+          {% else %}
+          You are guaranteed the right to inspect your order package in front of our courier prior to payment.
+          {% endif %}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {% if is_ar %}تم تأكيد الطلب بنجاح #{{ order.order_number }} | LUMÉ لوميه{% else %}Order Confirmed Successfully #{{ order.order_number }} | LUMÉ{% endif %}
+{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-4xl mx-auto px-6 py-12">
+  
+  <!-- Success Banner Card -->
+  <div class="bg-surface-container-lowest p-8 md:p-12 rounded-3xl border editorial-border shadow-luxury-card text-center space-y-6">
+    
+    <div class="w-20 h-20 rounded-full bg-[#4A6B53]/15 text-[#4A6B53] mx-auto flex items-center justify-center animate-bounce">
+      <span class="material-symbols-outlined text-[40px]">check_circle</span>
+    </div>
+
+    <div>
+      <span class="text-xs font-mono uppercase tracking-widest text-primary font-bold">
+        {% if is_ar %}الوثيقة الملكية المعتمدة{% else %}CONFIRMED ATELIER DOSSIER{% endif %}
+      </span>
+      <h1 class="text-3xl md:text-4xl font-serif text-[#2A1D1A] mt-1 font-medium">
+        {% if is_ar %}
+          شكراً لكِ، تم تسجيل طلبكِ الملكي بنجاح!
+        {% else %}
+          Thank You, Your Royal Order Has Been Confirmed!
+        {% endif %}
+      </h1>
+      <p class="text-sm text-on-surface-variant mt-2 max-w-lg mx-auto leading-relaxed">
+        {% if is_ar %}
+          يجري الآن تجهيز طقس الجمال الخاص بكِ داخل معاملنا بالعاصمة وتغليفه يدوياً داخل صندوق لوميه المخملي الممهور بختم الشمع.
+        {% else %}
+          Your bespoke beauty formulations are now being curated in our Cairo atelier and hand-packaged with our signature wax seal.
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- Order Metadata Pill -->
+    <div class="inline-flex flex-wrap items-center justify-center gap-4 bg-surface-container-low px-6 py-3 rounded-2xl border editorial-border text-xs font-mono">
+      <div>
+        <span class="text-outline block text-[10px]">{% if is_ar %}رقم الطلب المرجعي{% else %}Order Reference{% endif %}</span>
+        <strong class="text-primary text-sm font-bold">{{ order.order_number }}</strong>
+      </div>
+      <span class="text-outline-variant">|</span>
+      <div>
+        <span class="text-outline block text-[10px]">{% if is_ar %}طريقة السداد{% else %}Payment Method{% endif %}</span>
+        <strong class="text-on-surface font-semibold">{{ order.get_payment_method_display }}</strong>
+      </div>
+      <span class="text-outline-variant">|</span>
+      <div>
+        <span class="text-outline block text-[10px]">{% if is_ar %}حالة الطلب{% else %}Order Status{% endif %}</span>
+        <strong class="text-[#4A6B53] font-semibold">{{ order.get_status_display }}</strong>
+      </div>
+    </div>
+
+    <!-- WhatsApp Reassurance Box -->
+    {% if order.whatsapp_opt_in %}
+      <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between gap-4 text-start max-w-xl mx-auto">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[22px]">chat</span>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-emerald-900">
+              {% if is_ar %}تنسيق التوصيل التلقائي عبر WhatsApp{% else %}Automatic Courier Coordination via WhatsApp{% endif %}
+            </h4>
+            <p class="text-[11px] text-emerald-700 mt-0.5">
+              {% if is_ar %}
+                تم إرسال إشعار التجهيز إلى هاتفكِ ({{ order.customer_phone }}). سيصلكِ إشعار المندوب قبل موعد الوصول.
+              {% else %}
+                Dispatch confirmation dispatched to {{ order.customer_phone }}. Courier will coordinate with you prior to arrival.
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Order Breakdown Details -->
+    <div class="pt-8 border-t editorial-border text-start space-y-4">
+      <h3 class="text-base font-serif text-on-surface font-medium">
+        {% if is_ar %}تفاصيل المقتنيات المسجلة{% else %}Curated Artifacts In Order{% endif %}
+      </h3>
+      <div class="space-y-3 divide-y divide-outline-variant/30 text-xs">
+        {% for item in order.items.all %}
+          <div class="pt-3 first:pt-0 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-14 rounded-lg bg-surface-container overflow-hidden shrink-0 border editorial-border">
+                {% if item.product_image_url %}
+                  <img src="{{ item.product_image_url }}" alt="{{ item.product_name }}" class="w-full h-full object-cover">
+                {% endif %}
+              </div>
+              <div>
+                <h4 class="font-bold text-on-surface">
+                  {% if is_ar %}{{ item.product.name_ar|default:item.product_name }}{% else %}{{ item.product_name }}{% endif %}
+                </h4>
+                {% if item.variant_title %}
+                  <span class="text-[11px] text-secondary font-medium">{{ item.variant_title }}</span>
+                {% endif %}
+                <span class="text-[11px] text-outline font-mono block">
+                  {% if is_ar %}الكمية: {% else %}Qty: {% endif %}{{ item.quantity }}
+                </span>
+              </div>
+            </div>
+            <span class="font-bold font-mono text-primary text-sm">
+              {% if is_ar %}{{ item.line_total }} ج.م{% else %}{{ item.line_total }} EGP{% endif %}
+            </span>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Financial Summary -->
+      <div class="bg-surface-container-low p-4 rounded-xl border editorial-border text-xs space-y-2 mt-4">
+        <div class="flex justify-between text-on-surface-variant">
+          <span>{% if is_ar %}المجموع الفرعي:{% else %}Subtotal:{% endif %}</span>
+          <span class="font-bold font-mono">
+            {% if is_ar %}{{ order.subtotal }} ج.م{% else %}{{ order.subtotal }} EGP{% endif %}
+          </span>
+        </div>
+        {% if order.discount_amount > 0 %}
+          <div class="flex justify-between text-primary">
+            <span>{% if is_ar %}الخصم المطبق:{% else %}Discount Applied:{% endif %}</span>
+            <span class="font-bold font-mono">
+              -{% if is_ar %}{{ order.discount_amount }} ج.م{% else %}{{ order.discount_amount }} EGP{% endif %}
+            </span>
+          </div>
+        {% endif %}
+        <div class="flex justify-between text-[#4A6B53]">
+          <span>{% if is_ar %}الشحن السريع:{% else %}Expedited Delivery:{% endif %}</span>
+          <span class="font-bold font-mono">
+            {% if order.shipping_cost == 0 %}
+              {% if is_ar %}مجاناً (0 ج.م){% else %}Complimentary (0 EGP){% endif %}
+            {% else %}
+              {% if is_ar %}{{ order.shipping_cost }} ج.م{% else %}{{ order.shipping_cost }} EGP{% endif %}
+            {% endif %}
+          </span>
+        </div>
+        <div class="pt-2 border-t editorial-border flex justify-between text-sm font-bold text-on-surface">
+          <span>{% if is_ar %}المبلغ الإجمالي المستحق:{% else %}Grand Total Due:{% endif %}</span>
+          <span class="text-primary font-mono text-base">
+            {% if is_ar %}{{ order.total }} ج.م{% else %}{{ order.total }} EGP{% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="pt-6 flex flex-wrap items-center justify-center gap-4">
+      <a href="{% url 'orders:order_track' order.order_number %}" class="px-6 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">radar</span>
+        <span>{% if is_ar %}تتبع مسار الشحنة{% else %}Track Dispatch{% endif %}</span>
+      </a>
+      <a href="{% url 'catalog:product_list' %}" class="px-6 py-3 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface border editorial-border text-xs font-semibold transition-all">
+        {% if is_ar %}متابعة التسوق واستكشاف الفصول{% else %}Continue Shopping{% endif %}
+      </a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

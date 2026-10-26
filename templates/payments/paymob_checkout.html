@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}بوابة الدفع الإلكتروني الآمن Paymob | LUMÉ لوميه{% else %}Paymob Secure Gateway | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-3xl mx-auto px-6 py-12 space-y-6">
+  
+  <!-- Header -->
+  <div class="text-center space-y-2">
+    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-primary font-mono text-xs font-bold">
+      <span class="material-symbols-outlined text-[16px]">lock</span>
+      <span>PAYMOB SECURE GATEWAY • 256-BIT SSL</span>
+    </div>
+    <h1 class="text-2xl md:text-3xl font-serif text-[#2A1D1A] font-medium">
+      {% if is_ar %}سداد طلب الشراء إلكترونياً{% else %}Secure Online Order Payment{% endif %}
+    </h1>
+    <p class="text-xs text-on-surface-variant">
+      {% if is_ar %}
+        طلب رقم #{{ order.order_number }} • القيمة المستحقة: <strong class="text-primary font-mono text-sm">{{ order.total }} {{ currency_symbol }}</strong>
+      {% else %}
+        Order #{{ order.order_number }} • Total Due: <strong class="text-primary font-mono text-sm">{{ order.total }} {{ currency_symbol }}</strong>
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Gateway Box -->
+  <div class="bg-surface-container-lowest p-6 rounded-3xl border editorial-border shadow-luxury-card space-y-6">
+    {% if iframe_url %}
+      <!-- Paymob Embedded Iframe -->
+      <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden border editorial-border bg-white shadow-inner">
+        <iframe src="{{ iframe_url }}" width="100%" height="100%" frameborder="0" class="w-full h-full"></iframe>
+      </div>
+    {% else %}
+      <!-- Direct Card Checkout UI with Paymob Server-Side Authorization Fallback -->
+      <div class="p-8 text-center space-y-4 bg-surface-container-low rounded-2xl border editorial-border">
+        <div class="w-16 h-16 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center">
+          <span class="material-symbols-outlined text-[32px]">credit_card</span>
+        </div>
+        <h3 class="text-base font-bold text-on-surface">
+          {% if is_ar %}بوابة الدفع الإلكتروني المباشر (Paymob Egypt){% else %}Direct Card Gateway (Paymob Egypt){% endif %}
+        </h3>
+        <p class="text-xs text-on-surface-variant max-w-md mx-auto leading-relaxed">
+          {% if is_ar %}
+            تم تجهيز طلبكِ بنجاح على بوابة Paymob. في بيئة التطوير والتشغيل المحلي، يمكنكِ تأكيد السداد الفوري وتحديث سجل المعاملة البنكية بنقرة واحدة أدناه.
+          {% else %}
+            Your order has been registered with Paymob. In this environment, you can confirm instant card authorization and update the payment record below.
+          {% endif %}
+        </p>
+
+        <!-- Development Verification Simulator -->
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="{% url 'payments:paymob_callback' %}?success=true&order={{ order.order_number }}&merchant_order_id={{ order.order_number }}&id=TRX-{{ order.order_number }}-OK" class="w-full sm:w-auto py-3 px-8 rounded-full bg-[#4A6B53] hover:bg-emerald-800 text-white font-bold text-xs transition-colors shadow-sm flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">verified</span>
+            <span>{% if is_ar %}تأكيد سداد البطاقة بنجاح (Verify Payment){% else %}Confirm Card Payment Success{% endif %}</span>
+          </a>
+          <a href="{% url 'payments:paymob_callback' %}?success=false&order={{ order.order_number }}&merchant_order_id={{ order.order_number }}&id=TRX-FAIL" class="w-full sm:w-auto py-3 px-6 rounded-full border border-red-300 text-red-700 hover:bg-red-50 text-xs font-bold transition-colors">
+            {% if is_ar %}محاكاة فشل الدفع{% else %}Simulate Payment Failure{% endif %}
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Security & Trust -->
+    <div class="pt-4 border-t editorial-border flex items-center justify-between text-xs text-outline">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+        <span>{% if is_ar %}معتمد ومحمي بشهادة التشفير البنكي المعتمدة من البنك المركزي المصري.{% else %}Protected with Central Bank of Egypt certified banking encryption.{% endif %}</span>
+      </div>
+      <a href="{% url 'orders:checkout' %}" class="text-primary hover:underline font-bold">
+        {% if is_ar %}العودة لتعديل وسيلة الدفع{% else %}Return to Checkout{% endif %}
+      </a>
+    </div>
+  </div>
+</main>
+{% endblock %}

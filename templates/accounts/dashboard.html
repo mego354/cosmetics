@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}الملف الشخصي والكونسيرج الملكي | LUMÉ لوميه{% else %}Royal Client Dashboard | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+
+  <!-- Header Dossier Banner -->
+  <section class="bg-surface-container-low rounded-3xl p-6 md:p-10 border editorial-border mb-8 relative overflow-hidden">
+    <div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+            {% if is_ar %}الملف الملكي المعتمد{% else %}OFFICIAL CLIENT DOSSIER{% endif %}
+          </span>
+          <span class="text-xs text-outline font-mono">ID: LUM-{{ user.id|stringformat:"05d" }}</span>
+        </div>
+        <h1 class="font-serif text-3xl md:text-4xl text-on-surface font-light">
+          {% if is_ar %}
+          أهلاً بكِ، {{ user.first_name|default:user.username }}
+          {% else %}
+          Welcome, {{ user.first_name|default:user.username }}
+          {% endif %}
+        </h1>
+        <p class="text-xs text-on-surface-variant max-w-xl">
+          {% if is_ar %}
+          مرحباً بكِ في مجلس كونسيرج لوميه. يمكنكِ هنا متابعة مسار شحناتكِ في مصر، إدارة مقتنياتكِ الفاخرة، واستبدال نقاط الولاء الفرعونية.
+          {% else %}
+          Welcome to the LUMÉ Atelier Concierge. Monitor real-time Egyptian courier tracking, manage royal privileges, and redeem loyalty points.
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- Quick Action / Tier Badge -->
+      <div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-2xl border editorial-border shadow-xs">
+        <div class="w-12 h-12 rounded-full bg-tertiary/10 border border-tertiary/20 flex items-center justify-center text-tertiary">
+          <span class="material-symbols-outlined text-[24px]">workspace_premium</span>
+        </div>
+        <div>
+          <span class="text-[10px] font-mono uppercase text-outline block">
+            {% if is_ar %}فئة العضوية{% else %}MEMBERSHIP TIER{% endif %}
+          </span>
+          <span class="text-sm font-serif font-bold text-on-surface block">
+            {% if is_ar %}نخبة الذهب الملكي{% else %}Royal Gold Tier{% endif %}
+          </span>
+          <span class="text-[11px] text-primary font-medium">
+            {{ profile.loyalty_points|default:"100" }} {% if is_ar %}نقطة متاحة{% else %}Pts Available{% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stat Tiles -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t editorial-border">
+      <div class="bg-surface-container-lowest p-4 rounded-xl border editorial-border">
+        <span class="text-[11px] text-on-surface-variant block mb-1">{% if is_ar %}رصيد نقاط الولاء{% else %}Loyalty Points{% endif %}</span>
+        <span class="font-serif text-2xl text-primary font-bold">{{ profile.loyalty_points|default:"100" }}</span>
+        <span class="text-[10px] text-outline block mt-0.5">{% if is_ar %}تعادل خصم {{ profile.loyalty_points|default:"100" }} {{ currency_symbol }}{% else %}≈ {{ profile.loyalty_points|default:"100" }} {{ currency_symbol }} Value{% endif %}</span>
+      </div>
+
+      <div class="bg-surface-container-lowest p-4 rounded-xl border editorial-border">
+        <span class="text-[11px] text-on-surface-variant block mb-1">{% if is_ar %}الطلبيات الملكية{% else %}Total Orders{% endif %}</span>
+        <span class="font-serif text-2xl text-on-surface font-bold">{{ recent_orders.count }}</span>
+        <a href="{% url 'accounts:orders' %}" class="text-[10px] text-primary hover:underline block mt-0.5">{% if is_ar %}عرض سجل الطلبات ←{% else %}View History →{% endif %}</a>
+      </div>
+
+      <div class="bg-surface-container-lowest p-4 rounded-xl border editorial-border">
+        <span class="text-[11px] text-on-surface-variant block mb-1">{% if is_ar %}المقتنيات المفضلة{% else %}Saved In Wishlist{% endif %}</span>
+        <span class="font-serif text-2xl text-on-surface font-bold">{{ wishlist_count }}</span>
+        <a href="{% url 'accounts:wishlist' %}" class="text-[10px] text-primary hover:underline block mt-0.5">{% if is_ar %}عرض قائمة الرغبات ←{% else %}View Wishlist →{% endif %}</a>
+      </div>
+
+      <div class="bg-surface-container-lowest p-4 rounded-xl border editorial-border">
+        <span class="text-[11px] text-on-surface-variant block mb-1">{% if is_ar %}العناوين المحفوظة بمصر{% else %}Saved Addresses{% endif %}</span>
+        <span class="font-serif text-2xl text-on-surface font-bold">{{ addresses.count }}</span>
+        <a href="{% url 'accounts:addresses' %}" class="text-[10px] text-primary hover:underline block mt-0.5">{% if is_ar %}إدارة العناوين ←{% else %}Manage Addresses →{% endif %}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left / Sub Nav Navigation (4 COLS) -->
+    <aside class="lg:col-span-4 space-y-4">
+      <div class="bg-surface-container-lowest rounded-2xl p-4 border editorial-border shadow-xs">
+        <nav class="space-y-1">
+          <a href="{% url 'accounts:dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white text-xs font-semibold">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>{% if is_ar %}لوحة التحكم الرئيسية{% else %}Client Dashboard{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:orders' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">package_2</span>
+            <span>{% if is_ar %}سجل الطلبيات والشحنات{% else %}Orders & Shipments{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:addresses' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span>{% if is_ar %}دفتر العناوين المصري{% else %}Egyptian Address Book{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:wishlist' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+            <span>{% if is_ar %}قائمة المقتنيات المفضلة{% else %}Royal Wishlist{% endif %}</span>
+          </a>
+          <div class="pt-2 border-t editorial-border my-2"></div>
+          <a href="{% url 'accounts:logout' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-error hover:bg-error/10 text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+            <span>{% if is_ar %}تسجيل الخروج من الحساب{% else %}Sign Out{% endif %}</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Concierge VIP Support Card -->
+      <div class="bg-surface-container-low p-6 rounded-2xl border editorial-border space-y-3">
+        <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+          <span class="material-symbols-outlined text-[18px]">support_agent</span>
+          <span>{% if is_ar %}كونسيرج لوميه الخاص{% else %}Atelier Concierge Care{% endif %}</span>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          هل تحتاجين إلى استشارة جمالية مخصصة لنوع بشرتك أو متابعة خاصة لشحنتك؟ فريق الكونسيرج متاح على مدار الساعة عبر واتساب.
+          {% else %}
+          Need bespoke skincare advice or immediate dispatch coordination? Our Cairo atelier team is available via VIP WhatsApp.
+          {% endif %}
+        </p>
+        <a 
+          href="https://wa.me/201012345678" 
+          target="_blank" 
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest border border-primary/30 hover:border-primary text-primary text-xs font-semibold transition-all shadow-xs"
+        >
+          <span class="material-symbols-outlined text-[16px]">chat</span>
+          <span>{% if is_ar %}محادثة كونسيرج واتساب (+20){% else %}WhatsApp VIP Atelier{% endif %}</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Right / Recent Orders & Profile Details (8 COLS) -->
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- Recent Orders Section -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b editorial-border">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">local_shipping</span>
+            <h2 class="font-serif text-lg text-on-surface font-semibold">
+              {% if is_ar %}أحدث الطلبيات والشحنات الجارية{% else %}Recent Royal Orders{% endif %}
+            </h2>
+          </div>
+          <a href="{% url 'accounts:orders' %}" class="text-xs text-primary font-semibold hover:underline">
+            {% if is_ar %}عرض الكل ←{% else %}View All →{% endif %}
+          </a>
+        </div>
+
+        {% if recent_orders %}
+        <div class="space-y-4">
+          {% for order in recent_orders %}
+          <div class="p-4 rounded-xl bg-surface-container-low border editorial-border hover:border-primary/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-on-surface">#{{ order.order_number }}</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium 
+                  {% if order.status == 'delivered' %}bg-primary/10 text-primary border border-primary/20
+                  {% elif order.status == 'shipped' %}bg-secondary/15 text-secondary border border-secondary/20
+                  {% elif order.status == 'cancelled' %}bg-error/10 text-error border border-error/20
+                  {% else %}bg-tertiary/15 text-tertiary border border-tertiary/30{% endif %}">
+                  {{ order.get_status_display }}
+                </span>
+              </div>
+              <p class="text-[11px] text-on-surface-variant">
+                {{ order.created_at|date:"d M Y, h:i A" }} • {{ order.items.count }} {% if is_ar %}منتجات{% else %}items{% endif %}
+              </p>
+              <p class="text-xs font-bold text-primary font-mono">
+                {{ order.grand_total }} {{ currency_symbol }}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <a 
+                href="{% url 'orders:order_track' order.order_number %}" 
+                class="px-3.5 py-2 rounded-xl bg-surface-container-lowest border editorial-border hover:border-primary text-xs font-medium text-on-surface transition-all flex items-center gap-1.5"
+              >
+                <span class="material-symbols-outlined text-[16px]">location_searching</span>
+                <span>{% if is_ar %}تتبع الشحنة{% else %}Track{% endif %}</span>
+              </a>
+              <a 
+                href="{% url 'accounts:order_detail' order.order_number %}" 
+                class="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-medium transition-all"
+              >
+                {% if is_ar %}التفاصيل والفاتورة{% else %}Details{% endif %}
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-10 px-4">
+          <span class="material-symbols-outlined text-4xl text-outline mb-2">shopping_bag</span>
+          <p class="text-xs text-on-surface-variant mb-4">
+            {% if is_ar %}لم تقومي بإجراء أي طلب حتى الآن.{% else %}You have no recent orders placed.{% endif %}
+          </p>
+          <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-semibold">
+            <span>{% if is_ar %}استكشاف المجموعات الملكية{% else %}Explore Collections{% endif %}</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Default Egyptian Address Snapshot -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b editorial-border">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">home_pin</span>
+            <h2 class="font-serif text-lg text-on-surface font-semibold">
+              {% if is_ar %}عنوان التوصيل الافتراضي بمصر{% else %}Primary Delivery Address{% endif %}
+            </h2>
+          </div>
+          <a href="{% url 'accounts:addresses' %}" class="text-xs text-primary font-semibold hover:underline">
+            {% if is_ar %}إدارة العناوين ←{% else %}Manage ←{% endif %}
+          </a>
+        </div>
+
+        {% with default_addr=addresses.first %}
+        {% if default_addr %}
+        <div class="p-4 rounded-xl bg-surface-container-low border editorial-border text-xs space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-on-surface">{{ default_addr.full_name }}</span>
+            <span class="font-mono text-outline">{{ default_addr.phone_number }}</span>
+          </div>
+          <p class="text-on-surface-variant">
+            {{ default_addr.street_address }}، عمارة {{ default_addr.building_number|default:"-" }}، {{ default_addr.city }}، {{ default_addr.get_governorate_display }}
+          </p>
+          {% if default_addr.nearest_landmark %}
+          <p class="text-[11px] text-outline">
+            {% if is_ar %}أقرب علامة مميزة: {% else %}Landmark: {% endif %}{{ default_addr.nearest_landmark }}
+          </p>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="text-center py-6">
+          <p class="text-xs text-on-surface-variant mb-3">
+            {% if is_ar %}لم تسجلي عنوان توصيل بعد.{% else %}No saved address found.{% endif %}
+          </p>
+          <a href="{% url 'accounts:addresses' %}" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-surface-container-low hover:bg-surface-container border editorial-border text-xs font-semibold text-primary">
+            <span class="material-symbols-outlined text-[16px]">add</span>
+            <span>{% if is_ar %}إضافة عنوان جديد{% else %}Add Address{% endif %}</span>
+          </a>
+        </div>
+        {% endif %}
+        {% endwith %}
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

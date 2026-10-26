@@ -1,0 +1,112 @@
+{% if cart and cart.items.count > 0 %}
+  <!-- Free Shipping Progress -->
+  <div class="p-4 bg-surface-container-low rounded-2xl border editorial-border mb-4">
+    <div class="flex items-center justify-between text-xs mb-1.5">
+      <div class="flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-primary text-[18px]">local_shipping</span>
+        {% if cart.qualifies_for_free_shipping %}
+          <span class="text-[#4A6B53] font-bold">
+            {% if is_ar %}تم تفعيل الشحن الملكي المجاني 0 ج.م!{% else %}Complimentary Royal Shipping Unlocked!{% endif %}
+          </span>
+        {% else %}
+          <span class="text-on-surface font-medium">
+            {% if is_ar %}
+              أضيفي <strong class="text-primary font-bold">{{ cart.remaining_for_free_shipping }} ج.م</strong> لتفعيل الشحن المجاني!
+            {% else %}
+              Add <strong class="text-primary font-bold">{{ cart.remaining_for_free_shipping }} EGP</strong> for Free Shipping!
+            {% endif %}
+          </span>
+        {% endif %}
+      </div>
+      <span class="font-bold font-mono text-xs text-primary">{{ cart.free_shipping_progress_pct }}%</span>
+    </div>
+    <div class="w-full bg-surface-container h-2 rounded-full overflow-hidden border border-outline-variant/40">
+      <div class="bg-gradient-to-l from-primary to-[#C86D51] h-full rounded-full transition-all duration-500" style="width: {{ cart.free_shipping_progress_pct }}%;"></div>
+    </div>
+  </div>
+
+  <!-- Items List -->
+  <div class="space-y-3 divide-y divide-outline-variant/30">
+    {% for item in cart.items.all %}
+      <div class="pt-3 first:pt-0 flex gap-3.5 group">
+        <div class="w-16 h-20 rounded-xl overflow-hidden bg-surface-container shrink-0 border editorial-border">
+          {% if item.image_url %}
+            <img src="{{ item.image_url }}" alt="{{ item.product.name_ar }}" class="w-full h-full object-cover">
+          {% else %}
+            <div class="w-full h-full flex items-center justify-center text-outline text-xs">LUMÉ</div>
+          {% endif %}
+        </div>
+        <div class="flex-1 flex flex-col justify-between min-w-0">
+          <div>
+            <div class="flex items-start justify-between gap-1">
+              <h4 class="text-xs font-bold text-on-surface line-clamp-1 group-hover:text-primary transition-colors">
+                <a href="{% url 'catalog:product_detail' item.product.slug %}">
+                  {% if is_ar %}{{ item.product.name_ar }}{% else %}{{ item.product.name_en|default:item.product.name_ar }}{% endif %}
+                </a>
+              </h4>
+              <button onclick="removeCartItem({{ item.id }})" class="text-outline hover:text-red-700 p-0.5" title="{% if is_ar %}حذف{% else %}Remove{% endif %}">
+                <span class="material-symbols-outlined text-[16px]">close</span>
+              </button>
+            </div>
+            {% if item.variant %}
+              <span class="text-[10px] text-secondary font-medium block mt-0.5">
+                {% if is_ar %}{{ item.variant.title_ar }}{% else %}{{ item.variant.title_en|default:item.variant.title_ar }}{% endif %}
+              </span>
+            {% endif %}
+            <span class="text-xs font-mono font-bold text-primary mt-1 block">
+              {% if is_ar %}{{ item.line_total }} ج.م{% else %}{{ item.line_total }} EGP{% endif %}
+            </span>
+          </div>
+          <!-- Stepper -->
+          <div class="flex items-center gap-2 mt-2">
+            <div class="flex items-center border border-outline-variant/60 rounded-full bg-surface-container-low px-1 py-0.5">
+              <button onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'-1' }})" class="w-5 h-5 rounded-full flex items-center justify-center text-on-surface hover:text-primary text-xs font-bold">-</button>
+              <span class="w-6 text-center text-xs font-bold text-on-surface font-mono">{{ item.quantity }}</span>
+              <button onclick="updateCartItem({{ item.id }}, {{ item.quantity|add:'1' }})" class="w-5 h-5 rounded-full flex items-center justify-center text-on-surface hover:text-primary text-xs font-bold">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Drawer Footer Summary -->
+  <div class="mt-6 pt-4 border-t editorial-border space-y-3">
+    <div class="flex items-baseline justify-between text-sm">
+      <span class="text-on-surface font-medium">{% if is_ar %}المجموع الجزئي:{% else %}Subtotal:{% endif %}</span>
+      <span class="text-lg font-bold font-mono text-primary">
+        {% if is_ar %}{{ cart.subtotal }} ج.م{% else %}{{ cart.subtotal }} EGP{% endif %}
+      </span>
+    </div>
+    <p class="text-[11px] text-outline">
+      {% if is_ar %}شامل ضريبة القيمة المضافة 14% والتغليف الملكي بختم الشمع.{% else %}Includes 14% VAT and complimentary wax-sealed packaging.{% endif %}
+    </p>
+    <a href="{% url 'orders:checkout' %}" class="w-full py-3.5 px-6 rounded-full bg-[#2A1D1A] hover:bg-primary text-[#FDFBF7] font-bold text-xs tracking-wider transition-all duration-300 shadow-luxury-card flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">lock</span>
+      <span>{% if is_ar %}متابعة إتمام الطلب{% else %}Proceed to Checkout{% endif %}</span>
+      <span class="material-symbols-outlined text-[16px] {% if is_rtl %}rotate-180{% endif %}">arrow_forward</span>
+    </a>
+    <a href="{% url 'cart:cart_detail' %}" class="block text-center text-xs text-primary hover:underline font-semibold py-1">
+      {% if is_ar %}عرض وتعديل حقيبة المقتنيات{% else %}View & Edit Full Bag{% endif %}
+    </a>
+  </div>
+{% else %}
+  <div class="py-16 text-center space-y-4">
+    <div class="w-16 h-16 rounded-full bg-secondary-container/50 mx-auto flex items-center justify-center text-primary">
+      <span class="material-symbols-outlined text-[32px]">shopping_bag</span>
+    </div>
+    <h4 class="text-base font-serif font-medium text-on-surface">
+      {% if is_ar %}حقيبة المقتنيات فارغة{% else %}Your Bag is Empty{% endif %}
+    </h4>
+    <p class="text-xs text-on-surface-variant max-w-xs mx-auto">
+      {% if is_ar %}
+      لم تقومي باختيار أية مستحضرات بعد. استكشفي فصول الجمال الملكي والتركيبات النيلية النادرة.
+      {% else %}
+      You have not selected any artifacts yet. Discover our rare Egyptian botanical formulations.
+      {% endif %}
+    </p>
+    <a href="{% url 'catalog:product_list' %}" onclick="closeCartDrawer()" class="inline-block rounded-full bg-primary hover:bg-[#7A3626] text-white text-xs font-bold py-2.5 px-6 transition-all shadow-sm">
+      {% if is_ar %}تصفح الكتالوج التحريري{% else %}Explore Catalogue{% endif %}
+    </a>
+  </div>
+{% endif %}

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUMÉ | حقيبة التسوق والدفع السريع - Shopping Bag &amp; Checkout</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#fbf9f5",
+            "primary-fixed-dim": "#ffb59f",
+            "tertiary-fixed-dim": "#f1b9b7",
+            "primary-fixed": "#ffdbd0",
+            "on-secondary-fixed": "#251916",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#705f5b",
+            "on-background": "#1b1c1a",
+            "inverse-surface": "#30312e",
+            "inverse-primary": "#ffb59f",
+            "secondary-fixed-dim": "#d8c2bc",
+            "surface-bright": "#fbf9f5",
+            "on-primary-fixed": "#3a0a00",
+            "primary-container": "#b35c41",
+            "on-surface": "#1b1c1a",
+            "secondary-container": "#f2dad5",
+            "surface-container-lowest": "#ffffff",
+            "primary": "#94452c",
+            "secondary-fixed": "#f5ddd8",
+            "on-primary-container": "#fffbff",
+            "on-tertiary-container": "#fffbff",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#976967",
+            "surface-tint": "#97472e",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#55433e",
+            "outline-variant": "#dbc1ba",
+            "error": "#ba1a1a",
+            "tertiary": "#7c514f",
+            "surface-container-highest": "#e4e2de",
+            "tertiary-fixed": "#ffdad8",
+            "on-primary-fixed-variant": "#793019",
+            "surface-dim": "#dbdad6",
+            "inverse-on-surface": "#f2f0ed",
+            "secondary": "#6c5a56",
+            "surface": "#fbf9f5",
+            "on-tertiary-fixed-variant": "#643c3b",
+            "on-secondary-fixed-variant": "#53433f",
+            "on-tertiary-fixed": "#311212",
+            "on-error-container": "#93000a",
+            "outline": "#88726c",
+            "surface-container-low": "#f5f3ef",
+            "on-primary": "#ffffff",
+            "surface-variant": "#e4e2de",
+            "surface-container": "#efeeea",
+            "surface-container-high": "#eae8e4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem",
+            "margin-sm": "1rem",
+            "space-2xl": "4rem",
+            "gutter-lg": "2.5rem",
+            "gutter-sm": "1rem",
+            "margin-lg": "5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Playfair Display"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "display-lg-mobile": ["Playfair Display"],
+            "label-md": ["Plus Jakarta Sans"],
+            "display-md-mobile": ["Playfair Display"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Playfair Display"],
+            "display-md": ["Playfair Display"],
+            "headline-md": ["Playfair Display"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-lg-mobile": ["38px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display-md-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "display-md": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-secondary-container selection:text-primary min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Editorial Top Ticker / Trust Announcement -->
+<aside class="bg-secondary text-surface-bright py-2.5 px-4 text-center border-b border-outline-variant/20">
+<div class="max-w-[1440px] mx-auto flex items-center justify-center gap-3 font-label-md text-label-md tracking-wider">
+<span class="inline-flex items-center gap-1.5 text-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span>توصيل سريع للقاهرة والجيزة خلال 24 ساعة | الدفع عند الاستلام متاح</span>
+</span>
+<span class="hidden md:inline text-secondary-fixed-dim/60">•</span>
+<span class="hidden md:inline text-surface-container-high font-medium">Fast Regional Shipping &amp; Verified Authentic Egyptian Botanicals</span>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 z-40 bg-surface/95 dark:bg-inverse-surface/95 backdrop-blur-md border-b border-outline-variant/40 dark:border-outline/20 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-6 md:px-12 max-w-[1440px] mx-auto h-20">
+<!-- Brand Logo -->
+<div class="flex items-center gap-8">
+<a class="text-headline-lg font-headline-lg tracking-wider text-primary dark:text-inverse-primary font-medium flex items-baseline gap-2" href="#">
+<span>LUMÉ</span>
+<span class="font-body-sm text-label-sm tracking-normal text-on-surface-variant font-light">لوميه</span>
+</a>
+<!-- Navigation Links (JSON Source of Truth) -->
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">العناية بالبشرة Skincare</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">المكياج Makeup</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">العطور Perfumes</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">العناية بالجسم Body</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">العروض Offers</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 font-label-md text-label-md" href="#">قصص الجمال Stories</a>
+</nav>
+</div>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-4 md:gap-6">
+<!-- Search icon & bar on right -->
+<button aria-label="Search" class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[22px]">search</span>
+<span class="hidden md:inline font-label-sm text-label-sm">بحث Search</span>
+</button>
+<!-- Wishlist -->
+<button aria-label="Wishlist" class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-200 relative" type="button">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+</button>
+<!-- Account -->
+<button aria-label="Profile" class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-200" type="button">
+<span class="material-symbols-outlined text-[22px]">person</span>
+</button>
+<!-- Active Bag Indicator (Locking Active Shell State) -->
+<a class="relative flex items-center gap-2 bg-surface-container-high py-2 px-3.5 rounded-full text-primary border border-outline-variant/60 hover:bg-secondary-container/40 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span class="font-label-md text-label-md font-semibold">3</span>
+<span class="hidden md:inline font-label-sm text-label-sm border-r border-outline-variant/50 pr-2">حقيبة التسوق Bag</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+<!-- Breadcrumb & Editorial Header -->
+<section class="mb-8">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant mb-3">
+<a class="hover:text-primary transition-colors" href="#">الرئيسية Home</a>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold">حقيبة التسوق الفاخرة Checkout</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-outline-variant/40">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary tracking-tight">
+            حقيبة التسوق الفاخرة <span class="font-headline-md text-on-surface-variant font-normal">(3 منتجات)</span>
+</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+            مستحضرات تجميل نباتية وعضوية مستخلصة من خيرات وادي النيل ومصنوعة بإتقان مصري فريد.
+          </p>
+</div>
+<!-- Regional Trust Micro-Cues -->
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low rounded-full border border-outline-variant text-label-sm font-label-sm text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#4A6B53]"></span>
+<span>الدفع عند الاستلام متاح | COD</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low rounded-full border border-outline-variant text-label-sm font-label-sm text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+<span>أصلي 100% Guaranteed</span>
+</span>
+</div>
+</div>
+<!-- Free Shipping Dynamic Progress Tier -->
+<div class="mt-6 p-4 md:p-5 bg-surface-container-lowest rounded-xl border border-outline-variant/60 shadow-sm">
+<div class="flex items-center justify-between text-body-sm font-body-sm mb-2.5">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[20px]">local_shipping</span>
+<span class="font-medium text-primary">أضيفي منتجات بقيمة 120 ج.م</span> للحصول على توصيل مجاني لكافة محافظات مصر!
+          </div>
+<span class="font-label-md text-label-md font-bold text-primary">85% تم الوصول</span>
+</div>
+<!-- Track Bar -->
+<div class="w-full bg-surface-container h-2.5 rounded-full overflow-hidden">
+<div class="bg-gradient-to-l from-primary to-primary-container h-full rounded-full transition-all duration-500" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant mt-1.5">
+<span>المبلغ الحالي: 1,666 ج.م</span>
+<span class="text-tertiary">الحد الأدنى للشحن المجاني الوطني: 1,786 ج.م</span>
+</div>
+</div>
+</section>
+<!-- Split Cart & Quick Checkout Flow (Bento / Modern 2-Column Grid) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT / MAIN COLUMN: Items & Editorial Routine (7 Cols) -->
+<section class="lg:col-span-7 space-y-6">
+<!-- Gift with Order Banner -->
+<div class="p-4 bg-secondary-container/40 border border-outline-variant/60 rounded-xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-primary border border-outline-variant/50">
+<span class="material-symbols-outlined text-[24px]">card_giftcard</span>
+</div>
+<div class="flex-1">
+<span class="inline-block px-2 py-0.5 mb-1 rounded bg-primary/10 text-primary text-label-sm font-label-sm font-semibold">هدية فاخرة تلقائية Free Gift</span>
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight">
+              عينة فاخرة من مقشر زبدة الشيا والرمان مع هذا الطلب
+            </p>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">هدية تدليل مجانية مقدمة في عبوة زجاجية مصغرة 15ml مخصصة لرحلتكِ.</p>
+</div>
+</div>
+<!-- CART ITEMS CONTAINER -->
+<div class="space-y-4">
+<!-- Item 1: سيروم اللوتس الأزرق والذهب -->
+<article class="p-5 md:p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/60 shadow-sm flex flex-col sm:flex-row gap-5 transition hover:border-primary/40">
+<div class="w-full sm:w-28 sm:h-36 rounded-xl overflow-hidden bg-surface-container shrink-0 border border-outline-variant/40 relative">
+<img class="w-full h-full object-cover" data-alt="An elegant dropper bottle of Egyptian blue lotus and pure gold leaf facial serum placed upon a pale warm travertine pedestal. Soft morning Nile sunshine casts delicate amber shadows on raw linen fabric. The cosmetic product exudes warm terracotta accents and rich golden botanical oil texture in an ultra-luxurious editorial studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH-gP-h_cClvnplY0eSyzrVxdnsgjQSG5Y-GEQLaVp5Wx2mXTWC5IOU7Zgyo4ygOQ8hGga9rg0xZd_ArXWd89oRMO8V29U_ycBOp9r41xdT_GnbSQcd1VrtUxGNMomNsWA6V3FMm7Yc8q2rkt-ZXzq4MpbyzOMqJCVY35kWycNjl-UAQouJIaGo7ugc3LsijEebZMmhi3CYgYgmxYEDC5yowDDjvxMdIkAbSG_5hHqOwO31SCT0Nda"/>
+<span class="absolute top-2 right-2 bg-surface/90 text-primary text-label-sm font-label-sm px-2 py-0.5 rounded shadow-sm">الأكثر طلباً</span>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="text-label-sm font-label-sm text-secondary tracking-wider block">العناية بالبشرة • BOTANICAL SERUM</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">سيروم اللوتس الأزرق والذهب</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">الحجم: 50ml عبوة فاخرة بقطارة كريستالية زجاجية</p>
+</div>
+<div class="text-left font-display-md text-primary font-medium text-lg md:text-xl whitespace-nowrap">
+                    680 <span class="text-label-sm font-label-sm font-normal text-on-surface-variant">ج.م</span>
+</div>
+</div>
+</div>
+<!-- Item Actions (Quantity, Wishlist, Delete) -->
+<div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-outline-variant/30">
+<!-- Quantity Selector -->
+<div class="flex items-center border border-outline-variant rounded-full p-1 bg-surface-container-low">
+<button aria-label="Decrease quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<span class="w-10 text-center font-label-md text-label-md text-on-surface font-semibold">1</span>
+<button aria-label="Increase quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<!-- Secondary actions -->
+<div class="flex items-center gap-4 text-body-sm font-body-sm text-on-surface-variant">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span>حفظ للمفضلة</span>
+</button>
+<span class="text-outline-variant">|</span>
+<button class="flex items-center gap-1 hover:text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>حذف</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Item 2: زيت العود والياسمين السيوي المركز -->
+<article class="p-5 md:p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/60 shadow-sm flex flex-col sm:flex-row gap-5 transition hover:border-primary/40">
+<div class="w-full sm:w-28 sm:h-36 rounded-xl overflow-hidden bg-surface-container shrink-0 border border-outline-variant/40 relative">
+<img class="w-full h-full object-cover" data-alt="A heavy glass flacon with dark oud and Siwa oasis jasmine perfume oil resting beside raw desert sandstones and dried wild jasmine petals. Warm golden hour light pours through, illuminating the deep amber liquid with rich cocoa and terracotta tones, photographed with editorial beauty depth and sharp focal elegance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9nYqXrgXMkLbBCv2PPVH0BWomVkmw5gmvNVw8giktWXXxKjVckUEE9zLEPQjvhc_CYVHBFQf3Buwznt3nnIiM1GXcIexWbNGdcJDWp1zT7KTc5spls1AUp-hanEWt93ie-EqX2SJ_VGoQlu49OLExLvnWKL40KqgAXTsF8QYSJxF_cGrFYV4b_2az7wwlrIehtRyz1juSy1mZdGxFaUXNryLM-7X9qIt6JILlKJplko_C3HzvQiMR"/>
+<span class="absolute top-2 right-2 bg-surface/90 text-on-surface text-label-sm font-label-sm px-2 py-0.5 rounded shadow-sm">عطر مركز</span>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="text-label-sm font-label-sm text-secondary tracking-wider block">العطور والزيوت • PURE PERFUME OIL</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">زيت العود والياسمين السيوي المركز</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">الحجم: 30ml - خالي تماماً من الكحول ومناسب للبشرة الحساسة</p>
+</div>
+<div class="text-left font-display-md text-primary font-medium text-lg md:text-xl whitespace-nowrap">
+                    520 <span class="text-label-sm font-label-sm font-normal text-on-surface-variant">ج.م</span>
+</div>
+</div>
+</div>
+<!-- Item Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-outline-variant/30">
+<div class="flex items-center border border-outline-variant rounded-full p-1 bg-surface-container-low">
+<button aria-label="Decrease quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<span class="w-10 text-center font-label-md text-label-md text-on-surface font-semibold">1</span>
+<button aria-label="Increase quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<div class="flex items-center gap-4 text-body-sm font-body-sm text-on-surface-variant">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span>حفظ للمفضلة</span>
+</button>
+<span class="text-outline-variant">|</span>
+<button class="flex items-center gap-1 hover:text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>حذف</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Item 3: أحمر شفاه مخملي غني بدرجة 'ورد النيل 04' -->
+<article class="p-5 md:p-6 bg-surface-container-lowest rounded-2xl border border-outline-variant/60 shadow-sm flex flex-col sm:flex-row gap-5 transition hover:border-primary/40">
+<div class="w-full sm:w-28 sm:h-36 rounded-xl overflow-hidden bg-surface-container shrink-0 border border-outline-variant/40 relative">
+<img class="w-full h-full object-cover" data-alt="A matte velvet terracotta lipstick tube in an architectural brushed brass casing, opened to reveal the sculpted tip in a deep Nile rose pigment. Studio cosmetic still-life shot on fine ivory parchment with creamy mineral swatches in a sophisticated soft-focus high-end editorial composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_SxpRkfcjJ5RcSXpyOSNyYrTT41V1Dnxv10uvIF4dlxAm7Gwm4hZVE6QHgLR4KPCkRwqYZN3DQp5lX7o-d3CY6jhN1266MNpaNo_sK4_T_Frc9wqpkbIdnAPKxM3BwbaO3y05D_q0iHRkM18KXuMBVsbjeV8jo7Kj1tA0zPKBdKY7MvqV4PuAQL3VIsPWOgIDS9_4HQ4GEDn7vYH83gpXLdBEn0djmzgLX0XHZHKjKFrRocXwfxrn"/>
+<span class="absolute top-2 right-2 bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm px-2 py-0.5 rounded shadow-sm">ورد النيل 04</span>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-2">
+<div>
+<span class="text-label-sm font-label-sm text-secondary tracking-wider block">المكياج الفاخر • VELVET LIPSTICK</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">أحمر شفاه مخملي غني بدرجة 'ورد النيل 04'</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">التركيبة: مطفي مخملي مرطب مع زيت الجوجوبا المصري (380 ج.م للقطعة)</p>
+</div>
+<div class="text-left font-display-md text-primary font-medium text-lg md:text-xl whitespace-nowrap">
+                    760 <span class="text-label-sm font-label-sm font-normal text-on-surface-variant">ج.م</span>
+</div>
+</div>
+</div>
+<!-- Item Actions (Qty = 2) -->
+<div class="flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-outline-variant/30">
+<div class="flex items-center border border-outline-variant rounded-full p-1 bg-surface-container-low">
+<button aria-label="Decrease quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<span class="w-10 text-center font-label-md text-label-md text-on-surface font-semibold">2</span>
+<button aria-label="Increase quantity" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface hover:bg-surface transition" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<div class="flex items-center gap-4 text-body-sm font-body-sm text-on-surface-variant">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+<span>حفظ للمفضلة</span>
+</button>
+<span class="text-outline-variant">|</span>
+<button class="flex items-center gap-1 hover:text-error transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>حذف</span>
+</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- RECOMMENDED ADD-ONS (أضيفي لمستكِ الأخيرة) -->
+<div class="p-6 bg-surface-container-low rounded-2xl border border-outline-variant/60">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">أضيفي لمستكِ الأخيرة (Complementary Add-ons)</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">قطع مختارة بعناية لتكتمل تجربتكِ الجمالية مع توصيل مجاني مباشر.</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[28px]">auto_awesome</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Add-on 1 -->
+<div class="p-4 bg-surface-container-lowest rounded-xl border border-outline-variant/50 flex items-center gap-3.5">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Pocket size travel perfume mist spray in a minimalist blush rose cylinder bottle, placed beside fresh orange blossoms with soft Egyptian warm light, luxury minimal cosmetic visual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC32-q7Wc0sSojgy8WDN97VGDCh7QN1f_gaL_vW9EIp4-J6BVzIiX7D53GcjUT-ZYx_wzxK4T8H3J6G3gD9ZEtBAKguta_RyNFtDcZahO4hZ9Zgps5mxVrlOEyFrAodUYpOF-8IbZ6r8Op8f5s-C-4UHWZmSEnJhEq0R2ouIvYnc6YzlhcZHPAwWqL8YArjpEntwjmTSU3MWtkUJc6Y0oI1uMfNjY0NCkOyFnJPXINlBxIY00fk-RcB"/>
+</div>
+<div class="flex-1">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-sm">بخاخ العطر المركز لحقيبة اليد (10ml)</h4>
+<div class="text-label-md font-label-md text-primary font-semibold mt-0.5">+140 ج.م</div>
+</div>
+<button class="px-3.5 py-1.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-on-primary text-label-sm font-label-sm transition-colors shrink-0" type="button">
+                + إضافة
+              </button>
+</div>
+<!-- Add-on 2 -->
+<div class="p-4 bg-surface-container-lowest rounded-xl border border-outline-variant/50 flex items-center gap-3.5">
+<div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Pure organic Egyptian cotton reusable cleansing pads stacked neatly in a natural woven reed basket, surrounded by soft bathroom mist and warm morning sunshine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjzHcSEn79ya8afiZ3rlFgXMk7ice4FwJX0NP8b6XsbgF13vyIVV5tFyz35lFjnLqMSSiVdLWiedDXEjhWFoOCEXnNRQVS5HrVTEoSbd1ku4sfg6b6UO1hp73U9_7d_pv_AYLOhlTrnWwoBlmqpGjkB-EfR6lUp_nyMWqLqMsfC4bnG2qM4X21tnLILJngWZA4p2rU11beWMNUF-Jm3rarrHt2B0esdmJz33hgCaDO1XtjRqAih9bN"/>
+</div>
+<div class="flex-1">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-sm">وسائد قطن مصري عضوي لإزالة المكياج</h4>
+<div class="text-label-md font-label-md text-primary font-semibold mt-0.5">+85 ج.م</div>
+</div>
+<button class="px-3.5 py-1.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-on-primary text-label-sm font-label-sm transition-colors shrink-0" type="button">
+                + إضافة
+              </button>
+</div>
+</div>
+</div>
+<!-- Packaging & Gifting Note -->
+<div class="p-4 rounded-xl bg-surface-container/50 border border-outline-variant/40 flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">featured_seasonal_and_gifts</span>
+<div class="text-body-sm font-body-sm text-on-surface-variant flex-1">
+<span class="font-semibold text-on-surface">تغليف فاخر مجاني:</span> كل طلب يوضع بعناية فائقة في صندوق هدايا لوميه المخملي الممهور بختم الشمع، جاهز تماماً للإهداء دون أي تكاليف إضافية.
+          </div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Order Summary & Fast Egyptian Checkout (5 Cols) -->
+<section class="lg:col-span-5 space-y-6">
+<!-- Sticky Checkout Card -->
+<div class="p-6 md:p-8 bg-surface-container-lowest rounded-2xl border border-outline-variant/70 shadow-md">
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/40 mb-5">
+<h2 class="text-headline-md font-headline-md text-on-surface">ملخص الطلب الفاخر</h2>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container px-2.5 py-1 rounded-full">Order Summary</span>
+</div>
+<!-- Price breakdown table -->
+<div class="space-y-3 font-body-sm text-body-sm border-b border-outline-variant/40 pb-5">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>مجموع المنتجات (4 قطع)</span>
+<span class="font-medium text-on-surface">1,960 ج.م</span>
+</div>
+<div class="flex justify-between items-center text-primary">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">loyalty</span>
+<span>خصم كود الترحيب (WELCOME15)</span>
+</span>
+<span class="font-semibold">-294 ج.م</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+<span>مصاريف الشحن</span>
+</span>
+<span class="text-[#4A6B53] font-semibold bg-[#4A6B53]/10 px-2 py-0.5 rounded text-label-sm">مجاناً (عرض ترويجي للقاهرة والجيزة)</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>ضريبة القيمة المضافة (14% VAT)</span>
+<span class="text-on-surface-variant">مشمولة بالسعر</span>
+</div>
+</div>
+<!-- Total Calculation -->
+<div class="py-4 border-b border-outline-variant/40 mb-6">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="text-headline-sm font-headline-sm text-on-surface block">الإجمالي النهائي المستحق</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">شامل كافة الضرائب والشحن السريع</span>
+</div>
+<div class="text-right">
+<span class="text-display-md font-display-md text-primary font-bold">1,666</span>
+<span class="text-label-md font-label-md text-on-surface-variant mr-1">ج.م</span>
+</div>
+</div>
+</div>
+<!-- Promo Code Box -->
+<div class="mb-6">
+<label class="block text-label-md font-label-md text-on-surface mb-2">كوبون الخصم Promo Code</label>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-md px-3.5 py-2.5 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition" placeholder="أدخلي رمز القسيمة" type="text" value="WELCOME15"/>
+<span class="material-symbols-outlined absolute left-3 top-3 text-[18px] text-[#4A6B53]">check_circle</span>
+</div>
+<button class="px-5 py-2.5 rounded-md bg-secondary text-surface-bright font-label-md text-label-md hover:bg-primary transition-colors" type="button">
+                تطبيق
+              </button>
+</div>
+<p class="text-label-sm font-label-sm text-[#4A6B53] mt-1.5 flex items-center gap-1">
+<span>تم تفعيل خصم 15% للعملاء الجدد بنجاح!</span>
+</p>
+</div>
+<!-- Quick Address & Governorate Dispatch Selector -->
+<div class="mb-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<div class="flex items-center gap-2 mb-3 text-on-surface font-headline-sm text-headline-sm text-base">
+<span class="material-symbols-outlined text-primary text-[20px]">pin_drop</span>
+<span>بيانات التوصيل السريع (Governorate &amp; Contact)</span>
+</div>
+<div class="space-y-3">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">المحافظة Governorate</label>
+<select class="w-full bg-surface-bright border border-outline-variant rounded-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option selected="">القاهرة (توصيل خلال 24 ساعة - مجاناً)</option>
+<option>الجيزة والشيخ زايد (توصيل خلال 24 ساعة - مجاناً)</option>
+<option>الإسكندرية والساحل الشمالي (توصيل خلال 48 ساعة)</option>
+<option>محافظات الدلتا والقناة (خلال يومين عمل)</option>
+<option>محافظات الصعيد والبحر الأحمر (3-4 أيام عمل)</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface-variant mb-1">رقم الهاتف لتأكيد الشحن الفوري (WhatsApp/SMS)</label>
+<div class="flex" dir="ltr">
+<span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-outline-variant bg-surface-container text-on-surface-variant font-label-md text-label-md">
+                    🇪🇬 +20
+                  </span>
+<input class="w-full bg-surface-bright border border-outline-variant rounded-r-md px-3 py-2 text-body-sm font-body-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none text-left" placeholder="10X XXX XXXX" type="tel" value="0109 876 5432"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Payment Options Selector (Regional Cues) -->
+<div class="mb-6">
+<div class="flex items-center justify-between mb-3">
+<label class="text-label-md font-label-md text-on-surface font-semibold">طريقة الدفع المختارة Payment Method</label>
+<span class="text-label-sm font-label-sm text-on-surface-variant">معاملات بنكية آمنة وموثقة</span>
+</div>
+<div class="space-y-2.5">
+<!-- Method 1: Cash on Delivery (COD) -->
+<label class="flex items-start gap-3 p-3.5 rounded-xl border border-primary bg-secondary-container/20 cursor-pointer transition">
+<input checked="" class="mt-1 text-primary focus:ring-primary border-outline-variant" name="payment_method" type="radio"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface text-sm font-bold">الدفع عند الاستلام (Cash on Delivery - COD)</span>
+<span class="text-label-sm bg-surface-bright text-primary border border-outline-variant/60 px-2 py-0.5 rounded font-semibold">الأكثر تفضيلاً</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                    يمكنكِ فحص وتأكيد الطرد الفاخر والتأكد من المنتجات عند استلامها من مندوبنا قبل السداد.
+                  </p>
+</div>
+</label>
+<!-- Method 2: Cards (Visa, MC, Meeza) -->
+<label class="flex items-start gap-3 p-3.5 rounded-xl border border-outline-variant bg-surface-bright hover:border-primary/50 cursor-pointer transition">
+<input class="mt-1 text-primary focus:ring-primary border-outline-variant" name="payment_method" type="radio"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface text-sm">البطاقات البنكية (Visa / Mastercard / ميزة Meeza)</span>
+<div class="flex items-center gap-1.5 opacity-80 text-on-surface-variant text-[12px] font-bold">
+<span>VISA</span> • <span>MC</span> • <span>ميزة</span>
+</div>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                    دفع إلكتروني مشفر وآمن بمعيار 256-bit SSL بدون أية رسوم إضافية.
+                  </p>
+</div>
+</label>
+<!-- Method 3: Mobile Wallets & InstaPay -->
+<label class="flex items-start gap-3 p-3.5 rounded-xl border border-outline-variant bg-surface-bright hover:border-primary/50 cursor-pointer transition">
+<input class="mt-1 text-primary focus:ring-primary border-outline-variant" name="payment_method" type="radio"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface text-sm">المحافظ الإلكترونية و InstaPay إنستاباي</span>
+<span class="text-label-sm text-primary font-medium">فوري وفودافون كاش</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                    تحويل مباشر وسريع عبر Vodafone Cash، Orange Money، أو تطبيق InstaPay الوطني.
+                  </p>
+</div>
+</label>
+<!-- Method 4: Installments (ValU / Tabby) -->
+<label class="flex items-start gap-3 p-3.5 rounded-xl border border-outline-variant bg-surface-bright hover:border-primary/50 cursor-pointer transition">
+<input class="mt-1 text-primary focus:ring-primary border-outline-variant" name="payment_method" type="radio"/>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface text-sm">تقسيط بدون فوائد (ValU / Tabby)</span>
+<span class="text-label-sm text-secondary font-semibold">قسّطي على 3 أو 6 أشهر</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                    قسمي فاتورتك على دفعات ميسرة بقيمة 277 ج.م شهرياً مع ValU.
+                  </p>
+</div>
+</label>
+</div>
+</div>
+<!-- High-visibility Primary CTA Button (Design System Mandate: Pill-shaped, Solid Espresso -> Terracotta) -->
+<button class="w-full py-4 px-8 rounded-full bg-[#2A1D1A] hover:bg-[#C86D51] text-[#FDFBF7] font-label-lg text-label-lg transition-all duration-300 shadow-md flex items-center justify-center gap-3 active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+<span class="tracking-wide">إتمام الطلب بأمان (1,666 ج.م)</span>
+</button>
+<!-- Micro-Trust & Egyptian Guarantee Cluster -->
+<div class="mt-6 pt-5 border-t border-outline-variant/40 space-y-2 text-center">
+<div class="flex items-center justify-center gap-4 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+<span>ضمان أصالة 100%</span>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">autorenew</span>
+<span>إرجاع سهل 14 يوماً</span>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">card_giftcard</span>
+<span>تغليف مجاني فاخر</span>
+</span>
+</div>
+<p class="text-[11px] text-outline pt-1">
+              جميع المنتجات مسجلة رسمياً ومصنوعة بموجب تصريح هيئة الدواء المصرية للمستحضرات الطبيعية.
+            </p>
+</div>
+</div>
+<!-- Help & Concierge Support Box -->
+<div class="p-5 bg-surface-container-low rounded-xl border border-outline-variant/50 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-bright flex items-center justify-center text-primary border border-outline-variant/40">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-sm text-on-surface">تحتاجين لمساعدة خبيرة الجمال؟</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">فريقنا متاح عبر الواتساب للإجابة عن أسئلتك على مدار الساعة.</p>
+</div>
+</div>
+<a class="px-4 py-2 bg-surface-bright border border-outline-variant hover:border-primary text-primary rounded-full text-label-sm font-label-sm transition-colors whitespace-nowrap" href="#">
+            محادثة فورية
+          </a>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant/50 dark:border-outline/30 mt-16">
+<div class="w-full px-6 md:px-16 py-16 max-w-[1440px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-outline-variant/40">
+<!-- Brand Story Column -->
+<div class="lg:col-span-2 space-y-4">
+<div class="text-headline-md font-headline-md text-primary dark:text-inverse-primary tracking-wider">
+            LUMÉ • لوميه
+          </div>
+<p class="text-body-md font-body-md text-on-surface-variant dark:text-surface-variant max-w-md leading-relaxed">
+            دار مستحضرات التجميل والعطور الفاخرة المستوحاة من أسرار النيل الأزلية. نصيغ خلاصات النباتات المصرية النقية بأسلوب عصري يفيض بالعناية والترف لامرأة تبحث عن التميز والفرادة.
+          </p>
+<div class="flex items-center gap-3 pt-2">
+<span class="inline-flex items-center gap-1.5 text-label-sm font-label-sm text-secondary bg-surface-bright px-3 py-1.5 rounded-full border border-outline-variant/50">
+<span class="material-symbols-outlined text-[16px] text-primary">eco</span>
+<span>مكونات طبيعية 100%</span>
+</span>
+<span class="inline-flex items-center gap-1.5 text-label-sm font-label-sm text-secondary bg-surface-bright px-3 py-1.5 rounded-full border border-outline-variant/50">
+<span class="material-symbols-outlined text-[16px] text-primary">cruelty_free</span>
+<span>لم يُجرب على الحيوانات</span>
+</span>
+</div>
+</div>
+<!-- Links Column 1: Collections -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-primary dark:text-inverse-primary mb-4">المجموعات Collections</h4>
+<ul class="space-y-2.5">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">العناية بالبشرة Skincare</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">المكياج Makeup</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">العطور والزيوت Ritual Perfumery</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">عن لوميه Our Story</a></li>
+</ul>
+</div>
+<!-- Links Column 2: Customer Service -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-primary dark:text-inverse-primary mb-4">خدمة العملاء Client Care</h4>
+<ul class="space-y-2.5">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">سياسة الإرجاع والاستبدال 14 يوم</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">الشحن والتوصيل لكافة المحافظات</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">تواصل معنا Contact Us</a></li>
+</ul>
+</div>
+<!-- Links Column 3: Trust & Payments -->
+<div>
+<h4 class="text-headline-sm font-headline-sm text-primary dark:text-inverse-primary mb-4">طرق السداد المعتمدة</h4>
+<ul class="space-y-2.5">
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">الدفع عند الاستلام والتأكيد الفوري COD</a></li>
+<li><a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 text-body-md font-body-md block" href="#">برنامج التقسيط والمدفوعات الإلكترونية</a></li>
+<li class="pt-2">
+<span class="text-label-sm font-label-sm text-outline block mb-1">الرقم الضريبي الموحد: 498-320-119</span>
+<span class="text-label-sm font-label-sm text-outline block">سجل تجاري مصري: 84210</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Copyright Sub-bar -->
+<div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-body-md font-body-md text-on-surface-variant dark:text-surface-variant text-center md:text-right">
+<p>© 2024 LUMÉ لوميه لمستحضرات التجميل الفاخرة. جميع الحقوق محفوظة | صُنع في مصر Crafted in Egypt</p>
+<div class="flex items-center gap-6 text-label-md font-label-md">
+<a class="hover:text-primary transition-colors" href="#">سياسة الخصوصية Privacy</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">الشروط والأحكام Terms</a>
+<span>•</span>
+<span class="text-primary font-semibold">بوابة تسوق آمنة 100%</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

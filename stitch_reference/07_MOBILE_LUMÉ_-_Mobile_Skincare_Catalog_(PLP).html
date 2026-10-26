@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>LUMÉ | مجموعة العناية بالبشرة الفاخرة</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Playfair Display + Plus Jakarta Sans + Noto Kufi Arabic for Egyptian Luxury Editorial -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#94452c",
+            "on-primary-fixed-variant": "#793019",
+            "inverse-primary": "#ffb59f",
+            "on-tertiary-container": "#fffbff",
+            "primary-container": "#b35c41",
+            "tertiary-container": "#976967",
+            "on-tertiary-fixed": "#311212",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#30312e",
+            "on-error": "#ffffff",
+            "on-surface": "#1b1c1a",
+            "surface-container": "#efeeea",
+            "background": "#fbf9f5",
+            "primary-fixed-dim": "#ffb59f",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#251916",
+            "inverse-on-surface": "#f2f0ed",
+            "tertiary-fixed": "#ffdad8",
+            "secondary-fixed": "#f5ddd8",
+            "on-primary-container": "#fffbff",
+            "surface-container-high": "#eae8e4",
+            "on-secondary-container": "#705f5b",
+            "on-secondary-fixed-variant": "#53433f",
+            "surface-variant": "#e4e2de",
+            "surface": "#fbf9f5",
+            "surface-tint": "#97472e",
+            "on-background": "#1b1c1a",
+            "on-tertiary-fixed-variant": "#643c3b",
+            "error": "#ba1a1a",
+            "tertiary": "#7c514f",
+            "outline": "#88726c",
+            "outline-variant": "#dbc1ba",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-surface-variant": "#55433e",
+            "surface-container-highest": "#e4e2de",
+            "surface-bright": "#fbf9f5",
+            "surface-container-low": "#f5f3ef",
+            "secondary-fixed-dim": "#d8c2bc",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#ffdbd0",
+            "tertiary-fixed-dim": "#f1b9b7",
+            "surface-dim": "#dbdad6",
+            "secondary-container": "#f2dad5",
+            "on-primary-fixed": "#3a0a00",
+            "secondary": "#6c5a56"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "margin-lg": "5rem",
+            "margin": "2rem",
+            "gutter-sm": "1rem",
+            "margin-sm": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "gutter-lg": "2.5rem",
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Playfair Display", "Noto Kufi Arabic", "serif"],
+            "body-sm": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "display-md": ["Playfair Display", "Noto Kufi Arabic", "serif"],
+            "body-md": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "headline-lg": ["Playfair Display", "Noto Kufi Arabic", "serif"],
+            "label-md": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "body-lg": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "label-sm": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "display-md-mobile": ["Playfair Display", "Noto Kufi Arabic", "serif"],
+            "label-lg": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "headline-md": ["Playfair Display", "Noto Kufi Arabic", "serif"],
+            "headline-sm": ["Plus Jakarta Sans", "Noto Kufi Arabic", "sans-serif"],
+            "display-lg": ["Playfair Display", "Noto Kufi Arabic", "serif"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["38px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+            "display-md": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+            "display-md-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0em", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Kufi Arabic', sans-serif;
+      background-color: #fbf9f5;
+      color: #1b1c1a;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased selection:bg-secondary-fixed selection:text-primary min-h-screen pb-24">
+<!-- TopAppBar (From Shared Component JSON) -->
+<header class="bg-surface/90 dark:bg-surface/90 backdrop-blur-md text-primary dark:text-inverse-primary docked full-width top-0 sticky z-40 shadow-sm flex justify-between items-center w-full px-margin-sm h-14">
+<!-- Leading Icon -->
+<button aria-label="القائمة" class="p-2 -mr-2 rounded-full text-secondary hover:text-primary active:scale-95 transition-transform duration-150 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<!-- Center Brand Logo Headline -->
+<a class="font-display-md-mobile text-display-md-mobile tracking-wider text-primary dark:text-inverse-primary uppercase font-bold" href="#">
+      LUMÉ
+    </a>
+<!-- Trailing Actions (Search & Shopping Bag Counter) -->
+<div class="flex items-center gap-1 -ml-2">
+<button aria-label="البحث" class="p-2 rounded-full text-secondary hover:text-primary active:scale-95 transition-transform duration-150 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</button>
+<button aria-label="حقيبة التسوق" class="p-2 rounded-full text-secondary hover:text-primary active:scale-95 transition-transform duration-150 flex items-center justify-center relative" type="button">
+<span class="material-symbols-outlined text-[22px]">shopping_bag</span>
+<span class="absolute top-1.5 left-1.5 w-4 h-4 rounded-full bg-primary text-on-primary font-label-sm text-[9px] flex items-center justify-center font-bold">3</span>
+</button>
+</div>
+</header>
+<!-- Category Editorial Banner & Governorate Dispatch -->
+<section class="px-margin-sm pt-space-md pb-space-sm">
+<!-- Regional Dispatch Notice Pill -->
+<div class="inline-flex items-center gap-2 bg-secondary-fixed/50 px-3 py-1.5 rounded-full mb-3 shadow-[0_2px_10px_-2px_rgba(42,29,26,0.03)] border border-outline-variant/40">
+<span class="w-2 h-2 rounded-full bg-[#4A6B53] animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-secondary-fixed">توصيل فاخر خلال 24 ساعة للقاهرة والجيزة</span>
+<span class="material-symbols-outlined text-primary text-[16px]">local_shipping</span>
+</div>
+<!-- Editorial Header Title -->
+<div class="flex flex-col gap-1">
+<div class="flex items-baseline justify-between">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-serif">
+          عناية النيل النباتية
+        </h1>
+<span class="font-label-sm text-label-sm text-secondary tracking-widest uppercase">24 مستحضر</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-[340px] leading-relaxed">
+        إشراقة نقية مستوحاة من أسرار النيل وعجائب النباتات المصرية النادرة كزهرة اللوتس الأزرق والزيوت المعصورة على البارد.
+      </p>
+</div>
+</section>
+<!-- Mobile Sticky Filter & Sort Control Bar -->
+<div class="sticky top-14 z-30 bg-surface/95 backdrop-blur-md shadow-sm py-2 px-margin-sm space-y-2">
+<div class="flex items-center justify-between gap-2">
+<!-- Filter Trigger Button with Active Badge -->
+<button class="flex-1 flex items-center justify-center gap-2 h-10 px-4 rounded-full bg-surface-container-low border border-outline-variant text-on-surface active:scale-95 transition-all shadow-sm" id="openFilterBtn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span class="font-label-md text-label-md">تصفية الفلاتر</span>
+<span class="w-5 h-5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center font-bold">3</span>
+</button>
+<!-- Sort Dropdown Trigger -->
+<div class="relative flex-1">
+<button class="w-full flex items-center justify-between h-10 px-4 rounded-full bg-surface-container-low border border-outline-variant text-on-surface active:scale-95 transition-all shadow-sm" type="button">
+<span class="font-label-md text-label-md truncate">الأكثر مبيعاً</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">expand_more</span>
+</button>
+</div>
+<!-- Grid Toggle (2-column vs single column) -->
+<div class="flex items-center rounded-full bg-surface-container p-0.5 border border-outline-variant/30">
+<button aria-label="عرض عمودين" class="w-9 h-9 rounded-full bg-surface-container-lowest text-primary shadow-sm flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button aria-label="عرض مفرد" class="w-9 h-9 rounded-full text-secondary hover:text-primary flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[18px]">view_agenda</span>
+</button>
+</div>
+</div>
+<!-- Active Filter Chips (Scrollable Horizontal Strip) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1 pb-0.5">
+<button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm border border-outline-variant/50 whitespace-nowrap active:scale-90 transition-transform">
+<span>ترطيب فوري</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm border border-outline-variant/50 whitespace-nowrap active:scale-90 transition-transform">
+<span>خالي من العطور</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm border border-outline-variant/50 whitespace-nowrap active:scale-90 transition-transform">
+<span>أقل من 700 ج.م</span>
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="text-primary font-label-sm text-label-sm underline underline-offset-4 whitespace-nowrap px-1 hover:text-primary-container">
+        مسح الكل
+      </button>
+</div>
+</div>
+<!-- Main Product Listing: 2-Column Responsive Grid -->
+<main class="px-margin-sm pt-4 pb-6">
+<div class="grid grid-cols-2 gap-3">
+<!-- Card 1: سيروم اللوتس الأزرق والذهب -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<!-- Media Container (4:5 Aspect) -->
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Luxurious cosmetic dropper bottle filled with golden botanical serum, placed on natural sunlit alabaster stone with soft Egyptian linen shadows. The palette is infused with warm terracotta, deep cocoa, and gleaming champagne gold, evoking a lavish Cairo atelier ritual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQDhwO2Hfp1YTNWsuUzWQAL_GKiFS3UOOIoGn0XVZOLt5X7DnB8TlSfns2p6ug0XX-4n_YqmMZmrVM_BCyU-IVP2s0xTwgCLPVbTJZP1kbjBReMLK_JSLOFgloGe7EVTNCUce4ja46ZbU6ERN_kqBvNXI_uVMlyNjqc9AnOvjVNCJH5FIgfVrV5a-fG_VfdYkjBTbfjEYLZBEYt05Mk0Iz7GE55UWabTYQOXRkbfeIRPKl6E6RnnP4"/>
+<!-- Badges -->
+<div class="absolute top-2 right-2 flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[10px] font-label-sm font-bold shadow-sm">
+              الأكثر طلباً
+            </span>
+<span class="px-2 py-0.5 rounded-full bg-primary text-on-primary text-[10px] font-label-sm">
+              وفّري 170 ج.م
+            </span>
+</div>
+<!-- Wishlist Heart Trigger -->
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<!-- Product Meta -->
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<!-- Rating & Trust -->
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4.9</span>
+<span class="font-label-sm text-label-sm text-secondary">(468)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              سيروم اللوتس الأزرق والذهب عيار 24
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              ترطيب فائق وتجديد عميق للبشرة
+            </p>
+</div>
+<!-- Pricing & CTA -->
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">680 ج.م</span>
+<span class="font-label-sm text-label-sm text-secondary line-through">850 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: كريم الهيالورونيك الثلاثي المخملي -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Frosted glass luxury cream jar resting on sun-baked terracotta clay tiles, displaying a rich, whipped velvety white emulsion. Soft ambient morning light casts delicate warm organic shadows with subtle rose-tinted neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9SqFYiiDAJHmM7kzdEDobHgw5Ms4KHpH99ZNe7IQGxeasPpXWTC7z2WtR4sclbCk9bzf1lXLYfmYP-LySH6yoOvDHD8aCLIjgEmwAcNC8I6vfPtJMUKtKoF3U62yBNyJke3PZv5BOWMylO8D1kys-Dkccx4WanSXVNnPtgbnDGvQkC950KmvJ7QhJujOCOFBNO294_0VcGp9deBtI6E-nqK9CznGHWG-pZij3tuxargT-smQ9q5xL"/>
+<div class="absolute top-2 right-2 flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-[10px] font-label-sm font-bold shadow-sm">
+              ورد مصري نقي
+            </span>
+</div>
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4.8</span>
+<span class="font-label-sm text-label-sm text-secondary">(295)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              كريم الهيالورونيك الثلاثي المخملي
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              حبس رطوبة يدوم 72 ساعة
+            </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">640 ج.م</span>
+<span class="font-label-sm text-label-sm text-secondary line-through">780 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: زيت الباكوتشيول الليلي لشد البشرة -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Minimalist dark amber apothecary glass dropper bottle showcasing organic cold-pressed plant retinol alternative, set against hand-carved porous limestone. The lighting is moody and cinematic with warm chocolate undertones and radiant golden reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRDphcjZ3KbyteHf76vvULbDg0QMR9OjbubPBL2Mr_8TWxuKGI8d3Alog436mSLXkXhgexohX1e78A1uYg6I0CkdFSz4RvYgiu_Z9ctUBqg6W0iTv0rdL1e4S53flqKIndF1crAt56VyeXjx26Ps1W5NmXYsEj4lJOpuypYSFJks3uQPRlMOSxbDR41tJQt4YQKegqx2AfwYV_Qobj8jLHFBtXO7voinJeLsaA5F5IaZhauBZueglQ"/>
+<div class="absolute top-2 right-2 flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface text-[10px] font-label-sm font-bold shadow-sm">
+              بديل الريتينول
+            </span>
+</div>
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">5.0</span>
+<span class="font-label-sm text-label-sm text-secondary">(112)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              زيت الباكوتشيول الليلي لشد البشرة
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              مقاومة التجاعيد وتجديد الخلايا
+            </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">1,120 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 4: إكسير فيتامين C النقي 15% -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Elegant matte ochre glass flacon of potent vitamin C serum placed next to freshly harvested Egyptian bitter oranges and desert sand textures. Warm, high-fashion editorial lighting highlights the translucent liquid dropper and micro-gold typography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsbpPbAPxD3KD9SMckhDjufbwcaBnEeSoSyNOA4wJwgrrslGQEvJZrVQyLTermP8Cx726aPQfoXWgrEdL_ENgghN3JhpEV0GDPDwPd0hrmrxpn7brERbyt_6gBKl-F0LvsTg8RrBaIbMxuX56FUP9SvstoeU7240j_9EC4CBPzXVYa0k5JNylmvcurr0OoOXmBUKtvwTgGR3UktZ9bsckQjsCqCDPaZU_MrWVboa8dGXhxkKyd5p7m"/>
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4.9</span>
+<span class="font-label-sm text-label-sm text-secondary">(340)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              إكسير فيتامين C النقي 15%
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              توحيد لون البشرة ومحاربة التصبغات
+            </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">980 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 5: واقي الشمس المعدني غير المرئي -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Sleek, minimalist matte beige sunscreen tube resting organically against sunlit desert dunes and polished river quartz stone. Ultra-clean light-mode luxury beauty aesthetic with gentle warm terracotta highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUbAhE50pD3BYbhqZgDV5wS5gFzuCe0zYUzpFlm_RYca64T8i7wwoe9zpALXBZPkqjPPw72zaySuiSOmN1jKJ9jPiN-wMB7lHTXDmxIDuvEQecYhUu2pFdLmACs2FZ4WDd9jAKCAiiVCm4kiUM6NBrCmuo6YJeK2Xcg83MVGk-DsckwjVy9_GPpq5e5LM088i31_IGTOVBTt2J4N4Y6FzBSD9y62qULqVqWOO-zeXvyRxoIsx3YlDb"/>
+<div class="absolute top-2 right-2 flex flex-col gap-1 items-start">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface text-[10px] font-label-sm font-bold shadow-sm">
+              حماية SPF 50+
+            </span>
+</div>
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4.8</span>
+<span class="font-label-sm text-label-sm text-secondary">(189)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              واقي الشمس المعدني غير المرئي SPF 50+
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              ملمس غير دهني بدون أثر أبيض
+            </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">520 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 6: غسول رغوي بطمي أسوان المنقي -->
+<article class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 shadow-[0_4px_20px_-2px_rgba(42,29,26,0.03)] hover:shadow-[0_12px_32px_-4px_rgba(42,29,26,0.06)] transition-all">
+<div class="relative w-full aspect-[4/5] bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Refined earthen pump bottle with rich cleansing foam on a smooth basalt rock surrounded by delicate water ripples in natural warm sunlight. Visual aesthetic embraces Nile river minerals and warm organic Egyptian wellness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlGpUHJwRFWuVsZDUXqHoGuFdPyTNgdCLoX0Meymtb69dsuGM9Ol6EztucrhZ0h3Z-TTQ47BU8KqnLHgdFOluC0FVQRzlYM79yqSNNC6lxArtIIEnMQWlSsO1kXQ7neXhvwgNivIhD4ucRQQsJigWxY53yvXfTiE6YFc6UxqZg_BmUBdMAqMIjiWxrK5e5H2YU6SvSPth-eRFUMZ2FkIRAX-VMlziXSS3My_C2Hpl2S4k8yj31HW3S"/>
+<button aria-label="إضافة للمفضلة" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md flex items-center justify-center text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-3 flex flex-col flex-1 justify-between gap-2">
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">4.7</span>
+<span class="font-label-sm text-label-sm text-secondary">(214)</span>
+</div>
+<h3 class="font-headline-sm text-[14px] leading-snug font-bold text-on-surface line-clamp-2">
+              غسول رغوي بطمي أسوان المنقي
+            </h3>
+<p class="font-body-sm text-[11px] text-secondary line-clamp-1 mt-0.5">
+              تنظيف لطيف وتنقية عميقة للمسام
+            </p>
+</div>
+<div class="pt-2 border-t border-outline-variant/20">
+<div class="flex items-baseline gap-1.5 mb-2.5">
+<span class="font-label-lg text-label-lg font-bold text-primary">420 ج.م</span>
+</div>
+<button class="w-full h-10 rounded-full bg-on-surface text-surface font-label-md text-label-md flex items-center justify-center gap-1.5 hover:bg-primary active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">local_mall</span>
+<span>أضيفي للحقيبة</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- WhatsApp Beauty Advisor Banner -->
+<section class="mt-8 p-4 rounded-2xl bg-secondary-fixed/30 border border-outline-variant/50 relative overflow-hidden flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-[#25D366]/10 text-[#128C7E] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">support_agent</span>
+</div>
+<div class="space-y-0.5">
+<h4 class="font-headline-sm text-[15px] font-bold text-on-secondary-fixed">
+            تحتارين في اختيار الروتين الأمثل؟
+          </h4>
+<p class="font-body-sm text-[12px] text-secondary leading-snug">
+            استشيري خبيرات لوميه عبر واتساب لتحديد المستحضرات المناسبة لطبيعة بشرتك مجاناً.
+          </p>
+</div>
+</div>
+<a class="h-11 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-primary-container active:scale-95 transition-all shadow-sm" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>محادثة فورية مع خبيرة العناية</span>
+</a>
+</section>
+<!-- Pagination / Load More -->
+<div class="mt-6 flex flex-col items-center gap-2">
+<p class="font-label-sm text-label-sm text-secondary">عرض 6 من 24 مستحضر</p>
+<div class="w-32 h-1 bg-surface-container rounded-full overflow-hidden mb-2">
+<div class="w-1/4 h-full bg-primary rounded-full"></div>
+</div>
+<button class="w-full max-w-[280px] h-12 rounded-full border-1.5 border-primary text-primary font-label-lg text-label-lg hover:bg-secondary-fixed/30 active:scale-95 transition-all flex items-center justify-center gap-2" type="button">
+<span>عرض المزيد من المستحضرات</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<!-- Egyptian Quality & Trust Pledge Box -->
+<section class="mt-8 p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 space-y-3">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+<span>ميثاق ثقة وجودة LUMÉ في مصر</span>
+</div>
+<div class="grid grid-cols-1 gap-2.5 text-secondary text-body-sm text-[12px]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>مرخص رسمياً من هيئة الدواء المصرية (EDA)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">visibility</span>
+<span>حق المعاينة والتأكد من المنتج قبل سداد القيمة للمندوب</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">currency_exchange</span>
+<span>الدفع عند الاستلام متاح بجميع المحافظات واسترجاع مجاني خلال 14 يوماً</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Mobile Filter Drawer / Bottom Sheet Modal -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" id="filterDrawerBackdrop">
+<div class="fixed bottom-0 left-0 right-0 max-h-[751px] bg-surface rounded-t-[28px] shadow-[0_-8px_30px_rgba(42,29,26,0.15)] flex flex-col transform translate-y-full transition-transform duration-300" id="filterDrawerSheet">
+<!-- Drawer Drag Handle & Header -->
+<div class="p-4 border-b border-outline-variant/30 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">tune</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-serif">تصفية المنتجات</h2>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform" id="closeFilterBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Scrollable Content -->
+<div class="p-margin-sm overflow-y-auto space-y-6 no-scrollbar">
+<!-- Price Range Slider -->
+<div class="space-y-2.5">
+<div class="flex justify-between items-center">
+<span class="font-label-lg text-label-lg text-on-surface">نطاق السعر (بالجنيه المصري)</span>
+<span class="font-label-md text-label-md text-primary font-bold">150 ج.م - 2,500 ج.م</span>
+</div>
+<input class="w-full accent-primary h-2 bg-surface-container-high rounded-lg cursor-pointer" max="2500" min="150" type="range" value="700"/>
+<div class="flex justify-between text-secondary text-label-sm font-label-sm">
+<span>150 ج.م</span>
+<span>2,500 ج.م</span>
+</div>
+</div>
+<!-- Skin Type Pills -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface block">نوع البشرة</label>
+<div class="flex flex-wrap gap-2">
+<button class="h-9 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm">مختلطة</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">جافة</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">حساسة</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">دهنية</button>
+</div>
+</div>
+<!-- Active Botanical Ingredients -->
+<div class="space-y-2">
+<label class="font-label-lg text-label-lg text-on-surface block">المكونات الفعالة الأساسية</label>
+<div class="flex flex-wrap gap-2">
+<button class="h-9 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm">اللوتس الأزرق</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">حمض الهيالورونيك</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">نياسيناميد 5%</button>
+<button class="h-9 px-4 rounded-full border border-outline-variant bg-surface text-on-surface font-label-md text-label-md">باكوتشيول عضوي</button>
+</div>
+</div>
+<!-- Payment Eligibility Option -->
+<div class="p-3 rounded-xl bg-surface-container-low border border-outline-variant/40 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">مؤهل للدفع عند الاستلام (COD)</p>
+<p class="font-label-sm text-label-sm text-secondary">معاينة قبل الدفع لجميع المحافظات</p>
+</div>
+</div>
+<input checked="" class="w-5 h-5 rounded text-primary focus:ring-primary/20 accent-primary" type="checkbox"/>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-4 border-t border-outline-variant/30 bg-surface flex items-center gap-3">
+<button class="flex-1 h-12 rounded-full border border-outline text-secondary font-label-lg text-label-lg active:scale-95 transition-transform" id="resetFilterBtn" type="button">
+          إعادة ضبط
+        </button>
+<button class="flex-[2] h-12 rounded-full bg-primary text-on-primary font-label-lg text-label-lg shadow-md active:scale-95 transition-transform" id="applyFilterBtn" type="button">
+          تطبيق النتائج (24)
+        </button>
+</div>
+</div>
+</div>
+<!-- BottomNavBar (Shared Component from JSON - Active: المجموعات) -->
+<nav class="bg-surface/95 dark:bg-surface/95 backdrop-blur-lg text-primary dark:text-inverse-primary docked full-width bottom-0 fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-sm h-16 safe-area-inset-bottom shadow-[0_-4px_20px_-2px_rgba(42,29,26,0.05)] border-t border-outline-variant/40 dark:border-outline-variant/20">
+<!-- Item 1: الرئيسية -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim gap-1 py-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[22px]">spa</span>
+<span class="text-label-sm font-label-sm">الرئيسية</span>
+</a>
+<!-- Item 2: المجموعات (ACTIVE STATE MATCHING CURRENT PAGE) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-bold gap-1 py-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">auto_awesome_motion</span>
+<span class="text-label-sm font-label-sm">المجموعات</span>
+</a>
+<!-- Item 3: البحث -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim gap-1 py-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[22px]">search</span>
+<span class="text-label-sm font-label-sm">البحث</span>
+</a>
+<!-- Item 4: المفضلة -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim gap-1 py-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined text-[22px]">favorite</span>
+<span class="text-label-sm font-label-sm">المفضلة</span>
+</a>
+<!-- Item 5: الحقيبة -->
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim gap-1 py-1 hover:text-primary dark:hover:text-inverse-primary transition-colors duration-200 active:scale-90 relative" href="#">
+<span class="material-symbols-outlined text-[22px]">local_mall</span>
+<span class="text-label-sm font-label-sm">الحقيبة</span>
+<span class="absolute top-0 right-1 w-2 h-2 rounded-full bg-primary"></span>
+</a>
+</nav>
+<!-- Interactive Logic for Filter Drawer -->
+<script>
+    const openBtn = document.getElementById('openFilterBtn');
+    const closeBtn = document.getElementById('closeFilterBtn');
+    const applyBtn = document.getElementById('applyFilterBtn');
+    const resetBtn = document.getElementById('resetFilterBtn');
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const sheet = document.getElementById('filterDrawerSheet');
+
+    function openDrawer() {
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        sheet.classList.remove('translate-y-full');
+      }, 10);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      sheet.classList.add('translate-y-full');
+      backdrop.classList.add('opacity-0');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (applyBtn) applyBtn.addEventListener('click', closeDrawer);
+    if (resetBtn) resetBtn.addEventListener('click', closeDrawer);
+    if (backdrop) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeDrawer();
+      });
+    }
+  </script>
+</body></html>

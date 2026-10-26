@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}المقتنيات المفضلة وقائمة الرغبات | LUMÉ لوميه{% else %}Royal Wishlist & Curations | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+
+  <!-- Breadcrumbs -->
+  <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-6 pb-3 border-b editorial-border">
+    <a href="{% url 'core:home' %}" class="hover:text-primary transition-colors">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <a href="{% url 'accounts:dashboard' %}" class="hover:text-primary transition-colors">{% if is_ar %}الملف الملكي{% else %}Dossier{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <span class="text-primary font-semibold">{% if is_ar %}قائمة المقتنيات المفضلة{% else %}Royal Wishlist{% endif %}</span>
+  </div>
+
+  <!-- Header Banner -->
+  <div class="bg-surface-container-low rounded-3xl p-6 md:p-10 border editorial-border mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+    <div class="space-y-2 relative z-10">
+      <span class="px-3 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+        {% if is_ar %}مختاراتكِ المحفوظة • CURATED REPOSITORY{% else %}SAVED CLIENT REPOSITORY{% endif %}
+      </span>
+      <h1 class="font-serif text-3xl md:text-4xl text-on-surface font-light">
+        {% if is_ar %}مقتنياتكِ الملكية المفضلة{% else %}Your Royal Beauty Wishlist{% endif %}
+      </h1>
+      <p class="text-xs text-on-surface-variant max-w-xl">
+        {% if is_ar %}
+        جميع المستحضرات والطقوس التي نالت إعجابكِ محفوظة هنا، لطلبها متى رغبتِ بنقرة واحدة مع خدمة الكونسيرج والتوصيل المباشر.
+        {% else %}
+        All artifacts and rituals saved for your upcoming beauty orders. Ready to be added to your concierge bag with 1 click.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="relative z-10 text-end">
+      <span class="font-serif text-2xl text-primary font-bold block">{{ wishlist_items|length }}</span>
+      <span class="text-xs text-outline font-mono">
+        {% if is_ar %}مستحضر محفوظ{% else %}Artifacts Saved{% endif %}
+      </span>
+    </div>
+  </div>
+
+  <!-- Wishlist Products Grid -->
+  {% if wishlist_items %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for item in wishlist_items %}
+    <div class="bg-surface-container-lowest rounded-2xl border editorial-border overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow group relative">
+      
+      <!-- Top Image & Badge -->
+      <div class="relative aspect-square bg-surface-container-low overflow-hidden">
+        {% if item.product.images.first %}
+        <img 
+          src="{{ item.product.images.first.image.url }}" 
+          alt="{{ item.product.name_ar }}" 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        >
+        {% else %}
+        <div class="w-full h-full flex items-center justify-center text-outline">
+          <span class="material-symbols-outlined text-4xl">spa</span>
+        </div>
+        {% endif %}
+
+        <!-- Remove Wishlist Button -->
+        <button 
+          onclick="toggleWishlist({{ item.product.id }}, this)" 
+          class="wishlist-btn in-wishlist absolute top-3 {% if is_ar %}left-3{% else %}right-3{% endif %} w-9 h-9 rounded-full bg-surface-container-lowest/90 backdrop-blur-md border editorial-border flex items-center justify-center text-primary hover:text-error hover:border-error transition-all shadow-xs"
+          title="{% if is_ar %}إزالة من المفضلة{% else %}Remove{% endif %}"
+        >
+          <span class="material-symbols-outlined text-[18px]">favorite</span>
+        </button>
+
+        {% if item.product.is_bestseller %}
+        <span class="absolute top-3 {% if is_ar %}right-3{% else %}left-3{% endif %} px-2.5 py-1 text-[10px] font-bold rounded-full bg-tertiary text-white shadow-xs">
+          {% if is_ar %}الأكثر طلباً بمصر{% else %}Bestseller{% endif %}
+        </span>
+        {% endif %}
+      </div>
+
+      <!-- Info & Quick Add -->
+      <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div>
+          <span class="text-[10px] uppercase font-mono tracking-wider text-outline block mb-1">
+            {{ item.product.category.name_ar|default:"LUMÉ ATELIER" }}
+          </span>
+          <h3 class="font-serif text-sm font-semibold text-on-surface line-clamp-2">
+            <a href="{% url 'catalog:product_detail' item.product.slug %}" class="hover:text-primary transition-colors">
+              {% if is_ar %}{{ item.product.name_ar }}{% else %}{{ item.product.name_en }}{% endif %}
+            </a>
+          </h3>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="font-serif text-sm font-bold text-primary font-mono">
+              {{ item.product.price }} {{ currency_symbol }}
+            </span>
+            {% if item.product.compare_at_price %}
+            <span class="text-xs line-through text-outline font-mono">
+              {{ item.product.compare_at_price }} {{ currency_symbol }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="pt-3 border-t editorial-border flex items-center gap-2">
+          <button 
+            onclick="quickAddToCart({{ item.product.id }}, null, 1)" 
+            class="flex-1 py-2.5 px-3 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-xs"
+          >
+            <span class="material-symbols-outlined text-[16px]">shopping_bag</span>
+            <span>{% if is_ar %}إضافة للحقيبة{% else %}Add to Bag{% endif %}</span>
+          </button>
+          <a 
+            href="{% url 'catalog:product_detail' item.product.slug %}" 
+            class="p-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container border editorial-border text-on-surface transition-colors"
+            title="{% if is_ar %}تفاصيل المستحضر{% else %}View Details{% endif %}"
+          >
+            <span class="material-symbols-outlined text-[18px]">visibility</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="bg-surface-container-lowest rounded-3xl p-12 border editorial-border text-center max-w-lg mx-auto space-y-4">
+    <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto">
+      <span class="material-symbols-outlined text-3xl">favorite_border</span>
+    </div>
+    <h2 class="font-serif text-2xl text-on-surface font-light">
+      {% if is_ar %}قائمة مقتنياتكِ المفضلة فارغة حالياً{% else %}Your Wishlist is Empty{% endif %}
+    </h2>
+    <p class="text-xs text-on-surface-variant leading-relaxed">
+      {% if is_ar %}
+      اضغطي على رمز القلب بجوار أي مستحضر أثناء تصفحكِ لمجموعات لوميه لحفظه هنا ومتابعته لاحقاً.
+      {% else %}
+      Click the heart icon on any artifact while browsing our collections to save it here for later.
+      {% endif %}
+    </p>
+    <div class="pt-2">
+      <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white text-xs font-semibold shadow-sm hover:shadow transition-all">
+        <span>{% if is_ar %}تصفح مجموعات لوميه{% else %}Explore Collections{% endif %}</span>
+        <span class="material-symbols-outlined text-[16px]">{% if is_ar %}arrow_back{% else %}arrow_forward{% endif %}</span>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+</main>
+{% endblock %}

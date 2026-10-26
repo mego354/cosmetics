@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}دفتر العناوين المصري | LUMÉ لوميه{% else %}Egyptian Address Book | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+
+  <!-- Breadcrumbs -->
+  <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-6 pb-3 border-b editorial-border">
+    <a href="{% url 'core:home' %}" class="hover:text-primary transition-colors">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <a href="{% url 'accounts:dashboard' %}" class="hover:text-primary transition-colors">{% if is_ar %}الملف الملكي{% else %}Dossier{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <span class="text-primary font-semibold">{% if is_ar %}دفتر العناوين المصري{% else %}Address Book{% endif %}</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Sidebar Navigation (3 cols) -->
+    <aside class="lg:col-span-3 space-y-4">
+      <div class="bg-surface-container-lowest rounded-2xl p-4 border editorial-border shadow-xs">
+        <nav class="space-y-1">
+          <a href="{% url 'accounts:dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>{% if is_ar %}لوحة التحكم{% else %}Dashboard{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:orders' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">package_2</span>
+            <span>{% if is_ar %}سجل الطلبيات{% else %}Order History{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:addresses' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white text-xs font-semibold">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span>{% if is_ar %}دفتر العناوين{% else %}Address Book{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:wishlist' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+            <span>{% if is_ar %}المقتنيات المفضلة{% else %}Wishlist{% endif %}</span>
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Address Cards & Add Form (9 cols) -->
+    <div class="lg:col-span-9 space-y-8">
+      
+      {% if messages %}
+      <div class="space-y-2">
+        {% for message in messages %}
+        <div class="p-3.5 rounded-xl text-xs {% if message.tags == 'error' %}bg-error/10 text-error border border-error/20{% else %}bg-primary/10 text-primary border border-primary/20{% endif %} flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">check_circle</span>
+          <span>{{ message }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Saved Addresses Grid -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b editorial-border">
+          <div>
+            <span class="text-[10px] font-mono tracking-widest text-primary uppercase block">
+              {% if is_ar %}وجهات التوصيل المعتمدة{% else %}SAVED DESTINATIONS{% endif %}
+            </span>
+            <h1 class="font-serif text-2xl text-on-surface font-light">
+              {% if is_ar %}عناوين التوصيل بمصر{% else %}Saved Egyptian Addresses{% endif %}
+            </h1>
+          </div>
+          <span class="text-xs text-outline font-mono">{{ addresses.count }} {% if is_ar %}عنوان{% else %}Saved{% endif %}</span>
+        </div>
+
+        {% if addresses %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {% for addr in addresses %}
+          <div class="p-5 rounded-2xl bg-surface-container-low border editorial-border relative flex flex-col justify-between space-y-4">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-bold text-xs text-on-surface">{{ addr.full_name }}</span>
+                {% if addr.is_default %}
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary text-white">
+                  {% if is_ar %}العنوان الافتراضي{% else %}Default{% endif %}
+                </span>
+                {% endif %}
+              </div>
+              <p class="font-mono text-xs text-outline mb-1">{{ addr.phone_number }}</p>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                {{ addr.street_address }}، عمارة {{ addr.building_number|default:"-" }}، {{ addr.city }}
+              </p>
+              <p class="text-xs font-semibold text-primary mt-1">
+                {{ addr.get_governorate_display }}
+              </p>
+              {% if addr.nearest_landmark %}
+              <p class="text-[11px] text-outline mt-1">
+                {% if is_ar %}علامة مميزة: {% else %}Landmark: {% endif %}{{ addr.nearest_landmark }}
+              </p>
+              {% endif %}
+            </div>
+
+            <div class="pt-3 border-t editorial-border flex items-center justify-between">
+              {% if not addr.is_default %}
+              <form method="POST" action="{% url 'accounts:addresses' %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="set_default">
+                <input type="hidden" name="address_id" value="{{ addr.id }}">
+                <button type="submit" class="text-[11px] text-primary hover:underline font-medium">
+                  {% if is_ar %}تعيين كافتراضي{% else %}Make Default{% endif %}
+                </button>
+              </form>
+              {% else %}
+              <span class="text-[11px] text-outline font-medium">{% if is_ar %}محدد كافتراضي للشراء{% else %}Active Primary Address{% endif %}</span>
+              {% endif %}
+
+              <form method="POST" action="{% url 'accounts:addresses' %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="address_id" value="{{ addr.id }}">
+                <button type="submit" onclick="return confirm('{% if is_ar %}هل أنتِ متأكدة من حذف هذا العنوان؟{% else %}Are you sure you want to delete this address?{% endif %}')" class="text-[11px] text-error hover:underline font-medium">
+                  {% if is_ar %}حذف{% else %}Delete{% endif %}
+                </button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-xs text-on-surface-variant py-4">
+          {% if is_ar %}لم تقومي بحفظ أي عناوين بعد. أضيفي عنوانكِ الأول بالأسفل لتسريع تجربة الشراء القادمة.{% else %}No saved delivery addresses yet. Add your address below for 1-click concierge checkout.{% endif %}
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- Add New Address Form -->
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs space-y-6">
+        <div class="pb-3 border-b editorial-border">
+          <h2 class="font-serif text-lg text-on-surface font-semibold">
+            {% if is_ar %}إضافة عنوان توصيل جديد في مصر{% else %}Add New Egyptian Address{% endif %}
+          </h2>
+          <p class="text-xs text-on-surface-variant mt-0.5">
+            {% if is_ar %}بيانات دقيقة لتسهيل وصول مندوب الكونسيرج والتنسيق عبر الهاتف{% else %}Accurate address details for swift Egyptian courier coordination{% endif %}
+          </p>
+        </div>
+
+        <form method="POST" action="{% url 'accounts:addresses' %}" class="space-y-4">
+          {% csrf_token %}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}اسم المستلم بالكامل *{% else %}Recipient Full Name *{% endif %}
+              </label>
+              <input 
+                type="text" 
+                name="full_name" 
+                required 
+                placeholder="{% if is_ar %}الاسم الثلاثي كما بالبطاقة{% else %}Full legal name{% endif %}"
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary shadow-inner-soft"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}رقم الهاتف المحمول (مصر) *{% else %}Mobile Phone Number *{% endif %}
+              </label>
+              <input 
+                type="tel" 
+                name="phone_number" 
+                required 
+                placeholder="01012345678"
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary font-mono shadow-inner-soft"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}المحافظة *{% else %}Governorate *{% endif %}
+              </label>
+              <select 
+                name="governorate" 
+                required 
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary"
+              >
+                {% for code, name in governorates %}
+                <option value="{{ code }}">{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}المدينة / الحي / المنطقة *{% else %}City / District *{% endif %}
+              </label>
+              <input 
+                type="text" 
+                name="city" 
+                required 
+                placeholder="{% if is_ar %}المعادي، التجمع الخامس، سموحة...{% else %}e.g. New Cairo, Maadi, Smouha{% endif %}"
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary shadow-inner-soft"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}اسم الشارع والحي *{% else %}Street Address *{% endif %}
+              </label>
+              <input 
+                type="text" 
+                name="street_address" 
+                required 
+                placeholder="{% if is_ar %}شارع 9، متفرع من ميدان النصر{% else %}Street name and details{% endif %}"
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary shadow-inner-soft"
+              >
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-on-surface mb-1.5">
+                {% if is_ar %}رقم العمارة / الطابق{% else %}Building / Floor{% endif %}
+              </label>
+              <input 
+                type="text" 
+                name="building_number" 
+                placeholder="{% if is_ar %}عمارة 14، الدور 3، شقة 6{% else %}Bldg 14, Fl 3, Apt 6{% endif %}"
+                class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary shadow-inner-soft"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-on-surface mb-1.5">
+              {% if is_ar %}أقرب علامة مميزة (اختياري){% else %}Nearest Landmark (Optional){% endif %}
+            </label>
+            <input 
+              type="text" 
+              name="nearest_landmark" 
+              placeholder="{% if is_ar %}بجوار مسجد... أو أمام بنك مصر{% else %}Near landmark or famous building{% endif %}"
+              class="w-full bg-surface-container-low border editorial-border rounded-xl px-4 py-2.5 text-xs text-on-surface focus:outline-none focus:border-primary shadow-inner-soft"
+            >
+          </div>
+
+          <button 
+            type="submit" 
+            class="py-3 px-6 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-all shadow-sm flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined text-[18px]">add_location_alt</span>
+            <span>{% if is_ar %}حفظ العنوان الجديد في دفتري{% else %}Save Egyptian Address{% endif %}</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

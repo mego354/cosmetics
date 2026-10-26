@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}تسجيل الدخول إلى النادي الملكي | LUMÉ لوميه{% else %}Sign In to Royal Club | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-12 py-10 md:py-16">
+  
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch max-w-5xl mx-auto">
+    
+    <!-- Editorial Brand Column -->
+    <div class="hidden lg:flex lg:col-span-5 bg-surface-container-low rounded-3xl p-8 border editorial-border flex-col justify-between relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/10 pointer-events-none"></div>
+      
+      <div class="relative z-10 space-y-4">
+        <span class="inline-block px-3 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+          {% if is_ar %}النادي الملكي الخاص • DOSSIER 1928{% else %}ROYAL CLIENTELE • DOSSIER 1928{% endif %}
+        </span>
+        <h2 class="font-serif text-3xl text-on-surface font-light leading-snug">
+          {% if is_ar %}
+          أهلاً بكِ في دار الجمال المصري الفاخر
+          {% else %}
+          Welcome to the Atelier of Egyptian Luxury
+          {% endif %}
+        </h2>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          {% if is_ar %}
+          سجّلي دخولكِ للاستمتاع برصيد نقاط الولاء، وحفظ العناوين المصرية المفضلة، ومتابعة طلبيات الكونسيرج الفورية.
+          {% else %}
+          Sign in to access your royal loyalty privileges, saved delivery destinations across Egypt, and real-time atelier concierge tracking.
+          {% endif %}
+        </p>
+      </div>
+
+      <div class="relative z-10 my-8">
+        <div class="p-5 rounded-2xl bg-surface-container-lowest border editorial-border shadow-xs space-y-3">
+          <div class="flex items-center gap-2 text-tertiary">
+            <span class="material-symbols-outlined text-[20px]">diamond</span>
+            <span class="text-xs font-bold uppercase tracking-wider">
+              {% if is_ar %}مزايا العضوية الحصرية{% else %}Exclusive Privileges{% endif %}
+            </span>
+          </div>
+          <ul class="text-xs text-on-surface-variant space-y-2 list-none">
+            <li class="flex items-center gap-2">
+              <span class="text-primary text-[14px]">✓</span>
+              {% if is_ar %}100 نقطة ولاء ترحيبية فور التسجيل{% else %}100 welcome loyalty points upon joining{% endif %}
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary text-[14px]">✓</span>
+              {% if is_ar %}عينات مجانية فاخرة مع كل طلب كونسيرج{% else %}Complimentary luxury samples with every order{% endif %}
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary text-[14px]">✓</span>
+              {% if is_ar %}فحص المقتنيات الملكية قبل الاستلام لكافة المحافظات{% else %}Inspect order before payment anywhere in Egypt{% endif %}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="relative z-10 pt-4 border-t editorial-border text-[11px] text-outline flex items-center justify-between font-mono">
+        <span>CAIRO • LUXOR • ALEXANDRIA</span>
+        <span>LUMÉ ATELIER</span>
+      </div>
+    </div>
+
+    <!-- Login Form Column -->
+    <div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-6 sm:p-10 border editorial-border shadow-sm flex flex-col justify-center">
+      
+      <div class="mb-8 text-center sm:text-start">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[11px] font-mono tracking-widest text-primary uppercase">
+            {% if is_ar %}تسجيل الدخول{% else %}SIGN IN{% endif %}
+          </span>
+          <a href="{% url 'accounts:register' %}" class="text-xs text-primary hover:underline font-medium">
+            {% if is_ar %}إنشاء حساب جديد ←{% else %}Create Royal Account →{% endif %}
+          </a>
+        </div>
+        <h1 class="font-serif text-2xl sm:text-3xl text-on-surface font-light">
+          {% if is_ar %}الوصول إلى حسابكِ الملكي{% else %}Access Your Royal Account{% endif %}
+        </h1>
+        <p class="text-xs text-on-surface-variant mt-1.5">
+          {% if is_ar %}
+          أدخلي بريدكِ الإلكتروني وكلمة المرور للمتابعة
+          {% else %}
+          Enter your registered email and password to proceed
+          {% endif %}
+        </p>
+      </div>
+
+      {% if messages %}
+      <div class="mb-6 space-y-2">
+        {% for message in messages %}
+        <div class="p-3.5 rounded-xl text-xs {% if message.tags == 'error' %}bg-error/10 text-error border border-error/20{% else %}bg-primary/10 text-primary border border-primary/20{% endif %} flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">info</span>
+          <span>{{ message }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="{% url 'accounts:login' %}" class="space-y-5">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+        <div>
+          <label class="block text-xs font-semibold text-on-surface mb-2">
+            {% if is_ar %}البريد الإلكتروني أو اسم المستخدم *{% else %}Email Address or Username *{% endif %}
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute {% if is_ar %}right-3.5{% else %}left-3.5{% endif %} top-1/2 -translate-y-1/2 text-outline text-[18px]">mail</span>
+            <input 
+              type="text" 
+              name="username" 
+              required 
+              placeholder="{% if is_ar %}nour@lume-beauty.com{% else %}client@lume-beauty.com{% endif %}"
+              class="w-full bg-surface-container-low border editorial-border rounded-xl {% if is_ar %}pr-11 pl-4{% else %}pl-11 pr-4{% endif %} py-3 text-xs text-on-surface focus:outline-none focus:border-primary transition-all shadow-inner-soft"
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-xs font-semibold text-on-surface">
+              {% if is_ar %}كلمة المرور *{% else %}Password *{% endif %}
+            </label>
+            <a href="#" class="text-[11px] text-outline hover:text-primary transition-colors">
+              {% if is_ar %}نسيت كلمة المرور؟{% else %}Forgot Password?{% endif %}
+            </a>
+          </div>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute {% if is_ar %}right-3.5{% else %}left-3.5{% endif %} top-1/2 -translate-y-1/2 text-outline text-[18px]">lock</span>
+            <input 
+              type="password" 
+              name="password" 
+              required 
+              placeholder="••••••••••••"
+              class="w-full bg-surface-container-low border editorial-border rounded-xl {% if is_ar %}pr-11 pl-4{% else %}pl-11 pr-4{% endif %} py-3 text-xs text-on-surface focus:outline-none focus:border-primary transition-all shadow-inner-soft"
+            >
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs pt-1">
+          <label class="flex items-center gap-2 cursor-pointer text-on-surface-variant">
+            <input type="checkbox" name="remember" class="w-4 h-4 rounded text-primary border-outline-variant focus:ring-primary">
+            <span>{% if is_ar %}تذكر بيانات الدخول{% else %}Remember my session{% endif %}</span>
+          </label>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wider transition-all shadow-sm hover:shadow flex items-center justify-center gap-2"
+        >
+          <span>{% if is_ar %}الدخول إلى حسابي الملكي{% else %}Sign In to Atelier{% endif %}</span>
+          <span class="material-symbols-outlined text-[18px]">{% if is_ar %}arrow_back{% else %}arrow_forward{% endif %}</span>
+        </button>
+      </form>
+
+      <div class="mt-8 pt-6 border-t editorial-border text-center">
+        <p class="text-xs text-on-surface-variant">
+          {% if is_ar %}
+          ليس لديكِ حساب كونسيرج بعد؟ 
+          <a href="{% url 'accounts:register' %}" class="text-primary font-bold hover:underline">انضمي الآن واحصلي على 100 نقطة</a>
+          {% else %}
+          New to LUMÉ? 
+          <a href="{% url 'accounts:register' %}" class="text-primary font-bold hover:underline">Create an account & claim 100 points</a>
+          {% endif %}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

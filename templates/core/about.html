@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}دار لوميه | ميثاق الجمال المصري الخالد والطقوس الملكية{% else %}About Atelier LUMÉ | The Eternal Egyptian Beauty Charter{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-10 md:py-16">
+
+  <!-- Hero Editorial Banner -->
+  <section class="relative rounded-3xl overflow-hidden bg-surface-container-low border editorial-border p-8 md:p-16 mb-16 text-center max-w-5xl mx-auto">
+    <div class="space-y-4 max-w-3xl mx-auto">
+      <span class="inline-block px-3.5 py-1 text-[10px] uppercase font-mono tracking-widest text-primary bg-primary/10 rounded-full border border-primary/20">
+        {% if is_ar %}تأسست في القاهرة • ميثاق 2026{% else %}FOUNDED IN CAIRO • THE 2026 CHARTER{% endif %}
+      </span>
+      <h1 class="font-serif text-3xl md:text-5xl text-on-surface font-light leading-tight">
+        {% if is_ar %}
+        إعادة إحياء أسرار الجمال الفرعوني بأعلى معايير الصيدلة الحيوية الحديثة
+        {% else %}
+        Reviving Pharaonic Beauty Archives Through Modern Biocosmetic Science
+        {% endif %}
+      </h1>
+      <p class="text-xs md:text-sm text-on-surface-variant leading-relaxed font-sans">
+        {% if is_ar %}
+        وُلدت «دار لوميه» في القاهرة من شغف عميق بتراث مصر القديم؛ حيث كانت الملكات كليوباترا وحتشبسوت ونفرتيتي يستخدمن خلاصات نادرة من زهرة اللوتس الزرقاء وذهب عيار 24 ونكتار نخيل سيوة لترطيب وتجديد نضارة البشرة.
+        {% else %}
+        Atelier LUMÉ was conceived in Cairo from a profound reverence for ancient Egyptian alchemy; where Queens Cleopatra and Nefertiti harnessed rare blue lotus, 24k colloidal gold, and Siwa date seed nectar for eternal youth.
+        {% endif %}
+      </p>
+    </div>
+  </section>
+
+  <!-- Pillars Grid -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+    <div class="bg-surface-container-lowest p-8 rounded-3xl border editorial-border space-y-4 text-center md:text-start shadow-xs">
+      <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[26px]">eco</span>
+      </div>
+      <h3 class="font-serif text-xl text-on-surface font-semibold">
+        {% if is_ar %}أعشاب ونباتات برية أصيلة{% else %}Wild Botanical Provenance{% endif %}
+      </h3>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        {% if is_ar %}
+        نحصد زهور اللوتس الزرقاء يدوياً من ضفاف النيل الموسيقية، وزيوت المورينجا من صعيد مصر، ونكتار التمر من واحة سيوة الطبيعية المعزولة.
+        {% else %}
+        Sourced ethically from Upper Egypt's wild moringa groves, the sacred Nile delta lotus lagoons, and isolated oasis palms in Siwa.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="bg-surface-container-lowest p-8 rounded-3xl border editorial-border space-y-4 text-center md:text-start shadow-xs">
+      <div class="w-12 h-12 rounded-2xl bg-tertiary/10 text-tertiary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[26px]">science</span>
+      </div>
+      <h3 class="font-serif text-xl text-on-surface font-semibold">
+        {% if is_ar %}الصيدلة السريرية والذهب 24K{% else %}Clinical Colloidal Gold 24K{% endif %}
+      </h3>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        {% if is_ar %}
+        دمج الرقائق الميكرونية من الذهب عيار 24 مع حمض الهيالورونيك الثلاثي يعزز تغلغل المكونات الفعالة إلى أعمق طبقات الأدمة لنضارة فورية.
+        {% else %}
+        24-karat colloidal gold flakes fused with triple molecular weight hyaluronic acid stimulate collagen synthesis and instant cellular radiance.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="bg-surface-container-lowest p-8 rounded-3xl border editorial-border space-y-4 text-center md:text-start shadow-xs">
+      <div class="w-12 h-12 rounded-2xl bg-secondary/15 text-secondary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[26px]">verified</span>
+      </div>
+      <h3 class="font-serif text-xl text-on-surface font-semibold">
+        {% if is_ar %}اعتماد وزارة الصحة وتجربة كونسيرج{% else %}Ministry Approved & Concierge{% endif %}
+      </h3>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        {% if is_ar %}
+        جميع منتجاتنا مسجلة برقم إخطار رسمي لدى وزارة الصحة المصرية وهيئة الدواء، مع خدمة توصيل مخصصة وضمان فحص الصندوق قبل الاستلام.
+        {% else %}
+        100% accredited by the Egyptian Ministry of Health and EDA, backed by concierge white-glove courier and open-box inspection.
+        {% endif %}
+      </p>
+    </div>
+  </section>
+
+  <!-- Editorial Quote Section -->
+  <section class="bg-surface-container-low rounded-3xl p-10 md:p-14 border editorial-border text-center max-w-4xl mx-auto my-12">
+    <span class="material-symbols-outlined text-4xl text-primary mb-3">format_quote</span>
+    <blockquote class="font-serif text-xl md:text-2xl text-on-surface italic font-light leading-relaxed max-w-2xl mx-auto mb-4">
+      {% if is_ar %}
+      «الجمال في مصر القديمة لم يكن زينة عابرة، بل كان طقساً مقدساً لتوازن الروح والجسد؛ نورٌ يتجدد مع شروق كل شمس فوق النيل.»
+      {% else %}
+      "Beauty in ancient Egypt was never a superficial vanity; it was a sacred liturgy of balance between spirit and skin — radiance born from the dawn of the Nile."
+      {% endif %}
+    </blockquote>
+    <cite class="text-xs text-primary font-mono uppercase tracking-widest block not-italic">
+      {% if is_ar %}— أرشيف برديات الكونسيرج الملكي، طيبة{% else %}— The Royal Atelier Papyrus, Thebes{% endif %}
+    </cite>
+  </section>
+
+  <!-- Call to Explore -->
+  <div class="text-center mt-12">
+    <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold tracking-wider transition-all shadow-sm">
+      <span>{% if is_ar %}استكشاف مقتنيات الدار الملكية{% else %}Explore Atelier Curations{% endif %}</span>
+      <span class="material-symbols-outlined text-[18px]">{% if is_ar %}arrow_back{% else %}arrow_forward{% endif %}</span>
+    </a>
+  </div>
+
+</main>
+{% endblock %}

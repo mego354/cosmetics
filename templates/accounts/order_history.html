@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if is_ar %}سجل الطلبيات والكونسيرج الملكي | LUMÉ لوميه{% else %}Order History & Archives | LUMÉ{% endif %}{% endblock %}
+
+{% block content %}
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-12">
+
+  <!-- Breadcrumbs -->
+  <div class="flex items-center gap-2 text-xs text-on-surface-variant mb-6 pb-3 border-b editorial-border">
+    <a href="{% url 'core:home' %}" class="hover:text-primary transition-colors">{% if is_ar %}الرئيسية{% else %}Home{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <a href="{% url 'accounts:dashboard' %}" class="hover:text-primary transition-colors">{% if is_ar %}الملف الملكي{% else %}Dossier{% endif %}</a>
+    <span class="text-outline-variant">/</span>
+    <span class="text-primary font-semibold">{% if is_ar %}سجل الطلبيات والشحنات{% else %}Order Archives{% endif %}</span>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Sidebar Navigation (3 cols) -->
+    <aside class="lg:col-span-3 space-y-4">
+      <div class="bg-surface-container-lowest rounded-2xl p-4 border editorial-border shadow-xs">
+        <nav class="space-y-1">
+          <a href="{% url 'accounts:dashboard' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">dashboard</span>
+            <span>{% if is_ar %}لوحة التحكم{% else %}Dashboard{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:orders' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white text-xs font-semibold">
+            <span class="material-symbols-outlined text-[18px]">package_2</span>
+            <span>{% if is_ar %}سجل الطلبيات{% else %}Order History{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:addresses' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">location_on</span>
+            <span>{% if is_ar %}دفتر العناوين{% else %}Address Book{% endif %}</span>
+          </a>
+          <a href="{% url 'accounts:wishlist' %}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface hover:bg-surface-container text-xs font-medium transition-colors">
+            <span class="material-symbols-outlined text-[18px]">favorite</span>
+            <span>{% if is_ar %}المقتنيات المفضلة{% else %}Wishlist{% endif %}</span>
+          </a>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Orders List (9 cols) -->
+    <div class="lg:col-span-9 space-y-6">
+      
+      <div class="bg-surface-container-lowest p-6 rounded-2xl border editorial-border shadow-xs">
+        <div class="flex items-center justify-between pb-4 border-b editorial-border">
+          <div>
+            <span class="text-[10px] font-mono tracking-widest text-primary uppercase block">
+              {% if is_ar %}أرشيف المقتنيات الملكية{% else %}ROYAL ARCHIVES{% endif %}
+            </span>
+            <h1 class="font-serif text-2xl text-on-surface font-light">
+              {% if is_ar %}سجل جميع الطلبيات والشحنات{% else %}Order History & Dispatches{% endif %}
+            </h1>
+          </div>
+          <span class="text-xs text-outline font-mono">
+            {{ orders.count }} {% if is_ar %}طلب مسجل{% else %}Orders Recorded{% endif %}
+          </span>
+        </div>
+
+        {% if orders %}
+        <div class="divide-y divide-outline-variant/30">
+          {% for order in orders %}
+          <div class="py-6 space-y-4">
+            
+            <!-- Order Header Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 bg-surface-container-low p-4 rounded-xl border editorial-border">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-sm font-bold text-on-surface">#{{ order.order_number }}</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium 
+                    {% if order.status == 'delivered' %}bg-primary/10 text-primary border border-primary/20
+                    {% elif order.status == 'shipped' %}bg-secondary/15 text-secondary border border-secondary/20
+                    {% elif order.status == 'cancelled' %}bg-error/10 text-error border border-error/20
+                    {% else %}bg-tertiary/15 text-tertiary border border-tertiary/30{% endif %}">
+                    {{ order.get_status_display }}
+                  </span>
+                </div>
+                <p class="text-[11px] text-on-surface-variant font-mono">
+                  {{ order.created_at|date:"d F Y • h:i A" }}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <span class="text-xs font-mono font-bold text-primary">
+                  {{ order.grand_total }} {{ currency_symbol }}
+                </span>
+                <a 
+                  href="{% url 'orders:order_track' order.order_number %}" 
+                  class="px-3 py-1.5 rounded-lg bg-surface-container-lowest border editorial-border hover:border-primary text-xs font-medium text-on-surface transition-colors flex items-center gap-1"
+                >
+                  <span class="material-symbols-outlined text-[15px]">radar</span>
+                  <span>{% if is_ar %}تتبع الشحنة{% else %}Track Dispatch{% endif %}</span>
+                </a>
+                <a 
+                  href="{% url 'accounts:order_detail' order.order_number %}" 
+                  class="px-3 py-1.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-medium transition-colors"
+                >
+                  {% if is_ar %}الفاتورة والتفاصيل{% else %}View Invoice{% endif %}
+                </a>
+              </div>
+            </div>
+
+            <!-- Items Thumbnails / Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {% for item in order.items.all %}
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-lowest border editorial-border">
+                {% if item.product and item.product.images.first %}
+                <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product_name }}" class="w-12 h-12 object-cover rounded-lg border editorial-border bg-surface-container">
+                {% else %}
+                <div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-outline">
+                  <span class="material-symbols-outlined text-[18px]">spa</span>
+                </div>
+                {% endif %}
+                <div class="min-w-0 flex-1">
+                  <h4 class="text-xs font-medium text-on-surface truncate">
+                    {% if is_ar %}{{ item.product.name_ar|default:item.product_name }}{% else %}{{ item.product_name }}{% endif %}
+                  </h4>
+                  <p class="text-[11px] text-outline font-mono">
+                    {{ item.quantity }} × {{ item.unit_price }} {{ currency_symbol }}
+                  </p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-16">
+          <span class="material-symbols-outlined text-5xl text-outline mb-3">inventory_2</span>
+          <h3 class="font-serif text-lg text-on-surface mb-2">{% if is_ar %}لا توجد طلبيات سابقة مسجلة{% else %}No order archives yet{% endif %}</h3>
+          <p class="text-xs text-on-surface-variant max-w-sm mx-auto mb-6">
+            {% if is_ar %}ابدئي طقوسكِ الجمالية اليوم واستمتعي بخدمة التوصيل السريع لجميع محافظات مصر مع ضمان المعاينة قبل الدفع.{% else %}Begin your royal beauty journey today with nationwide expedited Egyptian delivery.{% endif %}
+          </p>
+          <a href="{% url 'catalog:product_list' %}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white text-xs font-semibold">
+            <span>{% if is_ar %}تسوق المجموعات الملكية{% else %}Explore Atelier Catalog{% endif %}</span>
+          </a>
+        </div>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

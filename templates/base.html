@@ -1,0 +1,468 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="scroll-smooth" dir="{% if is_rtl %}rtl{% else %}ltr{% endif %}" lang="{{ current_language }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% if is_ar %}LUMÉ | لوميه — مجلة ومقتنيات الجمال الملكي والعطور النادرة{% else %}LUMÉ | Atelier of Ancient Egyptian Luxury Beauty & Rare Parfums{% endif %}{% endblock %}</title>
+  
+  <!-- SEO & Meta -->
+  <meta name="description" content="{% block meta_description %}{% if is_ar %}دار لوميه الملكية لمستحضرات التجميل النباتية والعطور النادرة المستخلصة من أسرار نباتات وادي النيل والواحات المصرية.{% else %}Atelier LUMÉ: Ancient Egyptian botanical formulations and rare elixirs harvested from the Nile delta and desert oases.{% endif %}{% endblock %}">
+  <meta property="og:title" content="LUMÉ Luxury Egyptian Beauty Store">
+  <meta property="og:description" content="{% if is_ar %}عناية ملكية نباتية مستخلصة من زهرة اللوتس النيلية وذهب عيار 24.{% else %}Royal botanical skincare powered by Nile blue lotus and 24k gold.{% endif %}">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN with configuration -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#fbf9f5",
+            "primary": "#94452c",
+            "primary-container": "#b35c41",
+            "primary-fixed-dim": "#ffb59f",
+            "secondary": "#2a1d1a",
+            "secondary-container": "#f2dad5",
+            "tertiary": "#7c514f",
+            "surface": "#fbf9f5",
+            "surface-bright": "#fbf9f5",
+            "surface-dim": "#dbdad6",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f5f3ef",
+            "surface-container": "#efeeea",
+            "surface-container-high": "#eae8e4",
+            "surface-container-highest": "#e4e2de",
+            "on-surface": "#1b1c1a",
+            "on-surface-variant": "#55433e",
+            "outline": "#88726c",
+            "outline-variant": "#dbc1ba",
+          },
+          fontFamily: {
+            "serif": ["Playfair Display", "Amiri", "serif"],
+            "cormorant": ["Cormorant Garamond", "Amiri", "serif"],
+            "sans": ["Plus Jakarta Sans", "Tajawal", "sans-serif"],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Global LUMÉ Client Configuration & Localization Tokens -->
+  <script>
+    window.LUME_CONFIG = {
+      lang: "{{ current_language }}",
+      isRtl: {{ is_rtl|yesno:"true,false" }},
+      currency: "{{ currency_symbol }}",
+      csrfToken: "{{ csrf_token }}",
+      i18n: {
+        cartAdded: "{% if is_ar %}تمت إضافة المستحضر إلى حقيبة المقتنيات.{% else %}Artifact added to shopping bag.{% endif %}",
+        cartRemoved: "{% if is_ar %}تم حذف المستحضر من الحقيبة.{% else %}Artifact removed from bag.{% endif %}",
+        wishlistAdded: "{% if is_ar %}تمت إضافة المستحضر إلى المفضلة.{% else %}Added to royal wishlist.{% endif %}",
+        wishlistRemoved: "{% if is_ar %}تمت إزالة المستحضر من المفضلة.{% else %}Removed from wishlist.{% endif %}",
+        networkError: "{% if is_ar %}حدث خطأ في الاتصال. يرجى المحاولة ثانية.{% else %}Network error. Please try again.{% endif %}",
+        noSearchResults: "{% if is_ar %}لم نجد مستحضرات تطابق بحثكِ.{% else %}No artifacts found matching your query.{% endif %}",
+        cairoGizaShipping: "{% if is_ar %}توصيل فاخر خلال 24 ساعة بمندوب دار لوميه المعتمد.{% else %}Expedited 24h white-glove delivery in Cairo & Giza.{% endif %}",
+        deltaAlexShipping: "{% if is_ar %}توصيل خلال 48 ساعة لباب المنزل.{% else %}Delivery within 48h to your doorstep.{% endif %}",
+        upperEgyptShipping: "{% if is_ar %}توصيل خلال 3 إلى 4 أيام عمل لكافة محافظات الصعيد.{% else %}Delivery within 3-4 business days for Upper Egypt.{% endif %}"
+      }
+    };
+  </script>
+
+  <!-- Master LUMÉ Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/lume.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-secondary-container selection:text-primary min-h-screen flex flex-col">
+
+  <!-- 1. ANNOUNCEMENT BAR & ISSUE MASTHEAD -->
+  <aside class="bg-surface-container-low border-b editorial-border text-on-surface-variant text-xs py-2 px-4 md:px-12 transition-colors">
+    <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-start">
+      <div class="flex items-center flex-wrap justify-center gap-2 md:gap-4 text-[11px] md:text-xs">
+        <span class="inline-flex items-center gap-1.5 font-bold tracking-widest text-primary uppercase font-mono">
+          {% if is_ar %}إصدار رقم 04 • القاهرة والإسكندرية{% else %}ISSUE N° 04 • CAIRO &amp; ALEXANDRIA{% endif %}
+        </span>
+        <span class="hidden sm:inline text-outline-variant">•</span>
+        <span class="inline-flex items-center gap-1.5 text-primary font-semibold">
+          <span class="w-2 h-2 rounded-full bg-[#4A6B53] animate-pulse"></span>
+          {% if is_ar %}
+            توصيل فاخر مجاني للطلبات فوق 800 ج.م في القاهرة والجيزة (24 ساعة)
+          {% else %}
+            Complimentary luxury delivery on orders over 800 EGP in Cairo &amp; Giza (24h)
+          {% endif %}
+        </span>
+        <span class="hidden lg:inline text-outline-variant">•</span>
+        <span class="hidden lg:inline-flex items-center gap-1 bg-surface-container px-2.5 py-0.5 rounded-full border editorial-border">
+          {% if is_ar %}
+            كود دار التحرير: <strong class="text-primary font-bold tracking-wider">EGYPTGLOW</strong> (خصم 15%)
+          {% else %}
+            Promo Code: <strong class="text-primary font-bold tracking-wider">EGYPTGLOW</strong> (15% Off)
+          {% endif %}
+        </span>
+      </div>
+
+      <!-- Regional Delivery & Language Switcher -->
+      <div class="flex items-center gap-4 text-xs font-medium">
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px]">location_on</span>
+          <span>
+            {% if is_ar %}التسليم إلى: <strong class="text-primary font-bold">القاهرة الكبرى</strong>{% else %}Deliver to: <strong class="text-primary font-bold">Greater Cairo</strong>{% endif %}
+          </span>
+        </div>
+        <span class="text-outline-variant">|</span>
+        <div class="flex items-center gap-1 font-semibold text-primary">
+          <span>{{ currency_symbol }}</span>
+        </div>
+        <span class="text-outline-variant">|</span>
+        {% if is_ar %}
+          <a href="{% url 'core:switch_language' 'en' %}" class="hover:text-primary transition-colors font-semibold tracking-wide font-sans">
+            English (EN)
+          </a>
+        {% else %}
+          <a href="{% url 'core:switch_language' 'ar' %}" class="hover:text-primary transition-colors font-semibold tracking-wide font-sans">
+            العربية (AR)
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. HIGH-FASHION EDITORIAL HEADER -->
+  <header class="sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b editorial-border transition-all">
+    <div class="flex justify-between items-center w-full px-6 md:px-12 max-w-[1440px] mx-auto h-20">
+      
+      <!-- Brand Wordmark -->
+      <div class="flex items-center gap-4">
+        <button type="button" onclick="document.getElementById('mobile-nav-drawer').classList.toggle('hidden')" class="lg:hidden p-2 text-on-surface hover:text-primary" aria-label="{% if is_ar %}القائمة{% else %}Menu{% endif %}">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <a class="group flex items-baseline gap-2.5" href="{% url 'core:home' %}">
+          <span class="text-3xl md:text-4xl font-serif text-primary tracking-widest font-normal">LUMÉ</span>
+          <span class="text-xs md:text-sm tracking-[0.25em] text-on-surface-variant font-light group-hover:text-primary transition-colors">
+            {% if is_ar %}لوميه{% else %}ATELIER{% endif %}
+          </span>
+        </a>
+        <span class="hidden xl:inline-block h-4 w-[1px] bg-outline-variant/60 mx-1"></span>
+        <span class="hidden xl:inline-block text-[10px] uppercase tracking-[0.25em] text-secondary font-medium">
+          {% if is_ar %}دار الجمال والمجلة النباتية المصرية{% else %}Maison de Beauté &amp; Botanical Revue{% endif %}
+        </span>
+      </div>
+
+      <!-- Primary Navigation Links (Cleanly Segregated by Active Language) -->
+      <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-7 h-full text-xs font-semibold tracking-wide">
+        <a class="relative text-primary border-b-2 border-primary pb-1 font-semibold transition-colors flex items-center gap-1.5" href="{% url 'catalog:product_list' %}">
+          <span>{% if is_ar %}العناية بالبشرة{% else %}Skincare{% endif %}</span>
+          <span class="bg-primary text-white text-[9px] font-mono px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
+            {% if is_ar %}الأكثر طلباً{% else %}Bestseller{% endif %}
+          </span>
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'catalog:category_products' 'makeup' %}">
+          {% if is_ar %}المكياج المخملي{% else %}Velvet Makeup{% endif %}
+        </a>
+        <a class="relative text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1" href="{% url 'catalog:category_products' 'perfumes' %}">
+          <span>{% if is_ar %}عطور وادي النيل{% else %}Haute Parfums{% endif %}</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#4A6B53]"></span>
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'core:rituals' %}">
+          {% if is_ar %}طقوس الملكات{% else %}Imperial Rituals{% endif %}
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'core:stories' %}">
+          {% if is_ar %}فصول التحرير{% else %}Editorial Volumes{% endif %}
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="{% url 'orders:track_order' %}">
+          {% if is_ar %}تتبع الشحنة{% else %}Track Order{% endif %}
+        </a>
+      </nav>
+
+      <!-- Right Action Cluster -->
+      <div class="flex items-center gap-3 sm:gap-5">
+        
+        <!-- Live Predictive Search Input -->
+        <div class="relative hidden md:block w-64 lg:w-72">
+          <div class="relative flex items-center">
+            <input class="lume-search-input w-full bg-surface-container-low border border-outline-variant/60 rounded-full py-2 pe-9 ps-4 text-xs text-on-surface placeholder:text-outline/70 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all shadow-xs" 
+                   placeholder="{% if is_ar %}ابحثي عن سيروم، روتين، مكون...{% else %}Search formulations, rituals...{% endif %}" 
+                   type="text" 
+                   autocomplete="off">
+            <span class="material-symbols-outlined absolute top-1/2 -translate-y-1/2 end-3 text-outline text-[18px]">search</span>
+          </div>
+
+          <!-- Predictive Dropdown Container -->
+          <div id="search-predictive-dropdown" class="hidden absolute top-full inset-x-0 mt-2 bg-surface rounded-2xl border editorial-border shadow-luxury-elevated p-3 z-50 max-h-80 overflow-y-auto">
+            <div class="text-[10px] font-mono text-outline uppercase tracking-wider px-2 py-1 border-b editorial-border mb-2 flex items-center justify-between">
+              <span>{% if is_ar %}نتائج البحث الفورية{% else %}Instant Search Results{% endif %}</span>
+              <span class="text-primary font-mono">LUMÉ</span>
+            </div>
+            <div id="search-predictive-results" class="space-y-1"></div>
+          </div>
+        </div>
+
+        <!-- Wishlist -->
+        <a href="{% url 'accounts:wishlist' %}" class="relative p-2 text-on-surface-variant hover:text-primary transition-all duration-200 active:scale-95" aria-label="{% if is_ar %}المفضلة{% else %}Wishlist{% endif %}">
+          <span class="material-symbols-outlined text-[22px]">favorite</span>
+          <span class="wishlist-badge-count absolute top-1 end-1 w-4 h-4 bg-primary text-white rounded-full text-[10px] font-bold flex items-center justify-center font-mono {% if wishlist_count == 0 %}hidden{% endif %}">
+            {{ wishlist_count }}
+          </span>
+        </a>
+
+        <!-- Account Profile -->
+        <div class="relative group">
+          <a href="{% url 'accounts:dashboard' %}" class="p-2 text-on-surface-variant hover:text-primary transition-colors block" aria-label="{% if is_ar %}الحساب{% else %}Account{% endif %}">
+            <span class="material-symbols-outlined text-[22px]">person</span>
+          </a>
+          <div class="hidden group-hover:block absolute top-full end-0 mt-1 w-48 bg-surface rounded-xl border editorial-border shadow-luxury-card p-2 z-50">
+            {% if user.is_authenticated %}
+              <div class="px-3 py-2 border-b editorial-border mb-1">
+                <span class="text-xs font-bold text-on-surface block truncate">{{ user.get_full_name|default:user.username }}</span>
+                <span class="text-[10px] text-outline truncate block font-mono">{{ user.email }}</span>
+              </div>
+              <a href="{% url 'accounts:dashboard' %}" class="block px-3 py-1.5 text-xs text-on-surface hover:text-primary hover:bg-surface-container rounded-lg">
+                {% if is_ar %}لوحة التحكم{% else %}Client Dashboard{% endif %}
+              </a>
+              <a href="{% url 'accounts:orders' %}" class="block px-3 py-1.5 text-xs text-on-surface hover:text-primary hover:bg-surface-container rounded-lg">
+                {% if is_ar %}طلباتي السابقة{% else %}Order Archives{% endif %}
+              </a>
+              <a href="{% url 'accounts:addresses' %}" class="block px-3 py-1.5 text-xs text-on-surface hover:text-primary hover:bg-surface-container rounded-lg">
+                {% if is_ar %}دفتر العناوين{% else %}Address Book{% endif %}
+              </a>
+              <a href="{% url 'accounts:logout' %}" class="block px-3 py-1.5 text-xs text-red-700 hover:bg-red-50 rounded-lg mt-1 border-t editorial-border">
+                {% if is_ar %}تسجيل الخروج{% else %}Sign Out{% endif %}
+              </a>
+            {% else %}
+              <a href="{% url 'accounts:login' %}" class="block px-3 py-2 text-xs font-bold text-primary hover:bg-surface-container rounded-lg">
+                {% if is_ar %}تسجيل الدخول{% else %}Sign In{% endif %}
+              </a>
+              <a href="{% url 'accounts:register' %}" class="block px-3 py-2 text-xs text-on-surface hover:text-primary hover:bg-surface-container rounded-lg">
+                {% if is_ar %}إنشاء حساب جديد{% else %}Create Account{% endif %}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Shopping Bag CTA (Slide Drawer Trigger) -->
+        <button type="button" onclick="openCartDrawer()" class="flex items-center gap-2 p-1.5 bg-surface-container-low hover:bg-secondary-container/50 border editorial-border rounded-full ps-3 pe-2 transition-all duration-200 active:scale-95 group" aria-label="{% if is_ar %}حقيبة المقتنيات{% else %}Shopping Bag{% endif %}">
+          <div class="flex flex-col text-left leading-tight hidden md:flex">
+            <span class="text-[9px] uppercase tracking-widest text-secondary font-medium">
+              {% if is_ar %}المقتنيات{% else %}Bag{% endif %}
+            </span>
+            <span class="cart-badge-subtotal text-xs font-bold text-primary font-mono">
+              {% if is_ar %}{{ cart_subtotal }} ج.م{% else %}{{ cart_subtotal }} EGP{% endif %}
+            </span>
+          </div>
+          <div class="relative flex items-center justify-center">
+            <span class="material-symbols-outlined text-[22px] text-primary">shopping_bag</span>
+            <span class="cart-badge-count absolute -top-1 -end-1 w-4 h-4 bg-primary text-white rounded-full text-[10px] font-bold flex items-center justify-center font-mono {% if cart_count == 0 %}hidden{% endif %}">
+              {{ cart_count }}
+            </span>
+          </div>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobile-nav-drawer" class="hidden lg:hidden bg-surface border-b editorial-border p-6 shadow-luxury-card z-30">
+    <div class="mb-4">
+      <input class="lume-search-input w-full bg-surface-container-low border border-outline-variant/60 rounded-full py-2.5 px-4 text-xs text-on-surface outline-none" 
+             placeholder="{% if is_ar %}ابحثي عن مستحضر، مكون، أو طقس...{% else %}Search formulations, rituals...{% endif %}" 
+             type="text">
+    </div>
+    <nav class="space-y-3 font-semibold text-sm">
+      <a class="block py-2 text-primary border-b editorial-border" href="{% url 'catalog:product_list' %}">
+        {% if is_ar %}العناية بالبشرة{% else %}Skincare{% endif %}
+      </a>
+      <a class="block py-2 text-on-surface border-b editorial-border" href="{% url 'catalog:category_products' 'makeup' %}">
+        {% if is_ar %}المكياج المخملي{% else %}Velvet Makeup{% endif %}
+      </a>
+      <a class="block py-2 text-on-surface border-b editorial-border" href="{% url 'catalog:category_products' 'perfumes' %}">
+        {% if is_ar %}عطور وادي النيل{% else %}Haute Parfums{% endif %}
+      </a>
+      <a class="block py-2 text-on-surface border-b editorial-border" href="{% url 'core:rituals' %}">
+        {% if is_ar %}طقوس الملكات{% else %}Imperial Rituals{% endif %}
+      </a>
+      <a class="block py-2 text-on-surface border-b editorial-border" href="{% url 'orders:track_order' %}">
+        {% if is_ar %}تتبع الشحنة{% else %}Track Order{% endif %}
+      </a>
+      {% if user.is_authenticated %}
+        <a class="block py-2 text-on-surface" href="{% url 'accounts:dashboard' %}">
+          {% if is_ar %}حسابي الشخصي ({{ user.username }}){% else %}My Account ({{ user.username }}){% endif %}
+        </a>
+      {% else %}
+        <div class="pt-2 flex gap-3">
+          <a class="flex-1 py-2 text-center rounded-full bg-primary text-white text-xs font-bold" href="{% url 'accounts:login' %}">
+            {% if is_ar %}تسجيل الدخول{% else %}Sign In{% endif %}
+          </a>
+          <a class="flex-1 py-2 text-center rounded-full border border-primary text-primary text-xs font-bold" href="{% url 'accounts:register' %}">
+            {% if is_ar %}إنشاء حساب{% else %}Create Account{% endif %}
+          </a>
+        </div>
+      {% endif %}
+    </nav>
+  </div>
+
+  <!-- SLIDE-OVER CART DRAWER -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none overflow-hidden" aria-labelledby="cart-drawer-title" role="dialog" aria-modal="true">
+    <div id="cart-drawer-overlay" onclick="closeCartDrawer()" class="absolute inset-0 bg-[#2A1D1A]/50 backdrop-blur-xs opacity-0 transition-opacity duration-300"></div>
+    <div class="fixed inset-y-0 {% if is_rtl %}left-0{% else %}right-0{% endif %} max-w-full flex">
+      <div id="cart-drawer-panel" class="w-screen max-w-md bg-surface border-s editorial-border shadow-luxury-elevated p-6 flex flex-col justify-between transform transition-transform duration-300 {% if is_rtl %}-translate-x-full{% else %}translate-x-full{% endif %}">
+        
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between pb-4 border-b editorial-border">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">shopping_bag</span>
+            <h3 class="text-lg font-serif font-medium text-on-surface" id="cart-drawer-title">
+              {% if is_ar %}حقيبة المقتنيات الملكية{% else %}Royal Atelier Bag{% endif %}
+            </h3>
+          </div>
+          <button type="button" onclick="closeCartDrawer()" class="text-outline hover:text-primary p-1 rounded-full" aria-label="{% if is_ar %}إغلاق{% else %}Close{% endif %}">
+            <span class="material-symbols-outlined text-[22px]">close</span>
+          </button>
+        </div>
+
+        <!-- Drawer Content Container (Loaded via AJAX or Context) -->
+        <div id="cart-drawer-items-container" class="flex-1 overflow-y-auto py-4">
+          {% include 'components/cart_drawer_items.html' with cart=cart_obj %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SYSTEM MESSAGES / TOASTS -->
+  {% if messages %}
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 pt-4 w-full">
+      {% for message in messages %}
+        <div class="p-3.5 mb-2 rounded-xl text-xs md:text-sm font-medium flex items-center gap-2.5 {% if message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200{% elif message.tags == 'success' %}bg-emerald-50 text-emerald-900 border border-emerald-200{% else %}bg-secondary-container text-primary border border-primary/20{% endif %}">
+          <span class="material-symbols-outlined text-[18px]">{% if message.tags == 'error' %}error{% else %}check_circle{% endif %}</span>
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- MAIN PAGE CONTENT BLOCK -->
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- 3. EDITORIAL FOOTER & REGIONAL CERTIFICATIONS -->
+  <footer class="bg-surface-container-low border-t editorial-border text-on-surface-variant pt-16 pb-10 px-6 md:px-12 mt-20">
+    <div class="max-w-[1440px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b editorial-border">
+        
+        <!-- Brand Narrative & Official Seals -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-baseline gap-2">
+            <span class="text-3xl font-serif text-primary tracking-widest font-normal">LUMÉ</span>
+            <span class="text-xs font-light text-secondary tracking-widest">
+              {% if is_ar %}لوميه{% else %}ATELIER{% endif %}
+            </span>
+          </div>
+          <p class="text-xs font-cormorant italic text-secondary text-sm">
+            "Maison de Haute Cosmétique Égyptienne — Le Caire"
+          </p>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            {% if is_ar %}
+              دار مصرية فاخرة تعيد صياغة أسرار البرديات النيلية وكنوز واحات مصر في مستحضرات نقية 100% معتمدة مخبرياً لحماية بشرتكِ وتألقها الدائم.
+            {% else %}
+              A high-luxury Egyptian maison recreating ancient Nile papyri secrets and desert oasis elixirs in 100% pure, clinically certified formulations.
+            {% endif %}
+          </p>
+          <div class="pt-2 flex flex-wrap gap-2 text-[11px] font-mono text-outline">
+            <span class="bg-surface px-2.5 py-1 rounded-md border editorial-border">
+              {% if is_ar %}مسجل بهيئة الدواء المصرية{% else %}Egyptian Drug Authority Approved{% endif %}
+            </span>
+            <span class="bg-surface px-2.5 py-1 rounded-md border editorial-border">EDA: EG-EDA-2024-88</span>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-xs font-bold text-on-surface uppercase tracking-wider font-mono">
+            {% if is_ar %}فصول المقتنيات{% else %}Curated Volumes{% endif %}
+          </h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="{% url 'catalog:product_list' %}" class="hover:text-primary transition-colors">{% if is_ar %}العناية بالبشرة (VOL. I){% else %}Skincare (VOL. I){% endif %}</a></li>
+            <li><a href="{% url 'catalog:category_products' 'makeup' %}" class="hover:text-primary transition-colors">{% if is_ar %}المكياج المخملي (VOL. II){% else %}Velvet Makeup (VOL. II){% endif %}</a></li>
+            <li><a href="{% url 'catalog:category_products' 'perfumes' %}" class="hover:text-primary transition-colors">{% if is_ar %}العطور وزيوت النيل (VOL. III){% else %}Haute Parfums (VOL. III){% endif %}</a></li>
+            <li><a href="{% url 'catalog:category_products' 'body' %}" class="hover:text-primary transition-colors">{% if is_ar %}طقوس كليوباترا للجسم (VOL. IV){% else %}Body Rituals (VOL. IV){% endif %}</a></li>
+          </ul>
+        </div>
+
+        <!-- Service & Trust Links -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-xs font-bold text-on-surface uppercase tracking-wider font-mono">
+            {% if is_ar %}الكونسيرج والخدمات{% else %}Concierge &amp; Care{% endif %}
+          </h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="{% url 'orders:track_order' %}" class="hover:text-primary transition-colors">{% if is_ar %}تتبع مسار الشحنة{% else %}Track Dispatch{% endif %}</a></li>
+            <li><a href="{% url 'accounts:dashboard' %}" class="hover:text-primary transition-colors">{% if is_ar %}الحساب الشخصي ونقاط الولاء{% else %}Client Dossier &amp; Points{% endif %}</a></li>
+            <li><a href="{% url 'core:rituals' %}" class="hover:text-primary transition-colors">{% if is_ar %}الطقوس الملكية الأربعة{% else %}The Four Imperial Rituals{% endif %}</a></li>
+            <li><a href="{% url 'core:stories' %}" class="hover:text-primary transition-colors">{% if is_ar %}أرشيف المقالات والقصص{% else %}Editorial Journal{% endif %}</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter & Concierge Contact -->
+        <div class="lg:col-span-4 space-y-4">
+          <h4 class="text-xs font-bold text-on-surface uppercase tracking-wider font-mono">
+            {% if is_ar %}رسائل دار لوميه التحريرية{% else %}Atelier Editorial Gazette{% endif %}
+          </h4>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            {% if is_ar %}
+              انضمي لنادي الصفوة للحصول على دعوات المعارض الحصرية، عينات مجانية مع كل طلب، وكوبونات موسمية خاصة.
+            {% else %}
+              Join our private clientele for private exhibitions, bespoke samples with every delivery, and seasonal privileges.
+            {% endif %}
+          </p>
+          <form onsubmit="event.preventDefault(); showToast(window.LUME_CONFIG.lang === 'ar' ? 'شكراً لانضمامكِ لنادي دار لوميه الملكي!' : 'Welcome to the Royal LUMÉ Circle!', 'success');" class="flex gap-2">
+            <input type="email" required placeholder="{% if is_ar %}بريدكِ الإلكتروني...{% else %}Your email address...{% endif %}" class="bg-surface border editorial-border rounded-full py-2 px-4 text-xs text-on-surface flex-1 outline-none focus:border-primary">
+            <button type="submit" class="bg-[#2A1D1A] hover:bg-primary text-white text-xs font-bold px-5 rounded-full transition-colors">
+              {% if is_ar %}انضمام{% else %}Subscribe{% endif %}
+            </button>
+          </form>
+          <div class="text-[11px] text-outline flex items-center gap-2 pt-1">
+            <span class="w-2 h-2 rounded-full bg-[#4A6B53]"></span>
+            <span>
+              {% if is_ar %}توصيل معتمد لـ 27 محافظة مصرية مع حق الفحص والمعاينة قبل الدفع.{% else %}Insured courier to 27 Egyptian governorates with open-box inspection prior to payment.{% endif %}
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Credits & Payment Methods -->
+      <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-outline">
+        <p>
+          {% if is_ar %}© 2026 LUMÉ Maison de Beauté. جميع الحقوق محفوظة لجمهورية مصر العربية.{% else %}© 2026 LUMÉ Maison de Beauté. All rights reserved. Cairo, Egypt.{% endif %}
+        </p>
+        <div class="flex items-center gap-3 font-mono text-[11px]">
+          <span>{% if is_ar %}الدفع عند الاستلام (COD){% else %}Cash on Delivery (COD){% endif %}</span>
+          <span>•</span>
+          <span>Paymob Egypt</span>
+          <span>•</span>
+          <span>InstaPay</span>
+          <span>•</span>
+          <span>Meeza</span>
+          <span>•</span>
+          <span>ValU (0% Interest)</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Master JavaScript -->
+  <script src="{% static 'js/lume.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

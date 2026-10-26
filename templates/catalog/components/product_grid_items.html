@@ -1,0 +1,50 @@
+{% load static %}
+{% if products and products|length > 0 %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+    {% for product in products %}
+      {% include 'components/product_card.html' with product=product %}
+    {% endfor %}
+  </div>
+
+  <!-- Pagination Controls -->
+  {% if page_obj.has_other_pages %}
+    <nav class="flex items-center justify-center gap-2 mt-12 pt-8 border-t editorial-border" aria-label="Pagination">
+      {% if page_obj.has_previous %}
+        <button type="button" onclick="goToCatalogPage({{ page_obj.previous_page_number }})" class="px-4 py-2 text-xs font-bold rounded-lg border editorial-border bg-surface hover:border-primary text-on-surface transition-colors">
+          {% if is_ar %}← السابق{% else %}← Previous{% endif %}
+        </button>
+      {% endif %}
+      
+      <span class="text-xs font-mono text-outline px-3">
+        {% if is_ar %}صفحة {{ page_obj.number }} من {{ page_obj.paginator.num_pages }}{% else %}Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}{% endif %}
+      </span>
+
+      {% if page_obj.has_next %}
+        <button type="button" onclick="goToCatalogPage({{ page_obj.next_page_number }})" class="px-4 py-2 text-xs font-bold rounded-lg border editorial-border bg-surface hover:border-primary text-on-surface transition-colors">
+          {% if is_ar %}التالي →{% else %}Next →{% endif %}
+        </button>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <!-- Empty Filter State -->
+  <div class="bg-surface-container-lowest rounded-3xl p-12 text-center border editorial-border shadow-xs">
+    <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center mx-auto mb-4 text-outline">
+      <span class="material-symbols-outlined text-3xl">filter_alt_off</span>
+    </div>
+    <h3 class="font-serif text-xl text-on-surface font-semibold mb-2">
+      {% if is_ar %}لم نجد مستحضرات تطابق معايير التصفية الحالية{% else %}No artifacts match your selected filter criteria{% endif %}
+    </h3>
+    <p class="text-xs text-on-surface-variant max-w-md mx-auto mb-6 leading-relaxed">
+      {% if is_ar %}
+      جربي توسيع نطاق السعر أو اختيار طقس عناية بديل لاستعراض مقتنيات الدار المعملية المصنوعة بمصر.
+      {% else %}
+      Try expanding your price range or selecting another beauty ritual to view our Egyptian botanical formulations.
+      {% endif %}
+    </p>
+    <button type="button" onclick="resetCatalogFilters()" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-semibold transition-all shadow-xs">
+      <span class="material-symbols-outlined text-[16px]">refresh</span>
+      <span>{% if is_ar %}إعادة تعيين كافة الفلاتر{% else %}Clear All Filters{% endif %}</span>
+    </button>
+  </div>
+{% endif %}
