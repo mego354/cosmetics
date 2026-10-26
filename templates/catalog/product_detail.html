@@ -428,7 +428,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block font-medium mb-1">{% if is_ar %}اسمكِ الكريم{% else %}Your Full Name{% endif %}</label>
-            <input type="text" name="author_name" required value="{{ user.get_full_name|default:'' }}" class="w-full bg-surface border editorial-border rounded-xl p-2.5 outline-none focus:border-primary">
+            <input type="text" name="author_name" required value="{% if user.is_authenticated %}{{ user.get_full_name }}{% endif %}" class="w-full bg-surface border editorial-border rounded-xl p-2.5 outline-none focus:border-primary">
           </div>
           <div>
             <label class="block font-medium mb-1">{% if is_ar %}المحافظة{% else %}Governorate{% endif %}</label>

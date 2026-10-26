@@ -66,7 +66,7 @@
                 {% if is_ar %}الاسم بالكامل *{% else %}Full Name *{% endif %}
               </label>
               <input type="text" name="customer_name" required 
-                     value="{{ default_address.full_name|default:user.get_full_name|default:'' }}" 
+                     value="{% if default_address.full_name %}{{ default_address.full_name }}{% elif user.is_authenticated %}{{ user.get_full_name }}{% endif %}" 
                      placeholder="{% if is_ar %}الاسم الأول واسم العائلة{% else %}First and Last Name{% endif %}" 
                      class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
             </div>
@@ -75,7 +75,7 @@
                 {% if is_ar %}البريد الإلكتروني (لتأكيد الفاتورة){% else %}Email Address (for Invoice){% endif %}
               </label>
               <input type="email" name="customer_email" 
-                     value="{{ user.email|default:'' }}" 
+                     value="{% if user.is_authenticated %}{{ user.email }}{% endif %}" 
                      placeholder="client@lume-beauty.com" 
                      class="w-full bg-surface border editorial-border rounded-xl p-3 outline-none focus:border-primary">
             </div>
@@ -153,7 +153,7 @@
             <div class="flex" dir="ltr">
               <span class="inline-flex items-center px-3 rounded-l-xl border border-r-0 editorial-border bg-surface-container text-on-surface-variant font-mono">🇪🇬 +20</span>
               <input type="tel" name="customer_phone" required 
-                     value="{{ default_address.phone_number|default:user.phone_number|default:'01012345678' }}" 
+                     value="{% if default_address.phone_number %}{{ default_address.phone_number }}{% elif user.is_authenticated %}{{ user.phone_number }}{% endif %}" 
                      placeholder="10X XXX XXXX" 
                      class="w-full bg-surface border editorial-border rounded-r-xl px-3 py-2.5 outline-none font-mono text-left">
             </div>

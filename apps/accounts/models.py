@@ -1,6 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AnonymousUser
 from django.utils.translation import gettext_lazy as _
+
+# Ensure AnonymousUser safely resolves common user fields in templates
+if not hasattr(AnonymousUser, 'get_full_name'):
+    AnonymousUser.get_full_name = lambda self: ''
+if not hasattr(AnonymousUser, 'phone_number'):
+    AnonymousUser.phone_number = ''
+if not hasattr(AnonymousUser, 'email'):
+    AnonymousUser.email = ''
 
 
 class User(AbstractUser):
